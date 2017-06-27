@@ -1,8 +1,8 @@
 #ifndef QSTRINGLISTEDITWIDGET_H
 #define QSTRINGLISTEDITWIDGET_H
 
-#include <QtGui/QWidget>
-#include <QtGui/QListWidgetItem>
+#include <QWidget>
+#include <QListWidgetItem>
 
 namespace Ui {
 class QStringListEditWidget;

@@ -584,8 +584,9 @@ void RiverSystem::deleteSegment(RiverSegment *seg)
 
 void RiverSystem::addDam(Dam *dam)
 {
+    int i, num = dam->getNumPowerhouses();
     dams->append(*dam->name);
-    for (int i = 0; i < dam->powerhouse_cap.count(); i++)
+    for (i = 0; i < num; i++)
         powerhouses->append(QString ("%1_PH%2").arg(
                                 *dam->name, QString::number(i+1)));
 }
@@ -601,7 +602,7 @@ void RiverSystem::deleteDam(Dam *dam)
     ind = dams->indexOf(*dam->name);
     if (ind >= 0)
         dams->takeAt(ind);
-    for (int i = 0; i < dam->powerhouse_cap.count(); i++)
+    for (int i = 0; i < dam->getNumPowerhouses(); i++)
     {
         QString ph_name (*dam->name);
         ph_name.append(QString("_%1").arg(QString::number(i + 1)));
@@ -620,12 +621,12 @@ void RiverSystem::deleteDam(Dam *dam)
         impounded_reaches.append(seg_up);
         while (seg_up->up != NULL &&
                seg_up->up->type == RiverSegment::ReachSegment &&
-               seg_up->up->impound() != RiverSegment::NotImpounded)
+               seg_up->up->getImpound() != RiverSegment::NotImpounded)
         {
             seg_up = (Reach *)seg_up->up;
             impounded_reaches.append(seg_up);
         }
-        if (seg_up->impound() == RiverSegment::NotImpounded)
+        if (seg_up->getImpound() == RiverSegment::NotImpounded)
             adjustReaches (seg_down, seg_up, impounded_reaches);
         else
             adjustReaches (seg_down, seg_down, impounded_reaches);

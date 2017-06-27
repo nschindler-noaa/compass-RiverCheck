@@ -1,6 +1,6 @@
 #include "mapinfowidget.h"
 
-#include <QtGui/QLayout>
+#include <QLayout>
 
 mapInfoWidget::mapInfoWidget (QWidget *parent) :
     QWidget (parent)

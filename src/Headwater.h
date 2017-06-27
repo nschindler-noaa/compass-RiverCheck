@@ -15,22 +15,6 @@ public:
     bool initialize();
     bool output (int indent, RiverFile *rfile);
 
-    bool read_flows;     /**< true if flow values are read from a data file. */
-    bool regulated;          /**< Whether this is a regulated or unregulated headwater */
-    float flow_coefficient;   /**< For unregulated flow */
-
-    float elev_change[DAYS_IN_SEASON]; /**< Delta from max */
-/*    GasDistribution *gas_out; *< Output gas distribution */
-/*    float *initial_gas;       *< Only defined if there is an initial gas
-                               * vector which supercedes any in-river gas */
-
-/*    float turbidity[STEPS_IN_SEASON]; *< Turbidity at each model
-                                                            *time step */
-/*    int turbidity_flag;       *< 1 if input_turb = "0N" (reading turbidity),
-                                                            * 0 if "Off" (propogate from above)*/
-
-    float flow_mean;          /**< Mean flow at this headwater */
-
     void calculateFlow ();
     void fillRegulated ();   /**< fills headwaters that are regulated and labels them as such. */
     void fillUnRegulated (); /**< fills headwaters not filled in previous - fillRegulated must be called first. */
@@ -40,12 +24,44 @@ public:
     void calculateTempInputs ();
     void calculateTemps ();
 
+    bool getReadFlows() const;
+    void setReadFlows(bool value);
+
+    bool getRegulated() const;
+    void setRegulated(bool value);
+
+    float getFlowCoefficient() const;
+    void setFlowCoefficient(float value);
+
+    float getFlowMean() const;
+    void setFlowMean(float value);
+
+    float getElevChange (int index) const;
+    void setElevChange (int index, float value);
+
 public slots:
     void mapView();
     void sideView();
     void topView();
     void sectionA();
     void sectionB();
+
+private:
+    bool readFlows;     /**< true if flow values are read from a data file. */
+    bool regulated;          /**< Whether this is a regulated or unregulated headwater */
+    float flowCoefficient;   /**< For unregulated flow */
+
+    float elevChange[DAYS_IN_SEASON]; /**< Delta from max */
+/*    GasDistribution *gas_out; *< Output gas distribution */
+/*    float *initial_gas;       *< Only defined if there is an initial gas
+                               * vector which supercedes any in-river gas */
+
+/*    float turbidity[STEPS_IN_SEASON]; *< Turbidity at each model
+                                                            *time step */
+/*    int turbidity_flag;       *< 1 if input_turb = "0N" (reading turbidity),
+                                                            * 0 if "Off" (propogate from above)*/
+
+    float flowMean;          /**< Mean flow at this headwater */
 
 };
 

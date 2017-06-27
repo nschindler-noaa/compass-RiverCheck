@@ -2,9 +2,9 @@
 #define RIVERFILE_H
 
 #include <QFile>
-#include <QtCore/QString>
+#include <QString>
 #include <QStringList>
-#include <QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 #define MAX_LINE_LENGTH    1024
 

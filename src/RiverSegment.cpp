@@ -295,9 +295,9 @@ float RiverSegment::distance(RiverPoint *loc)
     return dist;
 }
 
-RiverSegment::Impounded RiverSegment::impound()
+RiverSegment::Impounded RiverSegment::getImpound()
 {
-    Impounded state = NotImpounded;
+    impound = NotImpounded;
     RiverSegment *down_seg = down;
     while (down_seg != NULL &&
            down_seg->type != DamSegment)
@@ -312,13 +312,38 @@ RiverSegment::Impounded RiverSegment::impound()
             if (top >= (lower_elev + lower_depth))
             {
                 if (top >= (upper_elev + upper_depth))
-                    state = FullyImpounded;
+                    impound = FullyImpounded;
                 else
-                    state = PartiallyImpounded;
+                    impound = PartiallyImpounded;
             }
         }
     }
-    return state;
+    return impound;
+}
+
+void RiverSegment::setImpound()
+{
+    impound = NotImpounded;
+    RiverSegment *down_seg = down;
+    while (down_seg != NULL &&
+           down_seg->type != DamSegment)
+    {
+        down_seg = down_seg->down;
+    }
+    if (down_seg != NULL)
+    {
+        if (down_seg->type == DamSegment)
+        {
+            float top = down_seg->upper_elev + down_seg->upper_depth;
+            if (top >= (lower_elev + lower_depth))
+            {
+                if (top >= (upper_elev + upper_depth))
+                    impound = FullyImpounded;
+                else
+                    impound = PartiallyImpounded;
+            }
+        }
+    }
 }
 
 /*QGraphicsScene *RiverSegment::mapView()

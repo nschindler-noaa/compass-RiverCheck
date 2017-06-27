@@ -1,13 +1,14 @@
 // mapScene.cpp
 //
 // Last modified, 05-21-2009, Neal Schindler
-#include <QtGui/QPaintEvent>
-#include <QtGui/QResizeEvent>
-#include <QtGui/QMouseEvent>
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QMouseEvent>
 #include <QRectF>
 #include <qpainter.h>
-#include <qprinter.h>
-#include <QPrintDialog>
+#include <QtPrintSupport/QPrintDialog>
+//#include <qprinter.h>
+//#include <QPrintDialog>
 #include <QGraphicsSceneEvent>
 
 //#include "compass.h"

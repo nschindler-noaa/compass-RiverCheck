@@ -1,7 +1,7 @@
 #include "qstringlisteditdialog.h"
 #include "ui_qstringlisteditdialog.h"
 
-#include <QtGui/QMessageBox>
+#include <QMessageBox>
 
 QStringListEditDialog::QStringListEditDialog(QWidget *parent) :
     QDialog(parent),

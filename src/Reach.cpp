@@ -225,7 +225,7 @@ bool Reach::calculateGeometries()
                 else if (up->type == RiverSegment::DamSegment)
                 {
                     Dam * dm = (Dam *)up;
-                    upper_elev = dm->floor_elev;
+                    upper_elev = dm->getFloorElev();
                 }
                 else if (up->type == RiverSegment::HeadwaterSegment)
                 {

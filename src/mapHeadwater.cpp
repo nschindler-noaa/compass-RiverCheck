@@ -1,11 +1,11 @@
 #include "mapHeadwater.h"
 //#include "qMercatorTransform.h"
-#include <QtGui/QGraphicsScene>
-#include <QtGui/QGraphicsItem>
-#include <QtGui/QMenu>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QMenu>
 #include <QPainter>
-#include <QtGui/QGraphicsSceneMouseEvent>
-#include <QtGui/QGraphicsSceneHoverEvent>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneHoverEvent>
 
 mapHeadwater::mapHeadwater(QGraphicsItem *par)
     : mapItem(par)

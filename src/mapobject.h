@@ -1,16 +1,16 @@
 #ifndef MAPOBJECT_H
 #define MAPOBJECT_H
 
-#include <QtGui/QGraphicsObject>
-#include <QtGui/QAction>
-#include <QtGui/QVBoxLayout>
+#include <QGraphicsObject>
+#include <QAction>
+#include <QVBoxLayout>
 #include <QPainter>
 #include <QRectF>
 #include <QString>
 #include <QPainterPath>
 #include <QPen>
-#include <QtGui/QDialog>
-#include <QtGui/QMenu>
+#include <QDialog>
+#include <QMenu>
 
 #include "RiverSegment.h"
 #include "mapTransform.h"

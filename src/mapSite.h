@@ -1,7 +1,7 @@
 #ifndef MAP_SITE_H
 #define MAP_SITE_H
 
-#include <QtGui/QGraphicsItem>
+#include <QGraphicsItem>
 
 //#include "mapItem.h"
 //#include "compass.h"

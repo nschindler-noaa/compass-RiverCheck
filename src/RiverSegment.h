@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QString>
-#include <QtGui/QGraphicsScene>
+#include <QGraphicsScene>
 
 #include "RiverFile.h"
 #include "RiverPoint.h"
@@ -73,31 +73,15 @@ public:
     RiverSegment *fork;/**< next segment up for different river. */
     RiverSegment *down;/**< next segment down the (same) river. */
 
-//    /** Division of river into separate flows. Also used for spill side location */
-//    enum Location {
-//        Right,         /**< Right side of the segment */
-//        Left,          /**< Left side of the segment */
-//        FlowDivisions, /**< Number of flow divisions */
-//        Middle         /**< Currently not used */
-//    };
-
-    /* Errors that can occur in a segment or between segments. They are 'OR'ed together.
-    enum SegError {
-        LatLonUpper = 0x1,
-        LatLonLower = 0x2,
-        ElevUpper = 0x4,
-        ElevLower = 0x8,
-        SlopeIncorrect = 0x10,
-        SpillwayWidth = 0x20
-    };*/
-
     enum Impounded {
         NotImpounded,
         PartiallyImpounded,
         FullyImpounded
     };
 
-    Impounded impound ();
+    void setImpound ();
+    Impounded getImpound ();
+    Impounded impound;
 
     short error;  /**< flag that contains error masks. See /ref errors below for more information. */
     short findErrors ();

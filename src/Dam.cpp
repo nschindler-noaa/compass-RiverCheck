@@ -15,10 +15,16 @@ Dam::Dam(QString dname, QString rivName, QObject *parent) :
 
 Dam::~Dam ()
 {
+    PowerHouse *phs = NULL;
     delete name;
-    powerhouse_cap.clear();
-    if (basin != NULL)
-        delete_basin (basin);
+    if (storage != NULL)
+        delete_basin (storage);
+    while (getNumPowerhouses() > 0)
+    {
+        phs = powerhouses.takeLast();
+        delete phs;
+    }
+
 }
 
 void Dam::reset()
@@ -30,25 +36,27 @@ void Dam::reset()
 
 void Dam::clear()
 {
-    basin = NULL;
+    if (storage)
+        delete storage;
+    storage = NULL;
     width = 0.0;
     length = 20.0;
-    tailrace_length = DAM_TAILRACE_DEFAULT;
+    tailraceLength = DAM_TAILRACE_DEFAULT;
 //    base_elev = 0.0;
-    forebay_elev = 0.0;
-    tailrace_elev = 0.0;
-    full_head = 0.0;
-    full_fb_depth = 0.0;
-    bypass_elev = 0.0;
+    forebayElev = 0.0;
+    tailraceElev = 0.0;
+    fullHead = 0.0;
+    fullFbDepth = 0.0;
+    bypassElev = 0.0;
     collector = 0;
     ngates = 0;
-    gate_width = 0.0;
+    gateWidth = 0.0;
     pergate = 0.0;
-    spillway_width = 0.0;
-    basin_length = 0.0;
+    spillwayWidth = 0.0;
+    stillingLength = 0.0;
     sgr = 0.0;
 
-    spill_side = (Location)-1;
+    spillSide = (Location)-1;
 
     flow_max = 0.0;
 }
@@ -89,32 +97,44 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
 
     if (token.compare ("powerhouse_capacity", Qt::CaseInsensitive) == 0)
     {
-        float *cap = (float *)calloc (1, sizeof(float));
-        okay = rfile->readFloatOrNa(na, *cap);
-        powerhouse_cap.append(*cap);
+        if (getNumPowerhouses() < 1)
+        {
+            PowerHouse *phs = new PowerHouse();
+            powerhouses.append(phs);
+        }
+        float cap;//*cap = (float *)calloc (1, sizeof(float));
+        okay = rfile->readFloatOrNa(na, cap);//*cap);
+//        powerhouse_cap.append(*cap);
+        powerhouses.at(0)->setCapacity(cap);
     }
     else if (token.compare("powerhouse_2_capacity", Qt::CaseInsensitive) == 0)
     {
-        float *cap = (float *)calloc (1, sizeof(float));
-        okay = rfile->readFloatOrNa(na, *cap);
-        powerhouse_cap.append(*cap);
+        while (getNumPowerhouses() < 2)
+        {
+            PowerHouse *phs = new PowerHouse();
+            powerhouses.append(phs);
+        }
+        float cap;//*cap = (float *)calloc (1, sizeof(float));
+        okay = rfile->readFloatOrNa(na, cap);//*cap);
+//        powerhouse_cap.append(*cap);
+        powerhouses.at(1)->setCapacity(cap);
     }
     else if (token.compare("floor_elevation", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, floor_elev);
-        if (okay) lower_elev = floor_elev;
+        okay = rfile->readFloatOrNa(na, floorElev);
+        if (okay) lower_elev = floorElev;
     }
     else if (token.compare("forebay_elevation", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, forebay_elev);
+        okay = rfile->readFloatOrNa(na, forebayElev);
     }
     else if (token.compare("tailrace_elevation", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, tailrace_elev);
+        okay = rfile->readFloatOrNa(na, tailraceElev);
     }
     else if (token.compare("bypass_elevation", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, bypass_elev);
+        okay = rfile->readFloatOrNa(na, bypassElev);
     }
     else if (token.compare("forebay_depth", Qt::CaseInsensitive) == 0)
     {
@@ -122,7 +142,7 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
     }
     else if (token.compare("full_pool_head", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, full_head);
+        okay = rfile->readFloatOrNa(na, fullHead);
     }
     else if (token.compare("collector", Qt::CaseInsensitive) == 0)
     {
@@ -130,18 +150,18 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
     }
     else if (token.compare("spillway_width", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, spillway_width);
+        okay = rfile->readFloatOrNa(na, spillwayWidth);
     }
     else if (token.compare("spill_side", Qt::CaseInsensitive) == 0)
     {
         okay = rfile->readString(na);
         if (na.compare("right", Qt::CaseInsensitive) == 0)
-            spill_side = Right;
+            spillSide = Right;
         else if (na.compare("left", Qt::CaseInsensitive) == 0)
-            spill_side = Left;
+            spillSide = Left;
         else
         {
-            spill_side = FlowDivisions;
+            spillSide = FlowDivisions;
             Log::instance()->add(Log::Error, QString ("Spill side %1 incorrect").arg(na));
         }
     }
@@ -156,11 +176,11 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
     }
     else if (token.compare("gate_width", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, gate_width);
+        okay = rfile->readFloatOrNa(na, gateWidth);
     }
     else if (token.compare("basin_length", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, basin_length);
+        okay = rfile->readFloatOrNa(na, stillingLength);
     }
     else if (token.compare("sgr", Qt::CaseInsensitive) == 0)
     {
@@ -173,9 +193,9 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
     }
     else if (token.compare("storage_basin", Qt::CaseInsensitive) == 0)
     {
-        basin = new_basin();
-        rfile->readFloatOrNa(na, basin->min_volume);
-        rfile->readFloatOrNa(na, basin->max_volume);
+        storage = new_basin();
+        rfile->readFloatOrNa(na, storage->min_volume);
+        rfile->readFloatOrNa(na, storage->max_volume);
     }
     else
     {
@@ -190,7 +210,7 @@ bool Dam::initialize()
     bool okay = true;
 
     clear();
-    spill_side = Left;
+    spillSide = Left;
 
     return okay;
 }
@@ -201,90 +221,90 @@ bool Dam::construct ()
     error = 0;
 
     // base elevation
-    lower_elev = floor_elev;
+    lower_elev = floorElev;
     upper_elev = lower_elev;
 
     // get widths from surrounding reaches
-    tailrace_width = down->upper_width;
+    tailraceWidth = down->upper_width;
 //    width = tailrace_width;
     if (up != NULL)
     {
-        width = up->width > tailrace_width? up->width: tailrace_width;
+        width = up->width > tailraceWidth? up->width: tailraceWidth;
     }
     else
     {
-        width = down->width > tailrace_width? down->width: tailrace_width;
+        width = down->width > tailraceWidth? down->width: tailraceWidth;
     }
     upper_width = width;
     lower_width = width;
 
     // get forebay depth and head from elevation, or vice versa
-    if (forebay_elev == 0.0)
+    if (forebayElev == 0.0)
     {
-        if (full_head == 0.0)
-            full_head = 112.0;
-        forebay_elev = floor_elev + full_head;
+        if (fullHead == 0.0)
+            fullHead = 112.0;
+        forebayElev = floorElev + fullHead;
     }
     else
     {
-        full_head = forebay_elev - floor_elev;
+        fullHead = forebayElev - floorElev;
     }
 
-    if (tailrace_elev == 0.0 && floor_elev > 0.0)
+    if (tailraceElev == 0.0 && floorElev > 0.0)
     {
-        if (full_head == 0.0)
-            full_head = 75.0;
-        tailrace_elev = forebay_elev - full_head;
+        if (fullHead == 0.0)
+            fullHead = 75.0;
+        tailraceElev = forebayElev - fullHead;
     }
     else
     {
-        full_head = forebay_elev - tailrace_elev;
+        fullHead = forebayElev - tailraceElev;
     }
 
-    full_fb_depth = forebay_elev - floor_elev;
-    upper_depth = full_fb_depth;
-    lower_depth = tailrace_elev - floor_elev;
+    fullFbDepth = forebayElev - floorElev;
+    upper_depth = fullFbDepth;
+    lower_depth = tailraceElev - floorElev;
 
     // spillway width defaults if necessary
-    if (ngates == 0 || gate_width == 0.0)
+    if (ngates == 0 || gateWidth == 0.0)
     {
-        if (spillway_width == 0.0)
-            spillway_width = 1320;
-        if (gate_width == 0.0)
+        if (spillwayWidth == 0.0)
+            spillwayWidth = 1320;
+        if (gateWidth == 0.0)
         {
-            gate_width = spillway_width;
+            gateWidth = spillwayWidth;
             ngates = 1;
             pergate = 1.0;
         }
         else
         {
-            ngates = (int)(spillway_width / gate_width);
+            ngates = (int)(spillwayWidth / gateWidth);
         }
     }
 
-    if (spillway_width == 0.0)
-        spillway_width = ngates * gate_width;
+    if (spillwayWidth == 0.0)
+        spillwayWidth = ngates * gateWidth;
 
-    if (tailrace_length < basin_length)
-        tailrace_length = DAM_TAILRACE_DEFAULT;
+    if (tailraceLength < stillingLength)
+        tailraceLength = DAM_TAILRACE_DEFAULT;
 
     RiverSegment::construct();
 
 //    error = findErrors();
 
     // Check values
-    if (floor_elev < -50 ||
-            forebay_elev <= 0.0 ||
-            tailrace_elev < 0.0 ||
-            bypass_elev > forebay_elev ||
-            full_head < 0.0 ||
-            full_fb_depth <= 0.0)
+    if (floorElev < -50 ||
+            forebayElev <= 0.0 ||
+            tailraceElev < 0.0 ||
+            bypassElev > forebayElev ||
+            fullHead < 0.0 ||
+            fullFbDepth <= 0.0)
     {
         Log::instance()->add
                 (Log::Error, QString("bad physical specifications at $1").arg(*name));
         error |= BadPhysics;
     }
-    if (ngates * gate_width != spillway_width)
+    if (ngates * gateWidth != spillwayWidth)
     {
         Log::instance()->add(Log::Error, QString ("%1 spillway width not consistent with gate width and number of gates").arg(
                                  *name));
@@ -299,41 +319,251 @@ bool Dam::output(int indent, RiverFile *rfile)
     bool okay = true;
 
     rfile->writeString(indent, "dam", *name);
-    for (int i = 0; i < powerhouse_cap.count(); i++)
+    for (int i = 0; i < powerhouses.count(); i++)
     {
         QString string("powerhouse_");
         if (i > 0)
             string.append(QString("%1_").arg (QString::number(i+1)));
         string.append("capacity");
-        rfile->writeString(indent + 1, string, QString::number(powerhouse_cap.at(i), 'f', 2));
+        rfile->writeString(indent + 1, string, QString::number(powerhouses.at(i)->getCapacity(), 'f', 2));
     }
-    rfile->writeString(indent + 1, "floor_elevation", QString::number(floor_elev, 'f', 2));
-    rfile->writeString(indent + 1, "forebay_elevation", QString::number(forebay_elev, 'f', 2));
-    rfile->writeString(indent + 1, "tailrace_elevation", QString::number(tailrace_elev, 'f', 2));
-    if (bypass_elev > 0.0)
-        rfile->writeString(indent + 1, "bypass_elevation", QString::number(bypass_elev, 'f', 2));
-    rfile->writeString(indent + 1, "spillway_width", QString::number(spillway_width, 'f', 2));
-    rfile->writeString(indent + 1, "spill_side", QString(spill_side? "left" : "right"));
+    rfile->writeString(indent + 1, "floor_elevation", QString::number(floorElev, 'f', 2));
+    rfile->writeString(indent + 1, "forebay_elevation", QString::number(forebayElev, 'f', 2));
+    rfile->writeString(indent + 1, "tailrace_elevation", QString::number(tailraceElev, 'f', 2));
+    if (bypassElev > 0.0)
+        rfile->writeString(indent + 1, "bypass_elevation", QString::number(bypassElev, 'f', 2));
+    rfile->writeString(indent + 1, "spillway_width", QString::number(spillwayWidth, 'f', 2));
+    rfile->writeString(indent + 1, "spill_side", QString(spillSide? "left" : "right"));
     if (ngates > 0)
     {
         rfile->writeString(indent + 1, "pergate", QString::number(pergate, 'f', 2));
         rfile->writeString(indent + 1, "ngates", QString::number(ngates));
-        rfile->writeString(indent + 1, "gate_width", QString::number(gate_width, 'f', 2));
+        rfile->writeString(indent + 1, "gate_width", QString::number(gateWidth, 'f', 2));
     }
-    rfile->writeString(indent + 1, "basin_length", QString::number(basin_length, 'f', 2));
+    rfile->writeString(indent + 1, "basin_length", QString::number(stillingLength, 'f', 2));
     rfile->writeString(indent + 1, "sgr", QString::number(sgr, 'f', 2));
     if (abbrev != NULL && !abbrev->isEmpty())
         rfile->writeString(indent + 1,"abbrev", *abbrev);
-    if (basin != NULL)
+    if (storage != NULL)
     {
         rfile->writeString(indent + 1, "storage_basin",
-                           QString::number(basin->min_volume, 'f', 2),
-                           QString::number(basin->max_volume, 'f', 2));
+                           QString::number(storage->min_volume, 'f', 2),
+                           QString::number(storage->max_volume, 'f', 2));
     }
     outputCourse (indent + 1, rfile);
     rfile->writeEnd(indent, "dam", *name);
 
     return okay;
+}
+
+Basin *Dam::getBasin() const
+{
+    return storage;
+}
+
+void Dam::setBasin(Basin *value)
+{
+    storage = value;
+}
+
+QList<PowerHouse *> Dam::getPowerhouses() const
+{
+    return powerhouses;
+}
+
+void Dam::setPowerhouses(const QList<PowerHouse *> &value)
+{
+    powerhouses = value;
+}
+
+int Dam::getNumPowerhouses()
+{
+    return powerhouses.count();
+}
+
+float Dam::getTailrace_width() const
+{
+    return tailraceWidth;
+}
+
+void Dam::setTailrace_width(float value)
+{
+    tailraceWidth = value;
+}
+
+float Dam::getTailraceWidth() const
+{
+    return tailraceWidth;
+}
+
+void Dam::setTailraceWidth(float value)
+{
+    tailraceWidth = value;
+}
+
+float Dam::getTailraceLength() const
+{
+    return tailraceLength;
+}
+
+void Dam::setTailraceLength(float value)
+{
+    tailraceLength = value;
+}
+
+float Dam::getTailraceElev() const
+{
+    return tailraceElev;
+}
+
+void Dam::setTailraceElev(float value)
+{
+    tailraceElev = value;
+}
+
+float Dam::getForebayElev() const
+{
+    return forebayElev;
+}
+
+void Dam::setForebayElev(float value)
+{
+    forebayElev = value;
+}
+
+float Dam::getFullFbDepth() const
+{
+    return fullFbDepth;
+}
+
+void Dam::setFullFbDepth(float value)
+{
+    fullFbDepth = value;
+}
+
+float Dam::getFullHead() const
+{
+    return fullHead;
+}
+
+void Dam::setFullHead(float value)
+{
+    fullHead = value;
+}
+
+float Dam::getBypassElev() const
+{
+    return bypassElev;
+}
+
+void Dam::setBypassElev(float value)
+{
+    bypassElev = value;
+}
+
+float Dam::getFloorElev() const
+{
+    return floorElev;
+}
+
+void Dam::setFloorElev(float value)
+{
+    floorElev = value;
+}
+
+int Dam::getCollector() const
+{
+    return collector;
+}
+
+void Dam::setCollector(int value)
+{
+    collector = value;
+}
+
+int Dam::getNgates() const
+{
+    return ngates;
+}
+
+void Dam::setNgates(int value)
+{
+    ngates = value;
+}
+
+float Dam::getGateWidth() const
+{
+    return gateWidth;
+}
+
+void Dam::setGateWidth(float value)
+{
+    gateWidth = value;
+}
+
+float Dam::getPergate() const
+{
+    return pergate;
+}
+
+void Dam::setPergate(float value)
+{
+    pergate = value;
+}
+
+float Dam::getSpillwayWidth() const
+{
+    return spillwayWidth;
+}
+
+void Dam::setSpillwayWidth(float value)
+{
+    spillwayWidth = value;
+}
+
+float Dam::getStillingLength() const
+{
+    return stillingLength;
+}
+
+void Dam::setStillingLength(float value)
+{
+    stillingLength = value;
+}
+
+float Dam::getSgr() const
+{
+    return sgr;
+}
+
+void Dam::setSgr(float value)
+{
+    sgr = value;
+}
+
+Location Dam::getSpillSide() const
+{
+    return spillSide;
+}
+
+void Dam::setSpillSide(const Location &value)
+{
+    spillSide = value;
+}
+
+QList<RSW *> Dam::getSpillWeirs() const
+{
+    return spillWeirs;
+}
+
+void Dam::setSpillWeirs(const QList<RSW *> &value)
+{
+    spillWeirs = value;
+}
+
+int Dam::getNumSpillWeirs()
+{
+    return spillWeirs.count();
 }
 
 Basin *new_basin ()

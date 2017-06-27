@@ -99,26 +99,26 @@ void DamDetailDialog::setData()
 {
     if (dam != NULL)
     {
-        floor_elev = dam->floor_elev;
-        tailrace_elev = dam->tailrace_elev;
+        floor_elev = dam->getFloorElev();//dam->floorElev;
+        tailrace_elev = dam->getTailraceElev();//dam->tailraceElev;
         tailrace_length = 1000.0;//dam->basin_length * 2.0;
-        forebay_elev = dam->forebay_elev;
-        bypass_elev = dam->bypass_elev;
-        basin_length = dam->basin_length;
-        gate_num = dam->ngates;
-        gate_width = dam->gate_width;
-        gate_flow = dam->pergate;
-        spill_width = dam->spillway_width;
-        spill_side = dam->spill_side;
-        SGR = dam->sgr;
+        forebay_elev = dam->getForebayElev();// dam->forebayElev;
+        bypass_elev = dam->getBypassElev();// dam->bypassElev;
+        basin_length = dam->getStillingLength();// dam->stillingLength;
+        gate_num = dam->getNgates();// dam->ngates;
+        gate_width = dam->getGateWidth();// dam->gateWidth;
+        gate_flow = dam->getPergate();// dam->pergate;
+        spill_width = dam->getSpillwayWidth();// dam->spillwayWidth;
+        spill_side = dam->getSpillSide();// dam->spillSide;
+        SGR = dam->getSgr();// dam->sgr;
 
         ui->doubleSpinBox_SGR->setValue(SGR);
-        if (dam->powerhouse_cap.count() > 0)
-            ui->doubleSpinBox_PH1Cap->setValue(dam->powerhouse_cap.at(0));
+        if (dam->getNumPowerhouses() > 0)
+            ui->doubleSpinBox_PH1Cap->setValue(dam->getPowerhouses().at(0)->getCapacity());// powerhouse_cap.at(0));
         else
             ui->doubleSpinBox_PH1Cap->setValue(0.0);
-        if (dam->powerhouse_cap.count() > 1)
-            ui->doubleSpinBox_PH2Cap->setValue(dam->powerhouse_cap.at(1));
+        if (dam->getNumPowerhouses() > 1)
+            ui->doubleSpinBox_PH2Cap->setValue(dam->getPowerhouses().at(1)->getCapacity());// powerhouse_cap.at(1));
         else
             ui->doubleSpinBox_PH2Cap->setValue(0.0);
         ui->doubleSpinBox_basinLength->setValue(basin_length);
@@ -423,20 +423,22 @@ void DamDetailDialog::changeSGR(double sgr)
 
 void DamDetailDialog::saveData()
 {
-    dam->sgr = SGR;
-    if (dam->powerhouse_cap.count() > 0)
-        dam->powerhouse_cap[0] = ui->doubleSpinBox_PH1Cap->value();
-    if (dam->powerhouse_cap.count() > 1)
-        dam->powerhouse_cap[1] = ui->doubleSpinBox_PH2Cap->value();
-    dam->basin_length = basin_length;
-    dam->bypass_elev = bypass_elev;
-    dam->forebay_elev = forebay_elev;
-    dam->floor_elev = floor_elev;
-    dam->tailrace_elev = tailrace_elev;
-    dam->ngates = gate_num;
-    dam->gate_width = gate_width;
-    dam->spillway_width = spill_width;
-    dam->spill_side = spill_side;//(Location)(ui->comboBox_spillSide->currentIndex ());
+    dam->setSgr(SGR);
+    if (dam->getNumPowerhouses() > 0)
+        dam->getPowerhouses().at(0)->setCapacity(ui->doubleSpinBox_PH1Cap->value());
+//        dam->powerhouse_cap[0] = ui->doubleSpinBox_PH1Cap->value();
+    if (dam->getNumPowerhouses() > 1)
+        dam->getPowerhouses().at(1)->setCapacity(ui->doubleSpinBox_PH2Cap->value());
+//        dam->powerhouse_cap[1] = ui->doubleSpinBox_PH2Cap->value();
+    dam->setStillingLength(basin_length);// stillingLength = basin_length;
+    dam->setBypassElev(bypass_elev);// bypassElev = bypass_elev;
+    dam->setForebayElev(forebay_elev);// forebayElev = forebay_elev;
+    dam->setFloorElev(floor_elev);// floorElev = floor_elev;
+    dam->setTailraceElev(tailrace_elev);// tailraceElev = tailrace_elev;
+    dam->setNgates(gate_num);// ngates = gate_num;
+    dam->setGateWidth(gate_width);// gateWidth = gate_width;
+    dam->setSpillwayWidth(spill_width);// spillwayWidth = spill_width;
+    dam->setSpillSide(spill_side);// spillSide = spill_side;
     dam->construct();
     if (dam->up != NULL)
         construct (dam->up);

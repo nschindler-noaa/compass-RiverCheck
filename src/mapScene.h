@@ -5,15 +5,15 @@
 #ifndef MAPSCENE_H
 #define MAPSCENE_H
 
-#include <QtCore/QObject>//qobject.h>
-#include <QtGui/QApplication>//qapplication.h>
+#include <QObject>
+#include <QApplication>
 #include <QPaintEvent>
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QPixmap>//qpixmap.h>
-#include <QtGui/QWidget>
-#include <QtGui/QGraphicsScene>
-#include <QtGui/QGraphicsItem>
+#include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
 
 #include "RiverSystem.h"
 #include "mapObject.h"

@@ -1,9 +1,9 @@
 #ifndef REACHDETAILDIALOG_H
 #define REACHDETAILDIALOG_H
 
-#include <QtGui/QWidget>
-#include <QtGui/QDialog>
-#include <QtGui/QGraphicsScene>
+#include <QWidget>
+#include <QDialog>
+#include <QGraphicsScene>
 
 #include "Reach.h"
 #include "seeview.h"

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += widgets printsupport
 
 TARGET = C_RiverCheck
 TEMPLATE = app
@@ -47,7 +48,8 @@ SOURCES += main.cpp\
     reachdetaildialog.cpp \
     seeview.cpp \
     segmentViews.cpp \
-    metadata.cpp
+    metadata.cpp \
+    Period.cpp
 
 HEADERS  += mainwindow.h \
     Stock.h \
@@ -88,7 +90,8 @@ HEADERS  += mainwindow.h \
     mapItem.h \
     seeview.h \
     segmentViews.h \
-    metadata.h
+    metadata.h \
+    Period.h
 
 FORMS    += mainwindow.ui \
     detaildialog.ui \
@@ -100,3 +103,6 @@ FORMS    += mainwindow.ui \
 
 OTHER_FILES += \
     readme.txt
+
+DISTFILES += \
+    ../readme.txt

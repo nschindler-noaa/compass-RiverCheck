@@ -1,12 +1,12 @@
 #include "RiverFile.h"
 #include "Log.h"
 #include <QRegExp>
-#include <QtCore/QString>
-#include <QtGui/QMessageBox>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QLineEdit>
-#include <QtGui/QBoxLayout>
-#include <QtGui/QSpacerItem>
+#include <QString>
+#include <QMessageBox>
+#include <QDialogButtonBox>
+#include <QLineEdit>
+#include <QBoxLayout>
+#include <QSpacerItem>
 #include <qstring.h>
 
 //#include "nsqstringlisteditdialog.h"
@@ -35,7 +35,6 @@ RiverFile::~RiverFile ()
 {
     delete header;
     delete tokens;
-//    ~QFile();
 }
 
 bool RiverFile::parse ()
@@ -236,9 +235,10 @@ QString RiverFile::getToken ()
             line++;
         }
         delete tokens;
-        tokens = new QStringList (rline.split ('\t', QString::SkipEmptyParts));
-        readString (rline);
-        delete tokens;
+        rline.replace('\t', ' ');
+//        tokens = new QStringList (rline.split ('\t', QString::SkipEmptyParts));
+ //       readString (rline);
+  //      delete tokens;
         tokens = new QStringList (rline.split(' ', QString::SkipEmptyParts));
     }
 
