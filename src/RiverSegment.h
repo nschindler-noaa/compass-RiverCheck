@@ -45,12 +45,27 @@ public:
 
 //    QList<RiverSite *> tributaries;
 
-
+    /** Type of River Segment. It can be DamSegment, ReachSegment (meaning a
+     *  pool or free-flowing segment), or HeadwaterSegment.
+     *  There is a NullSegment for unknown types.
+     */
     enum SegmentType {
         DamSegment,
         ReachSegment,
-        HeadwaterSegment
+        HeadwaterSegment,
+        NullSegment
     };
+
+    /** Type of impound due to downstream dam. It can be NotImpounded (not
+     *  affected by a downstream dam, PartiallyImpounded (some part of the
+     *  segment is affected), or FullyImpounded.
+     */
+    enum Impounded {
+        NotImpounded,
+        PartiallyImpounded,
+        FullyImpounded
+    };
+
     SegmentType type;  /**< type of river segment. */
 
     bool regPoint;     /**< True if this is a flow regulation point. */
@@ -58,26 +73,20 @@ public:
     float flow_min;    /**< Minimum flow. */
 
     float width;       /**< Average width in feet */
-    float lower_width; /**< Width of the reach at the lower end in feet */
-    float upper_width; /**< Width of the reach at the upper end in feet */
-    float lower_depth; /**< Maximum depth at lower end of reach in feet */
-    float upper_depth; /**< Maximum depth at upper end of reach in feet */
-    float lower_elev;  /**< Height above sea level, or bottom of the river
+    float lowerWidth; /**< Width of the reach at the lower end in feet */
+    float upperWidth; /**< Width of the reach at the upper end in feet */
+    float lowerDepth; /**< Maximum depth at lower end of reach in feet */
+    float upperDepth; /**< Maximum depth at upper end of reach in feet */
+    float lowerElev;  /**< Height above sea level, or bottom of the river
                          *  at the lower end of reach in feet. */
-    float upper_elev;  /**< Height above sea level, or bottom of the river
+    float upperElev;  /**< Height above sea level, or bottom of the river
                          *  at the upper end of reach in feet (calculated). */
     float length;      /**< Length of segment in miles */
-    float bed_width;      /**< Width of the riverbed for this reach in feet */
+    float bedWidth;      /**< Width of the riverbed for this reach in feet */
 
     RiverSegment *up;  /**< next segment up the same river.*/
     RiverSegment *fork;/**< next segment up for different river. */
     RiverSegment *down;/**< next segment down the (same) river. */
-
-    enum Impounded {
-        NotImpounded,
-        PartiallyImpounded,
-        FullyImpounded
-    };
 
     void setImpound ();
     Impounded getImpound ();

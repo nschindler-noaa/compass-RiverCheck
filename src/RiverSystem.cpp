@@ -675,7 +675,7 @@ void RiverSystem::deleteDam(Dam *dam)
     }
     else if (seg_down != NULL)
     {
-        seg_down->upper_elev = seg_down->lower_elev;
+        seg_down->upperElev = seg_down->lowerElev;
         river->deleteSegment(dam);
     }
 }
@@ -683,22 +683,22 @@ void RiverSystem::deleteDam(Dam *dam)
 void RiverSystem::adjustReaches(Reach *downReach, Reach *upReach, QList<Reach *> reaches)
 {
     Reach *reach = (Reach *)reaches.takeLast();
-    float bd_width = upReach->bed_width;
+    float bd_width = upReach->bedWidth;
     reach->slope = DEFAULT_SLOPE;
     reach->tan_slope = tan(reach->slope * DEG_2_RAD);
     if (upReach == downReach)
     {
         if (reach->up != NULL &&
-                reach->up->lower_depth < upReach->upper_depth)
-            reach->lower_depth = reach->upper_depth = reach->up->lower_depth;
+                reach->up->lowerDepth < upReach->upperDepth)
+            reach->lowerDepth = reach->upperDepth = reach->up->lowerDepth;
         else
-            reach->lower_depth = reach->upper_depth = upReach->upper_depth;
+            reach->lowerDepth = reach->upperDepth = upReach->upperDepth;
     }
     else
     {
-        reach->lower_depth = reach->upper_depth = upReach->lower_depth;
+        reach->lowerDepth = reach->upperDepth = upReach->lowerDepth;
     }
-    reach->width = bd_width + 2.0 * reach->upper_depth;
+    reach->width = bd_width + 2.0 * reach->upperDepth;
     reach->calculateGeometries();
 
     while (reaches.count() > 0)
@@ -707,16 +707,16 @@ void RiverSystem::adjustReaches(Reach *downReach, Reach *upReach, QList<Reach *>
         upReach = (Reach *)reach->up;
         reach->width = upReach->width;
         reach->slope = upReach->slope;
-        reach->lower_depth = reach->upper_depth = upReach->lower_depth;
+        reach->lowerDepth = reach->upperDepth = upReach->lowerDepth;
         reach->calculateGeometries();
     }
 
 //    reach->width = downReach->upper_width;
-    reach->lower_depth = downReach->upper_depth;
+    reach->lowerDepth = downReach->upperDepth;
     reach->calculateGeometries();
 
-    if (downReach->upper_elev != reach->lower_elev)
-        downReach->upper_elev  = reach->lower_elev;
+    if (downReach->upperElev != reach->lowerElev)
+        downReach->upperElev  = reach->lowerElev;
 }
 
 void RiverSystem::addReach(Reach *rch)

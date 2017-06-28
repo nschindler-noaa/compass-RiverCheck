@@ -122,7 +122,7 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
     else if (token.compare("floor_elevation", Qt::CaseInsensitive) == 0)
     {
         okay = rfile->readFloatOrNa(na, floorElev);
-        if (okay) lower_elev = floorElev;
+        if (okay) lowerElev = floorElev;
     }
     else if (token.compare("forebay_elevation", Qt::CaseInsensitive) == 0)
     {
@@ -138,7 +138,7 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
     }
     else if (token.compare("forebay_depth", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, upper_depth);
+        okay = rfile->readFloatOrNa(na, upperDepth);
     }
     else if (token.compare("full_pool_head", Qt::CaseInsensitive) == 0)
     {
@@ -221,11 +221,11 @@ bool Dam::construct ()
     error = 0;
 
     // base elevation
-    lower_elev = floorElev;
-    upper_elev = lower_elev;
+    lowerElev = floorElev;
+    upperElev = lowerElev;
 
     // get widths from surrounding reaches
-    tailraceWidth = down->upper_width;
+    tailraceWidth = down->upperWidth;
 //    width = tailrace_width;
     if (up != NULL)
     {
@@ -235,8 +235,8 @@ bool Dam::construct ()
     {
         width = down->width > tailraceWidth? down->width: tailraceWidth;
     }
-    upper_width = width;
-    lower_width = width;
+    upperWidth = width;
+    lowerWidth = width;
 
     // get forebay depth and head from elevation, or vice versa
     if (forebayElev == 0.0)
@@ -262,8 +262,8 @@ bool Dam::construct ()
     }
 
     fullFbDepth = forebayElev - floorElev;
-    upper_depth = fullFbDepth;
-    lower_depth = tailraceElev - floorElev;
+    upperDepth = fullFbDepth;
+    lowerDepth = tailraceElev - floorElev;
 
     // spillway width defaults if necessary
     if (ngates == 0 || gateWidth == 0.0)

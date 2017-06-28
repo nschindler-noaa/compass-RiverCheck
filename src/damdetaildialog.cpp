@@ -156,7 +156,7 @@ void DamDetailDialog::setItems()
         downReach = (Reach *)dam->down;
 
         segTopView->setValues(dam_length / scaleFactor,
-                              (dam->lower_width / 10.0) / scaleFactor,
+                              (dam->lowerWidth / 10.0) / scaleFactor,
                               basin_length / 10.0 / scaleFactor,
                               tailrace_length / 10.0 / scaleFactor,
                               gate_num,
@@ -181,7 +181,7 @@ void DamDetailDialog::setItems()
                                             80.0,
                                             upper_depth / scaleFactor);//-(upper_depth / scaleFactor + 20.0));
 
-        segSectionView->setValues((dam->lower_width / 10.0) / scaleFactor,
+        segSectionView->setValues((dam->lowerWidth / 10.0) / scaleFactor,
                                   (forebay_elev - floor_elev) / scaleFactor,
                                   gate_num,
                                   (gate_width / 10.0) / scaleFactor,
@@ -197,20 +197,20 @@ void DamDetailDialog::setItems()
         {
             float upReachLength = upReach->length * 528.0;
             segUpTopView->setValues(upReachLength / scaleFactor,
-                                    upReach->upper_width / 10.0 / scaleFactor,
-                                    upReach->lower_width / 10.0 / scaleFactor,
-                                    upReach->bed_width / 10.0 / scaleFactor,
+                                    upReach->upperWidth / 10.0 / scaleFactor,
+                                    upReach->lowerWidth / 10.0 / scaleFactor,
+                                    upReach->bedWidth / 10.0 / scaleFactor,
                                     up_offset);
             segUpSideView->setValues(upReachLength / scaleFactor,
-                                     upReach->upper_elev / scaleFactor,
-                                     upReach->lower_elev / scaleFactor,
-                                     upReach->upper_depth / scaleFactor,
-                                     upReach->lower_depth / scaleFactor,
+                                     upReach->upperElev / scaleFactor,
+                                     upReach->lowerElev / scaleFactor,
+                                     upReach->upperDepth / scaleFactor,
+                                     upReach->lowerDepth / scaleFactor,
                                      up_offset);
-            segUpSectionView->setValues(upReach->lower_width / 10.0 / scaleFactor,
-                                        upReach->lower_depth / scaleFactor,
-                                        upReach->bed_width / 10.0 / scaleFactor,
-                                        upReach->lower_elev / scaleFactor);
+            segUpSectionView->setValues(upReach->lowerWidth / 10.0 / scaleFactor,
+                                        upReach->lowerDepth / scaleFactor,
+                                        upReach->bedWidth / 10.0 / scaleFactor,
+                                        upReach->lowerElev / scaleFactor);
         }
         else
         {
@@ -223,20 +223,20 @@ void DamDetailDialog::setItems()
         {
             float downReachLength = downReach->length * 5280.0 / 10.0;
             segDownTopView->setValues(downReachLength / scaleFactor,
-                                      downReach->upper_width / 10.0 / scaleFactor,
-                                      downReach->lower_width / 10.0 / scaleFactor,
-                                      downReach->bed_width / 10.0 / scaleFactor,
+                                      downReach->upperWidth / 10.0 / scaleFactor,
+                                      downReach->lowerWidth / 10.0 / scaleFactor,
+                                      downReach->bedWidth / 10.0 / scaleFactor,
                                       -(downReachLength / scaleFactor + down_offset));
             segDownSideView->setValues(downReachLength / scaleFactor,
-                                       downReach->upper_elev / scaleFactor,
-                                       downReach->lower_elev / scaleFactor,
-                                       downReach->upper_depth / scaleFactor,
-                                       downReach->lower_depth / scaleFactor,
+                                       downReach->upperElev / scaleFactor,
+                                       downReach->lowerElev / scaleFactor,
+                                       downReach->upperDepth / scaleFactor,
+                                       downReach->lowerDepth / scaleFactor,
                                        -(downReachLength / scaleFactor + down_offset));
-            segDownSectionView->setValues(downReach->upper_width / 10.0 / scaleFactor,
-                                          downReach->upper_depth / scaleFactor,
-                                          downReach->bed_width / 10.0 / scaleFactor,
-                                          downReach->upper_elev / scaleFactor);
+            segDownSectionView->setValues(downReach->upperWidth / 10.0 / scaleFactor,
+                                          downReach->upperDepth / scaleFactor,
+                                          downReach->bedWidth / 10.0 / scaleFactor,
+                                          downReach->upperElev / scaleFactor);
         }
         else
         {

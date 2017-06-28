@@ -48,8 +48,10 @@ public slots:
 
 private:
     bool readFlows;     /**< true if flow values are read from a data file. */
-    bool regulated;          /**< Whether this is a regulated or unregulated headwater */
-    float flowCoefficient;   /**< For unregulated flow */
+    bool regulated;     /**< Whether this is a regulated or unregulated headwater.
+                         *  a regulated headwater is above a regulation point
+                         *  with not intervening forks.  */
+    float flowCoefficient;   /**< Flow coefficient for unregulated flow. */
 
     float elevChange[DAYS_IN_SEASON]; /**< Delta from max */
 /*    GasDistribution *gas_out; *< Output gas distribution */
@@ -58,7 +60,7 @@ private:
 
 /*    float turbidity[STEPS_IN_SEASON]; *< Turbidity at each model
                                                             *time step */
-/*    int turbidity_flag;       *< 1 if input_turb = "0N" (reading turbidity),
+/*    bool turbidity_flag;       *< 1 if input_turb = "0N" (reading turbidity),
                                                             * 0 if "Off" (propogate from above)*/
 
     float flowMean;          /**< Mean flow at this headwater */

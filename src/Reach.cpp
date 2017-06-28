@@ -23,7 +23,7 @@ void Reach::reset()
     volume = 0.0;
     surface_area = 0.0;
     ave_depth = 0.0;
-    bed_width = 0.0;
+    bedWidth = 0.0;
 
 }
 
@@ -146,16 +146,16 @@ bool Reach::parseToken (QString token, RiverFile *rfile)
 
     if (token.compare ("upper_depth", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa (na, upper_depth);
+        okay = rfile->readFloatOrNa (na, upperDepth);
     }
     else if (token.compare("lower_depth", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, lower_depth);
+        okay = rfile->readFloatOrNa(na, lowerDepth);
     }
     else if (token.compare("depth", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, lower_depth);
-        if (okay) upper_depth = lower_depth;
+        okay = rfile->readFloatOrNa(na, lowerDepth);
+        if (okay) upperDepth = lowerDepth;
     }
     else if (token.compare ("slope", Qt::CaseInsensitive) == 0)
     {
@@ -210,7 +210,7 @@ bool Reach::calculateGeometries()
     tan_slope = tan(slope * DEG_2_RAD);
 
     // set upper elevation if not read from file
-    if (upper_elev == 0.0)
+    if (upperElev == 0.0)
     {
 //        if (upper_depth == lower_depth)
         {
@@ -220,22 +220,22 @@ bool Reach::calculateGeometries()
                 if (up->type == RiverSegment::ReachSegment)
                 {
                     Reach *rch = (Reach *)up;
-                    upper_elev = rch->lower_elev;
+                    upperElev = rch->lowerElev;
                 }
                 else if (up->type == RiverSegment::DamSegment)
                 {
                     Dam * dm = (Dam *)up;
-                    upper_elev = dm->getFloorElev();
+                    upperElev = dm->getFloorElev();
                 }
                 else if (up->type == RiverSegment::HeadwaterSegment)
                 {
                     Headwater *hd = (Headwater *)up;
-                    upper_elev = hd->lower_elev;
+                    upperElev = hd->lowerElev;
                 }
             }
             else
             {
-                upper_elev = lower_elev;
+                upperElev = lowerElev;
             }
         }
 /*        else
@@ -248,44 +248,44 @@ bool Reach::calculateGeometries()
     //length = distance (top());
 
     // calculate average depth
-    ave_depth = (lower_depth + upper_depth) / 2.0;// lower_depth - (lower_depth - upper_depth) / 2.0;
+    ave_depth = (lowerDepth + upperDepth) / 2.0;// lower_depth - (lower_depth - upper_depth) / 2.0;
 
     // calculate width of river bed for this reach and any missing values
     if (width != 0)
     {
-        bed_width = width - (2 * (ave_depth * tan_slope));
-        lower_width = bed_width + (2 * (lower_depth * tan_slope));
-        upper_width = bed_width + (2 * (upper_depth * tan_slope));
+        bedWidth = width - (2 * (ave_depth * tan_slope));
+        lowerWidth = bedWidth + (2 * (lowerDepth * tan_slope));
+        upperWidth = bedWidth + (2 * (upperDepth * tan_slope));
     }
-    else if (lower_width != 0)
+    else if (lowerWidth != 0)
     {
-        bed_width = lower_width - (2 * (lower_depth * tan_slope));
-        upper_width = bed_width + (2 * (upper_depth * tan_slope));
-        width = (lower_width + upper_width) / 2.0;
+        bedWidth = lowerWidth - (2 * (lowerDepth * tan_slope));
+        upperWidth = bedWidth + (2 * (upperDepth * tan_slope));
+        width = (lowerWidth + upperWidth) / 2.0;
     }
-    else if (upper_width != 0)
+    else if (upperWidth != 0)
     {
-        bed_width = upper_width - (2 * (upper_depth * tan_slope));
-        lower_width = bed_width + (2 * (lower_depth * tan_slope));
-        width = (lower_width + upper_width) / 2.0;
+        bedWidth = upperWidth - (2 * (upperDepth * tan_slope));
+        lowerWidth = bedWidth + (2 * (lowerDepth * tan_slope));
+        width = (lowerWidth + upperWidth) / 2.0;
     }
     else
     {
-        lower_width = 100;
-        bed_width = lower_width - (2 * (lower_depth * tan_slope));
-        upper_width = bed_width + (2 * (upper_depth * tan_slope));
-        width = (lower_width + upper_width) / 2.0;
+        lowerWidth = 100;
+        bedWidth = lowerWidth - (2 * (lowerDepth * tan_slope));
+        upperWidth = bedWidth + (2 * (upperDepth * tan_slope));
+        width = (lowerWidth + upperWidth) / 2.0;
     }
 
     // calculate volume first by calculating cross section area
-    if (upper_depth == lower_depth)
+    if (upperDepth == lowerDepth)
     {
-        volume = (width - tan_slope * lower_depth) * (lower_depth);
+        volume = (width - tan_slope * lowerDepth) * (lowerDepth);
     }
     else
     {
-        volume = ((1.0 / (lower_depth - upper_depth)) * lower_depth * lower_depth
-            * (width / 2.0 - tan_slope * ((2.0 * lower_depth) / 3.0 )));
+        volume = ((1.0 / (lowerDepth - upperDepth)) * lowerDepth * lowerDepth
+            * (width / 2.0 - tan_slope * ((2.0 * lowerDepth) / 3.0 )));
     }
     volume *= length;
 
@@ -300,11 +300,11 @@ bool Reach::output(int indent, RiverFile *rfile)
 
     rfile->writeString(indent, "reach", *name);
     rfile->writeString(indent + 1, "width", QString::number(width, 'f', 2));
-    rfile->writeString(indent + 1, "lower_depth", QString::number(lower_depth, 'f', 2));
-    rfile->writeString(indent + 1, "upper_depth", QString::number(upper_depth, 'f', 2));
+    rfile->writeString(indent + 1, "lower_depth", QString::number(lowerDepth, 'f', 2));
+    rfile->writeString(indent + 1, "upper_depth", QString::number(upperDepth, 'f', 2));
     if (slope != 40.0)
         rfile->writeString(indent + 1, "slope", QString::number(slope, 'f', 2));
-    rfile->writeString(indent + 1, "lower_elev", QString::number(lower_elev, 'f', 2));
+    rfile->writeString(indent + 1, "lower_elev", QString::number(lowerElev, 'f', 2));
     if (abbrev != NULL && !abbrev->isEmpty())
         rfile->writeString(indent + 1,"abbrev", *abbrev);
     outputCourse (indent + 1, rfile);
