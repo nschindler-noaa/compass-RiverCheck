@@ -5,7 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui
-QT       += widgets printsupport
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts printsupport
 
 TARGET = C_RiverCheck
 TEMPLATE = app
