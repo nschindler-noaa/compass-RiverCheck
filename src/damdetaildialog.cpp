@@ -99,26 +99,26 @@ void DamDetailDialog::setData()
 {
     if (dam != NULL)
     {
-        floor_elev = dam->floor_elev;
-        tailrace_elev = dam->tailrace_elev;
+        floor_elev = dam->getFloorElev();//dam->floorElev;
+        tailrace_elev = dam->getTailraceElev();//dam->tailraceElev;
         tailrace_length = 1000.0;//dam->basin_length * 2.0;
-        forebay_elev = dam->forebay_elev;
-        bypass_elev = dam->bypass_elev;
-        basin_length = dam->basin_length;
-        gate_num = dam->ngates;
-        gate_width = dam->gate_width;
-        gate_flow = dam->pergate;
-        spill_width = dam->spillway_width;
-        spill_side = dam->spill_side;
-        SGR = dam->sgr;
+        forebay_elev = dam->getForebayElev();// dam->forebayElev;
+        bypass_elev = dam->getBypassElev();// dam->bypassElev;
+        basin_length = dam->getStillingLength();// dam->stillingLength;
+        gate_num = dam->getNgates();// dam->ngates;
+        gate_width = dam->getGateWidth();// dam->gateWidth;
+        gate_flow = dam->getPergate();// dam->pergate;
+        spill_width = dam->getSpillwayWidth();// dam->spillwayWidth;
+        spill_side = dam->getSpillSide();// dam->spillSide;
+        SGR = dam->getSgr();// dam->sgr;
 
         ui->doubleSpinBox_SGR->setValue(SGR);
-        if (dam->powerhouse_cap.count() > 0)
-            ui->doubleSpinBox_PH1Cap->setValue(dam->powerhouse_cap.at(0));
+        if (dam->getNumPowerhouses() > 0)
+            ui->doubleSpinBox_PH1Cap->setValue(dam->getPowerhouses().at(0)->getCapacity());// powerhouse_cap.at(0));
         else
             ui->doubleSpinBox_PH1Cap->setValue(0.0);
-        if (dam->powerhouse_cap.count() > 1)
-            ui->doubleSpinBox_PH2Cap->setValue(dam->powerhouse_cap.at(1));
+        if (dam->getNumPowerhouses() > 1)
+            ui->doubleSpinBox_PH2Cap->setValue(dam->getPowerhouses().at(1)->getCapacity());// powerhouse_cap.at(1));
         else
             ui->doubleSpinBox_PH2Cap->setValue(0.0);
         ui->doubleSpinBox_basinLength->setValue(basin_length);
@@ -156,7 +156,7 @@ void DamDetailDialog::setItems()
         downReach = (Reach *)dam->down;
 
         segTopView->setValues(dam_length / scaleFactor,
-                              (dam->lower_width / 10.0) / scaleFactor,
+                              (dam->lowerWidth / 10.0) / scaleFactor,
                               basin_length / 10.0 / scaleFactor,
                               tailrace_length / 10.0 / scaleFactor,
                               gate_num,
@@ -181,7 +181,7 @@ void DamDetailDialog::setItems()
                                             80.0,
                                             upper_depth / scaleFactor);//-(upper_depth / scaleFactor + 20.0));
 
-        segSectionView->setValues((dam->lower_width / 10.0) / scaleFactor,
+        segSectionView->setValues((dam->lowerWidth / 10.0) / scaleFactor,
                                   (forebay_elev - floor_elev) / scaleFactor,
                                   gate_num,
                                   (gate_width / 10.0) / scaleFactor,
@@ -197,20 +197,20 @@ void DamDetailDialog::setItems()
         {
             float upReachLength = upReach->length * 528.0;
             segUpTopView->setValues(upReachLength / scaleFactor,
-                                    upReach->upper_width / 10.0 / scaleFactor,
-                                    upReach->lower_width / 10.0 / scaleFactor,
-                                    upReach->bed_width / 10.0 / scaleFactor,
+                                    upReach->upperWidth / 10.0 / scaleFactor,
+                                    upReach->lowerWidth / 10.0 / scaleFactor,
+                                    upReach->bedWidth / 10.0 / scaleFactor,
                                     up_offset);
             segUpSideView->setValues(upReachLength / scaleFactor,
-                                     upReach->upper_elev / scaleFactor,
-                                     upReach->lower_elev / scaleFactor,
-                                     upReach->upper_depth / scaleFactor,
-                                     upReach->lower_depth / scaleFactor,
+                                     upReach->upperElev / scaleFactor,
+                                     upReach->lowerElev / scaleFactor,
+                                     upReach->upperDepth / scaleFactor,
+                                     upReach->lowerDepth / scaleFactor,
                                      up_offset);
-            segUpSectionView->setValues(upReach->lower_width / 10.0 / scaleFactor,
-                                        upReach->lower_depth / scaleFactor,
-                                        upReach->bed_width / 10.0 / scaleFactor,
-                                        upReach->lower_elev / scaleFactor);
+            segUpSectionView->setValues(upReach->lowerWidth / 10.0 / scaleFactor,
+                                        upReach->lowerDepth / scaleFactor,
+                                        upReach->bedWidth / 10.0 / scaleFactor,
+                                        upReach->lowerElev / scaleFactor);
         }
         else
         {
@@ -223,20 +223,20 @@ void DamDetailDialog::setItems()
         {
             float downReachLength = downReach->length * 5280.0 / 10.0;
             segDownTopView->setValues(downReachLength / scaleFactor,
-                                      downReach->upper_width / 10.0 / scaleFactor,
-                                      downReach->lower_width / 10.0 / scaleFactor,
-                                      downReach->bed_width / 10.0 / scaleFactor,
+                                      downReach->upperWidth / 10.0 / scaleFactor,
+                                      downReach->lowerWidth / 10.0 / scaleFactor,
+                                      downReach->bedWidth / 10.0 / scaleFactor,
                                       -(downReachLength / scaleFactor + down_offset));
             segDownSideView->setValues(downReachLength / scaleFactor,
-                                       downReach->upper_elev / scaleFactor,
-                                       downReach->lower_elev / scaleFactor,
-                                       downReach->upper_depth / scaleFactor,
-                                       downReach->lower_depth / scaleFactor,
+                                       downReach->upperElev / scaleFactor,
+                                       downReach->lowerElev / scaleFactor,
+                                       downReach->upperDepth / scaleFactor,
+                                       downReach->lowerDepth / scaleFactor,
                                        -(downReachLength / scaleFactor + down_offset));
-            segDownSectionView->setValues(downReach->upper_width / 10.0 / scaleFactor,
-                                          downReach->upper_depth / scaleFactor,
-                                          downReach->bed_width / 10.0 / scaleFactor,
-                                          downReach->upper_elev / scaleFactor);
+            segDownSectionView->setValues(downReach->upperWidth / 10.0 / scaleFactor,
+                                          downReach->upperDepth / scaleFactor,
+                                          downReach->bedWidth / 10.0 / scaleFactor,
+                                          downReach->upperElev / scaleFactor);
         }
         else
         {
@@ -423,20 +423,22 @@ void DamDetailDialog::changeSGR(double sgr)
 
 void DamDetailDialog::saveData()
 {
-    dam->sgr = SGR;
-    if (dam->powerhouse_cap.count() > 0)
-        dam->powerhouse_cap[0] = ui->doubleSpinBox_PH1Cap->value();
-    if (dam->powerhouse_cap.count() > 1)
-        dam->powerhouse_cap[1] = ui->doubleSpinBox_PH2Cap->value();
-    dam->basin_length = basin_length;
-    dam->bypass_elev = bypass_elev;
-    dam->forebay_elev = forebay_elev;
-    dam->floor_elev = floor_elev;
-    dam->tailrace_elev = tailrace_elev;
-    dam->ngates = gate_num;
-    dam->gate_width = gate_width;
-    dam->spillway_width = spill_width;
-    dam->spill_side = spill_side;//(Location)(ui->comboBox_spillSide->currentIndex ());
+    dam->setSgr(SGR);
+    if (dam->getNumPowerhouses() > 0)
+        dam->getPowerhouses().at(0)->setCapacity(ui->doubleSpinBox_PH1Cap->value());
+//        dam->powerhouse_cap[0] = ui->doubleSpinBox_PH1Cap->value();
+    if (dam->getNumPowerhouses() > 1)
+        dam->getPowerhouses().at(1)->setCapacity(ui->doubleSpinBox_PH2Cap->value());
+//        dam->powerhouse_cap[1] = ui->doubleSpinBox_PH2Cap->value();
+    dam->setStillingLength(basin_length);// stillingLength = basin_length;
+    dam->setBypassElev(bypass_elev);// bypassElev = bypass_elev;
+    dam->setForebayElev(forebay_elev);// forebayElev = forebay_elev;
+    dam->setFloorElev(floor_elev);// floorElev = floor_elev;
+    dam->setTailraceElev(tailrace_elev);// tailraceElev = tailrace_elev;
+    dam->setNgates(gate_num);// ngates = gate_num;
+    dam->setGateWidth(gate_width);// gateWidth = gate_width;
+    dam->setSpillwayWidth(spill_width);// spillwayWidth = spill_width;
+    dam->setSpillSide(spill_side);// spillSide = spill_side;
     dam->construct();
     if (dam->up != NULL)
         construct (dam->up);

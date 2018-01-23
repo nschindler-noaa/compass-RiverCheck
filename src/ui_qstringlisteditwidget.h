@@ -11,17 +11,17 @@
 #define UI_QSTRINGLISTEDITWIDGET_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QListWidget>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QToolButton>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QListWidget>
+#include <QSpacerItem>
+#include <QToolButton>
+#include <QVBoxLayout>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -87,18 +87,18 @@ public:
 
     void retranslateUi(QWidget *QStringListEditWidget)
     {
-        QStringListEditWidget->setWindowTitle(QApplication::translate("QStringListEditWidget", "Form", 0, QApplication::UnicodeUTF8));
-        actionAddItem->setText(QApplication::translate("QStringListEditWidget", "addItem", 0, QApplication::UnicodeUTF8));
+        QStringListEditWidget->setWindowTitle(QApplication::translate("QStringListEditWidget", "Form", 0));
+        actionAddItem->setText(QApplication::translate("QStringListEditWidget", "addItem", 0));
 #ifndef QT_NO_TOOLTIP
-        actionAddItem->setToolTip(QApplication::translate("QStringListEditWidget", "Add item to list", 0, QApplication::UnicodeUTF8));
+        actionAddItem->setToolTip(QApplication::translate("QStringListEditWidget", "Add item to list", 0));
 #endif // QT_NO_TOOLTIP
-        actionRemoveItem->setText(QApplication::translate("QStringListEditWidget", "removeItem", 0, QApplication::UnicodeUTF8));
+        actionRemoveItem->setText(QApplication::translate("QStringListEditWidget", "removeItem", 0));
 #ifndef QT_NO_TOOLTIP
-        actionRemoveItem->setToolTip(QApplication::translate("QStringListEditWidget", "Remove Item from list", 0, QApplication::UnicodeUTF8));
+        actionRemoveItem->setToolTip(QApplication::translate("QStringListEditWidget", "Remove Item from list", 0));
 #endif // QT_NO_TOOLTIP
-        label_Title->setText(QApplication::translate("QStringListEditWidget", "Title", 0, QApplication::UnicodeUTF8));
-        toolButton_add->setText(QApplication::translate("QStringListEditWidget", "+", 0, QApplication::UnicodeUTF8));
-        toolButton_remove->setText(QApplication::translate("QStringListEditWidget", "--", 0, QApplication::UnicodeUTF8));
+        label_Title->setText(QApplication::translate("QStringListEditWidget", "Title", 0));
+        toolButton_add->setText(QApplication::translate("QStringListEditWidget", "+", 0));
+        toolButton_remove->setText(QApplication::translate("QStringListEditWidget", "--", 0));
     } // retranslateUi
 
 };

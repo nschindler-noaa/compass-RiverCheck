@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QGraphicsScene>
+#include <QMainWindow>
+#include <QGraphicsScene>
 
 #include "RiverFile.h"
 #include "RiverSystem.h"

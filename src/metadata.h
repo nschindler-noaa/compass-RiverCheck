@@ -6,12 +6,12 @@
 #define APPLICATION_NAME   "River Description File Checker"
 #define VER_MAJOR_RELEASE   1
 #define VER_MINOR_RELEASE   2
-#define VER_BUGFIX          2
+#define VER_BUGFIX          3
 #define VER_RELEASE_LEVEL  "rc1"
-#define BUILD_DATE         "25 Feb 2016"
-#define MODIFIER           "Neal E. Schindler"
-#define CREATOR            "Neal E. Schindler"
-#define CREATED_DATE       "02 Jan 2013"
+#define BUILD_DATE         "2016-12-09"
+#define MODIFIER           "Neal Schindler"
+#define CREATOR            "Neal Schindler"
+#define CREATED_DATE       "2013 Jan 02"
 
 class metadata
 {

@@ -33,17 +33,21 @@ enum Location {
 #endif
 
 // some math definitions
+// PI
 #ifndef M_PI
 #define M_PI (3.1415926535897932384626433832795)
 #endif
+// degrees * DEG_2_RAD = radians
 #define M_PI_180  ( 0.017453292519943295769236907685)
 #define DEG_2_RAD   M_PI_180
+// radians * RAD_2_DEG = degrees
 #define M_180_PI  (57.295779513082320876798154814105)
 #define RAD_2_DEG   M_180_PI
 
 // scaling for segment views
 #define WIDTH_SCALE (.20)
 #define LENGTH_SCALE (.20)
+#define HEIGHT_SCALE (1.0) // not used
 
 
 #endif // DEFINITIONS_H

@@ -1,8 +1,8 @@
 #ifndef SEEVIEW_H
 #define SEEVIEW_H
 
-#include <QtGui/QGraphicsScene>
-#include <QtGui/QGraphicsSceneWheelEvent>
+#include <QGraphicsScene>
+#include <QGraphicsSceneWheelEvent>
 
 
 class SeeView : public QGraphicsScene

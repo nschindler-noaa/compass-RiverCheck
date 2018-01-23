@@ -62,9 +62,9 @@ void SegmentInfo::addSegment(RiverSegment *seg)
         switch (side)
         {
         case Upper:
-            ui->lineEdit_width->setText(QString::number(seg->upper_width, 'f', 2));
-            ui->lineEdit_elev->setText(QString::number(seg->upper_elev, 'f', 2));
-            ui->lineEdit_depth->setText(QString::number(seg->upper_depth, 'f', 2));
+            ui->lineEdit_width->setText(QString::number(seg->upperWidth, 'f', 2));
+            ui->lineEdit_elev->setText(QString::number(seg->upperElev, 'f', 2));
+            ui->lineEdit_depth->setText(QString::number(seg->upperDepth, 'f', 2));
             if (segment->type == RiverSegment::DamSegment)
             {
                 ui->label_areaValue->hide();
@@ -74,7 +74,7 @@ void SegmentInfo::addSegment(RiverSegment *seg)
             else
             {
                 Reach *rch = (Reach *)segment;
-                area = (rch->upper_width - (rch->upper_width - rch->bed_width)/2.0) * rch->upper_depth;
+                area = (rch->upperWidth - (rch->upperWidth - rch->bedWidth)/2.0) * rch->upperDepth;
                 ui->label_areaValue->setText(QString::number(area, 'f', 2));
                 ui->label_areaValue->show();
                 ui->label_dir_area->show();
@@ -82,9 +82,9 @@ void SegmentInfo::addSegment(RiverSegment *seg)
             }
             break;
         case Lower:
-            ui->lineEdit_width->setText(QString::number(seg->lower_width, 'f', 2));
-            ui->lineEdit_elev->setText(QString::number(seg->lower_elev, 'f', 2));
-            ui->lineEdit_depth->setText(QString::number(seg->lower_depth, 'f', 2));
+            ui->lineEdit_width->setText(QString::number(seg->lowerWidth, 'f', 2));
+            ui->lineEdit_elev->setText(QString::number(seg->lowerElev, 'f', 2));
+            ui->lineEdit_depth->setText(QString::number(seg->lowerDepth, 'f', 2));
             if (segment->type == RiverSegment::DamSegment)
             {
 
@@ -95,7 +95,7 @@ void SegmentInfo::addSegment(RiverSegment *seg)
             else
             {
                 Reach *rch = (Reach *)segment;
-                area = (rch->lower_width - (rch->lower_width - rch->bed_width)/2.0) * rch->lower_depth;
+                area = (rch->lowerWidth - (rch->lowerWidth - rch->bedWidth)/2.0) * rch->lowerDepth;
                 ui->label_areaValue->setText(QString::number(area, 'f', 2));
                 ui->label_areaValue->show();
                 ui->label_dir_area->show();

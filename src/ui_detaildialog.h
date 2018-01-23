@@ -11,19 +11,19 @@
 #define UI_DETAILDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QGraphicsView>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QVBoxLayout>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QGraphicsView>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -768,42 +768,42 @@ public:
 
     void retranslateUi(QDialog *DetailDialog)
     {
-        DetailDialog->setWindowTitle(QApplication::translate("DetailDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("DetailDialog", "Side View", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("DetailDialog", "Downstream Section", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("DetailDialog", "Upstream Section", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("DetailDialog", "Top View", 0, QApplication::UnicodeUTF8));
-        label_10->setText(QApplication::translate("DetailDialog", "Name", 0, QApplication::UnicodeUTF8));
-        label_29->setText(QApplication::translate("DetailDialog", "Upper Depth", 0, QApplication::UnicodeUTF8));
-        label_12->setText(QApplication::translate("DetailDialog", "Upper Width", 0, QApplication::UnicodeUTF8));
-        label_9->setText(QApplication::translate("DetailDialog", "Bed Width", 0, QApplication::UnicodeUTF8));
-        label_15->setText(QApplication::translate("DetailDialog", "Slope", 0, QApplication::UnicodeUTF8));
-        label_26->setText(QApplication::translate("DetailDialog", "deg", 0, QApplication::UnicodeUTF8));
-        label_6->setText(QApplication::translate("DetailDialog", "Length", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("DetailDialog", "Bed Width", 0, QApplication::UnicodeUTF8));
-        label_7->setText(QApplication::translate("DetailDialog", "Bed Width", 0, QApplication::UnicodeUTF8));
-        label_13->setText(QApplication::translate("DetailDialog", "Reach Segment", 0, QApplication::UnicodeUTF8));
-        label_16->setText(QApplication::translate("DetailDialog", "Lower", 0, QApplication::UnicodeUTF8));
-        label_22->setText(QApplication::translate("DetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        label_17->setText(QApplication::translate("DetailDialog", "Upper", 0, QApplication::UnicodeUTF8));
-        label_23->setText(QApplication::translate("DetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        label_8->setText(QApplication::translate("DetailDialog", "Slope of sides", 0, QApplication::UnicodeUTF8));
-        label_19->setText(QApplication::translate("DetailDialog", "Lower Width", 0, QApplication::UnicodeUTF8));
-        label_18->setText(QApplication::translate("DetailDialog", "Upper Width", 0, QApplication::UnicodeUTF8));
-        label_33->setText(QApplication::translate("DetailDialog", "Lower Elev", 0, QApplication::UnicodeUTF8));
-        label_31->setText(QApplication::translate("DetailDialog", "Lower Depth", 0, QApplication::UnicodeUTF8));
-        label_32->setText(QApplication::translate("DetailDialog", "Lower Width", 0, QApplication::UnicodeUTF8));
-        label_11->setText(QApplication::translate("DetailDialog", "Bed Width", 0, QApplication::UnicodeUTF8));
-        label_34->setText(QApplication::translate("DetailDialog", "Slope", 0, QApplication::UnicodeUTF8));
-        label_14->setText(QApplication::translate("DetailDialog", "deg", 0, QApplication::UnicodeUTF8));
-        pushButton_4->setText(QApplication::translate("DetailDialog", "Done", 0, QApplication::UnicodeUTF8));
-        label_20->setText(QApplication::translate("DetailDialog", "Lower", 0, QApplication::UnicodeUTF8));
-        label_24->setText(QApplication::translate("DetailDialog", "Depth", 0, QApplication::UnicodeUTF8));
-        pushButton_3->setText(QApplication::translate("DetailDialog", "Save ", 0, QApplication::UnicodeUTF8));
-        label_21->setText(QApplication::translate("DetailDialog", "Upper", 0, QApplication::UnicodeUTF8));
-        label_25->setText(QApplication::translate("DetailDialog", "Depth", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("DetailDialog", "<< Previous Segment", 0, QApplication::UnicodeUTF8));
-        pushButton_2->setText(QApplication::translate("DetailDialog", "Next Segment >>", 0, QApplication::UnicodeUTF8));
+        DetailDialog->setWindowTitle(QApplication::translate("DetailDialog", "Dialog", 0));
+        label->setText(QApplication::translate("DetailDialog", "Side View", 0));
+        label_2->setText(QApplication::translate("DetailDialog", "Downstream Section", 0));
+        label_3->setText(QApplication::translate("DetailDialog", "Upstream Section", 0));
+        label_4->setText(QApplication::translate("DetailDialog", "Top View", 0));
+        label_10->setText(QApplication::translate("DetailDialog", "Name", 0));
+        label_29->setText(QApplication::translate("DetailDialog", "Upper Depth", 0));
+        label_12->setText(QApplication::translate("DetailDialog", "Upper Width", 0));
+        label_9->setText(QApplication::translate("DetailDialog", "Bed Width", 0));
+        label_15->setText(QApplication::translate("DetailDialog", "Slope", 0));
+        label_26->setText(QApplication::translate("DetailDialog", "deg", 0));
+        label_6->setText(QApplication::translate("DetailDialog", "Length", 0));
+        label_5->setText(QApplication::translate("DetailDialog", "Bed Width", 0));
+        label_7->setText(QApplication::translate("DetailDialog", "Bed Width", 0));
+        label_13->setText(QApplication::translate("DetailDialog", "Reach Segment", 0));
+        label_16->setText(QApplication::translate("DetailDialog", "Lower", 0));
+        label_22->setText(QApplication::translate("DetailDialog", "Elev", 0));
+        label_17->setText(QApplication::translate("DetailDialog", "Upper", 0));
+        label_23->setText(QApplication::translate("DetailDialog", "Elev", 0));
+        label_8->setText(QApplication::translate("DetailDialog", "Slope of sides", 0));
+        label_19->setText(QApplication::translate("DetailDialog", "Lower Width", 0));
+        label_18->setText(QApplication::translate("DetailDialog", "Upper Width", 0));
+        label_33->setText(QApplication::translate("DetailDialog", "Lower Elev", 0));
+        label_31->setText(QApplication::translate("DetailDialog", "Lower Depth", 0));
+        label_32->setText(QApplication::translate("DetailDialog", "Lower Width", 0));
+        label_11->setText(QApplication::translate("DetailDialog", "Bed Width", 0));
+        label_34->setText(QApplication::translate("DetailDialog", "Slope", 0));
+        label_14->setText(QApplication::translate("DetailDialog", "deg", 0));
+        pushButton_4->setText(QApplication::translate("DetailDialog", "Done", 0));
+        label_20->setText(QApplication::translate("DetailDialog", "Lower", 0));
+        label_24->setText(QApplication::translate("DetailDialog", "Depth", 0));
+        pushButton_3->setText(QApplication::translate("DetailDialog", "Save ", 0));
+        label_21->setText(QApplication::translate("DetailDialog", "Upper", 0));
+        label_25->setText(QApplication::translate("DetailDialog", "Depth", 0));
+        pushButton->setText(QApplication::translate("DetailDialog", "<< Previous Segment", 0));
+        pushButton_2->setText(QApplication::translate("DetailDialog", "Next Segment >>", 0));
     } // retranslateUi
 
 };

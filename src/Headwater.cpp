@@ -13,8 +13,8 @@ Headwater::Headwater (QString hname, QString rivName, QObject *parent) :
 void Headwater::clear()
 {
     regulated = false;  // default setting
-    flow_coefficient = 0.0;
-    flow_mean = 0.0;
+    flowCoefficient = 0.0;
+    flowMean = 0.0;
 }
 
 
@@ -52,11 +52,11 @@ bool Headwater::parseToken (QString token, RiverFile *rfile)
 
     if (token.compare ("elevation_change", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatArray (elev_change);
+        okay = rfile->readFloatArray (elevChange);
     }
     else if (token.compare("flow_coefficient", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, flow_coefficient);
+        okay = rfile->readFloatOrNa(na, flowCoefficient);
     }
     else
     {
@@ -104,4 +104,54 @@ void Headwater::sectionA()
 void Headwater::sectionB()
 {
 
+}
+
+float Headwater::getFlowMean() const
+{
+    return flowMean;
+}
+
+void Headwater::setFlowMean(float value)
+{
+    flowMean = value;
+}
+
+float Headwater::getFlowCoefficient() const
+{
+    return flowCoefficient;
+}
+
+void Headwater::setFlowCoefficient(float value)
+{
+    flowCoefficient = value;
+}
+
+bool Headwater::getRegulated() const
+{
+    return regulated;
+}
+
+void Headwater::setRegulated(bool value)
+{
+    regulated = value;
+}
+
+bool Headwater::getReadFlows() const
+{
+    return readFlows;
+}
+
+void Headwater::setReadFlows(bool value)
+{
+    readFlows = value;
+}
+
+float Headwater::getElevChange (int index) const
+{
+    return elevChange[index];
+}
+
+void Headwater::setElevChange (int index, float value)
+{
+    elevChange[index] = value;
 }

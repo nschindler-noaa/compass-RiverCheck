@@ -1,12 +1,12 @@
 #ifndef MAP_ITEM_H
 #define MAP_ITEM_H
 
-#include <QtGui/QGraphicsItem>
-#include <QtGui/QDialog>
-#include <QtGui/QListWidget>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QToolTip>
+#include <QGraphicsItem>
+#include <QDialog>
+#include <QListWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QToolTip>
 
 #include "RiverSegment.h"
 //#include "compass.h"

@@ -11,21 +11,21 @@
 #define UI_DAMDETAILDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QComboBox>
-#include <QtGui/QDialog>
-#include <QtGui/QDoubleSpinBox>
-#include <QtGui/QGraphicsView>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QSpinBox>
-#include <QtGui/QVBoxLayout>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QComboBox>
+#include <QDialog>
+#include <QDoubleSpinBox>
+#include <QGraphicsView>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QSpinBox>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -489,42 +489,42 @@ public:
 
     void retranslateUi(QDialog *DamDetailDialog)
     {
-        DamDetailDialog->setWindowTitle(QApplication::translate("DamDetailDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        label_tailrace->setText(QApplication::translate("DamDetailDialog", "Tailrace", 0, QApplication::UnicodeUTF8));
-        label_traceElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_traceElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_floor->setText(QApplication::translate("DamDetailDialog", "Floor", 0, QApplication::UnicodeUTF8));
-        label_floorElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_floorElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_topView->setText(QApplication::translate("DamDetailDialog", "Top View", 0, QApplication::UnicodeUTF8));
-        label_secA->setText(QApplication::translate("DamDetailDialog", "Downstream Section", 0, QApplication::UnicodeUTF8));
-        label_forebay->setText(QApplication::translate("DamDetailDialog", "Forebay", 0, QApplication::UnicodeUTF8));
-        label_forebayElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_fbayElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_bypass->setText(QApplication::translate("DamDetailDialog", "Bypass", 0, QApplication::UnicodeUTF8));
-        label_bypassElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_bypassElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_sideView->setText(QApplication::translate("DamDetailDialog", "Side View", 0, QApplication::UnicodeUTF8));
-        label_basinLength->setText(QApplication::translate("DamDetailDialog", "Basin Length", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_basinLength->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        pushButton_revert->setText(QApplication::translate("DamDetailDialog", "Revert", 0, QApplication::UnicodeUTF8));
-        pushButton_save->setText(QApplication::translate("DamDetailDialog", "Save", 0, QApplication::UnicodeUTF8));
-        label_SGR->setText(QApplication::translate("DamDetailDialog", "SGR", 0, QApplication::UnicodeUTF8));
-        label_Phouse1Cap->setText(QApplication::translate("DamDetailDialog", "PowerHouse 1 cap.", 0, QApplication::UnicodeUTF8));
+        DamDetailDialog->setWindowTitle(QApplication::translate("DamDetailDialog", "Dialog", 0));
+        label_tailrace->setText(QApplication::translate("DamDetailDialog", "Tailrace", 0));
+        label_traceElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0));
+        doubleSpinBox_traceElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0));
+        label_floor->setText(QApplication::translate("DamDetailDialog", "Floor", 0));
+        label_floorElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0));
+        doubleSpinBox_floorElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0));
+        label_topView->setText(QApplication::translate("DamDetailDialog", "Top View", 0));
+        label_secA->setText(QApplication::translate("DamDetailDialog", "Downstream Section", 0));
+        label_forebay->setText(QApplication::translate("DamDetailDialog", "Forebay", 0));
+        label_forebayElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0));
+        doubleSpinBox_fbayElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0));
+        label_bypass->setText(QApplication::translate("DamDetailDialog", "Bypass", 0));
+        label_bypassElev->setText(QApplication::translate("DamDetailDialog", "Elev", 0));
+        doubleSpinBox_bypassElev->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0));
+        label_sideView->setText(QApplication::translate("DamDetailDialog", "Side View", 0));
+        label_basinLength->setText(QApplication::translate("DamDetailDialog", "Basin Length", 0));
+        doubleSpinBox_basinLength->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0));
+        pushButton_revert->setText(QApplication::translate("DamDetailDialog", "Revert", 0));
+        pushButton_save->setText(QApplication::translate("DamDetailDialog", "Save", 0));
+        label_SGR->setText(QApplication::translate("DamDetailDialog", "SGR", 0));
+        label_Phouse1Cap->setText(QApplication::translate("DamDetailDialog", "PowerHouse 1 cap.", 0));
         doubleSpinBox_PH1Cap->setSuffix(QString());
-        label_Phouse2Cap->setText(QApplication::translate("DamDetailDialog", "PowerHouse 2 cap.", 0, QApplication::UnicodeUTF8));
+        label_Phouse2Cap->setText(QApplication::translate("DamDetailDialog", "PowerHouse 2 cap.", 0));
         doubleSpinBox_PH2Cap->setSuffix(QString());
-        label_spillSide->setText(QApplication::translate("DamDetailDialog", "Spill Side ", 0, QApplication::UnicodeUTF8));
-        label_spillwyWidth->setText(QApplication::translate("DamDetailDialog", "Spillway Width", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_spillWidth->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_spillGates->setText(QApplication::translate("DamDetailDialog", "Spill gates", 0, QApplication::UnicodeUTF8));
+        label_spillSide->setText(QApplication::translate("DamDetailDialog", "Spill Side ", 0));
+        label_spillwyWidth->setText(QApplication::translate("DamDetailDialog", "Spillway Width", 0));
+        doubleSpinBox_spillWidth->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0));
+        label_spillGates->setText(QApplication::translate("DamDetailDialog", "Spill gates", 0));
 #ifndef QT_NO_TOOLTIP
         spinBox_gateNum->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
-        label_eachGateWidth->setText(QApplication::translate("DamDetailDialog", "* Each gate", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_gateWidth->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("DamDetailDialog", "=", 0, QApplication::UnicodeUTF8));
-        label_spillwyWidthValue->setText(QApplication::translate("DamDetailDialog", "value", 0, QApplication::UnicodeUTF8));
+        label_eachGateWidth->setText(QApplication::translate("DamDetailDialog", "* Each gate", 0));
+        doubleSpinBox_gateWidth->setSuffix(QApplication::translate("DamDetailDialog", " ft.", 0));
+        label->setText(QApplication::translate("DamDetailDialog", "=", 0));
+        label_spillwyWidthValue->setText(QApplication::translate("DamDetailDialog", "value", 0));
     } // retranslateUi
 
 };

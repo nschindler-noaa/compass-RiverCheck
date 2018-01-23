@@ -1,7 +1,7 @@
 #ifndef DETAILDIALOG_H
 #define DETAILDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
 
 namespace Ui {
 class DetailDialog;

@@ -1,11 +1,11 @@
 #ifndef MAPINFOWIDGET_H
 #define MAPINFOWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 #include <QString>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QSpacerItem>
+#include <QLabel>
+#include <QLineEdit>
+#include <QSpacerItem>
 
 class mapInfoWidget : public QWidget
 {

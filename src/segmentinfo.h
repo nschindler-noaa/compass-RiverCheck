@@ -2,7 +2,7 @@
 #define SEGMENTINFO_H
 #include "RiverSegment.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 namespace Ui {
 class SegmentInfo;

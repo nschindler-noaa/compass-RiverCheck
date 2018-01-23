@@ -11,16 +11,16 @@
 #define UI_QSTRINGLISTEDITDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QVBoxLayout>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -79,10 +79,10 @@ public:
 
     void retranslateUi(QDialog *QStringListEditDialog)
     {
-        QStringListEditDialog->setWindowTitle(QApplication::translate("QStringListEditDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        pushButton_reset->setText(QApplication::translate("QStringListEditDialog", "Reset", 0, QApplication::UnicodeUTF8));
-        pushButton_save->setText(QApplication::translate("QStringListEditDialog", "Save", 0, QApplication::UnicodeUTF8));
-        pushButton_close->setText(QApplication::translate("QStringListEditDialog", "Close", 0, QApplication::UnicodeUTF8));
+        QStringListEditDialog->setWindowTitle(QApplication::translate("QStringListEditDialog", "Dialog", 0));
+        pushButton_reset->setText(QApplication::translate("QStringListEditDialog", "Reset", 0));
+        pushButton_save->setText(QApplication::translate("QStringListEditDialog", "Save", 0));
+        pushButton_close->setText(QApplication::translate("QStringListEditDialog", "Close", 0));
     } // retranslateUi
 
 };

@@ -46,11 +46,11 @@ void RiverSegment::clear()
 {
     flow_max = 0.0;
     flow_min = 0.0;
-    lower_depth = 0.0;
-    upper_depth = 0.0;
-    lower_elev = 0.0;
-    upper_elev = 0.0;
-    upper_width = 0.0;
+    lowerDepth = 0.0;
+    upperDepth = 0.0;
+    lowerElev = 0.0;
+    upperElev = 0.0;
+    upperWidth = 0.0;
     width = 0.0;
 }
 
@@ -126,11 +126,11 @@ bool RiverSegment::parseToken(QString token, RiverFile *rfile)
     }
     else if (token.compare("lower_elev", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, lower_elev);
+        okay = rfile->readFloatOrNa(na, lowerElev);
     }
     else if (token.compare("upper_elev", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, upper_elev);
+        okay = rfile->readFloatOrNa(na, upperElev);
     }
     else if (token.compare("width", Qt::CaseInsensitive) == 0)
     {
@@ -138,11 +138,11 @@ bool RiverSegment::parseToken(QString token, RiverFile *rfile)
     }
     else if (token.compare("lower_width", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, lower_width);
+        okay = rfile->readFloatOrNa(na, lowerWidth);
     }
     else if (token.compare("upper_width", Qt::CaseInsensitive) == 0)
     {
-        okay = rfile->readFloatOrNa(na, upper_width);
+        okay = rfile->readFloatOrNa(na, upperWidth);
     }
     else     if (token.compare("flow_max", Qt::CaseInsensitive) == 0)
     {
@@ -183,27 +183,27 @@ short RiverSegment::findErrors ()
     {
         if (*bottom() != *(down->top()))
             error |= LatLonLower;
-        if (lower_elev != down->upper_elev)
+        if (lowerElev != down->upperElev)
             error |= ElevLower;
-        if (lower_depth != down->upper_depth)
+        if (lowerDepth != down->upperDepth)
             error |= DepthLower;
     }
     if (up != NULL)
     {
         if (*top() != *(up->bottom()))
             error |= LatLonUpper;
-        if (upper_elev != up->lower_elev)
+        if (upperElev != up->lowerElev)
             error |= ElevUpper;
-        if (upper_depth != up->lower_depth)
+        if (upperDepth != up->lowerDepth)
             error |= DepthUpper;
     }
     if (fork != NULL)
     {
         if (*top() != *(up->bottom()))
             error |= LatLonUpper;
-        if (upper_elev != up->lower_elev)
+        if (upperElev != up->lowerElev)
             error |= ElevUpper;
-        if (upper_depth != up->lower_depth)
+        if (upperDepth != up->lowerDepth)
             error |= DepthUpper;
     }
 
@@ -295,9 +295,9 @@ float RiverSegment::distance(RiverPoint *loc)
     return dist;
 }
 
-RiverSegment::Impounded RiverSegment::impound()
+RiverSegment::Impounded RiverSegment::getImpound()
 {
-    Impounded state = NotImpounded;
+    impound = NotImpounded;
     RiverSegment *down_seg = down;
     while (down_seg != NULL &&
            down_seg->type != DamSegment)
@@ -308,17 +308,42 @@ RiverSegment::Impounded RiverSegment::impound()
     {
         if (down_seg->type == DamSegment)
         {
-            float top = down_seg->upper_elev + down_seg->upper_depth;
-            if (top >= (lower_elev + lower_depth))
+            float top = down_seg->upperElev + down_seg->upperDepth;
+            if (top >= (lowerElev + lowerDepth))
             {
-                if (top >= (upper_elev + upper_depth))
-                    state = FullyImpounded;
+                if (top >= (upperElev + upperDepth))
+                    impound = FullyImpounded;
                 else
-                    state = PartiallyImpounded;
+                    impound = PartiallyImpounded;
             }
         }
     }
-    return state;
+    return impound;
+}
+
+void RiverSegment::setImpound()
+{
+    impound = NotImpounded;
+    RiverSegment *down_seg = down;
+    while (down_seg != NULL &&
+           down_seg->type != DamSegment)
+    {
+        down_seg = down_seg->down;
+    }
+    if (down_seg != NULL)
+    {
+        if (down_seg->type == DamSegment)
+        {
+            float top = down_seg->upperElev + down_seg->upperDepth;
+            if (top >= (lowerElev + lowerDepth))
+            {
+                if (top >= (upperElev + upperDepth))
+                    impound = FullyImpounded;
+                else
+                    impound = PartiallyImpounded;
+            }
+        }
+    }
 }
 
 /*QGraphicsScene *RiverSegment::mapView()

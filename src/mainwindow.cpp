@@ -6,11 +6,11 @@
 #include "segmentinfo.h"
 
 #include <QDir>
-#include <QtGui/QFileDialog>
-#include <QtGui/QMessageBox>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QStringListModel>
 #include <QPrintDialog>
-#include <QPrinter>
+//#include <QtPrintSupport/QPrinter>
 
 MainWindow::MainWindow (QWidget *parent) :
     QMainWindow(parent),
@@ -178,9 +178,9 @@ void MainWindow::help_about ()
     QString about ("");
     about.append(QString("This application is used to examine and edit river description files (.desc) "));
     about.append(QString("for the COMPASS application. \n\nIt is programmed in C++ with Qt.\n\n"));
-    about.append(QString("Version number:\t%1\n").arg(metadata::version()));
-    about.append(QString("Release date:\t\t%1\n").arg(metadata::versionDate()));
-    about.append(QString("Programmed by:\t%1\n\n").arg(metadata::modifier()));
+    about.append(QString("Version number:   %1\n").arg(metadata::version()));
+    about.append(QString("Programmer:       %1\n\n").arg(metadata::modifier()));
+    about.append(QString("Release date:     %1\n").arg(metadata::versionDate()));
     about.append(QString("Application created by %1 on %2\n").arg(
                      metadata::creator(), metadata::createdDate()));
 //      QMessageBox::about(this, "River Description File checker", "Programmed by Neal Schindler");
@@ -254,11 +254,12 @@ void MainWindow::saveFileAs (QString filename)
 
 void MainWindow::printFile ()
 {
-    QPrinter printer;
-    QPrintDialog printDialog (&printer, this);
-    int result = printDialog.exec();
+    QPrinter *printer;// = new QPrinter();
+    QPrintDialog *printDialog = new QPrintDialog(this);
+    int result = printDialog->exec();
     if (result == QDialog::Accepted)
     {
+        printer = printDialog->printer();
         // print the file
         ;
 

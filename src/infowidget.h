@@ -1,11 +1,11 @@
 #ifndef INFOWIDGET_H
 #define INFOWIDGET_H
 
-#include <QtGui/QWidget>
-#include <QtGui/QLabel>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QLineEdit>
-#include <QtGui/QHBoxLayout>
+#include <QWidget>
+#include <QLabel>
+#include <QSpacerItem>
+#include <QLineEdit>
+#include <QHBoxLayout>
 
 
 class infoFloatWidget : public QWidget

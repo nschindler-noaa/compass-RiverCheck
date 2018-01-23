@@ -114,20 +114,20 @@ void ReachDetailDialog::setData()
         length = reach->length * 528.0;
         width = reach->width;
         ave_depth = reach->ave_depth;
-        lower_elevation = reach->lower_elev;
-        lower_depth = reach->lower_depth;
-        lower_width = reach->lower_width;
-        upper_elevation = reach->upper_elev;
-        upper_depth = reach->upper_depth;
-        upper_width = reach->upper_width;
-        bed_width = reach->bed_width;
+        lower_elevation = reach->lowerElev;
+        lower_depth = reach->lowerDepth;
+        lower_width = reach->lowerWidth;
+        upper_elevation = reach->upperElev;
+        upper_depth = reach->upperDepth;
+        upper_width = reach->upperWidth;
+        bed_width = reach->bedWidth;
         slope = reach->slope;
         ui->doubleSpinBox_width->setValue(reach->width);
         ui->doubleSpinBox_slope->setValue(reach->slope);
-        ui->doubleSpinBox_lowerElev->setValue(reach->lower_elev);
-        ui->doubleSpinBox_lowerDepth->setValue(reach->lower_depth);
-        ui->doubleSpinBox_upperElev->setValue(reach->upper_elev);
-        ui->doubleSpinBox_upperDepth->setValue(reach->upper_depth);
+        ui->doubleSpinBox_lowerElev->setValue(reach->lowerElev);
+        ui->doubleSpinBox_lowerDepth->setValue(reach->lowerDepth);
+        ui->doubleSpinBox_upperElev->setValue(reach->upperElev);
+        ui->doubleSpinBox_upperDepth->setValue(reach->upperDepth);
         ui->label_lengthValue->setText(QString("%1 mi.").arg(QString::number(reach->length, 'f', 2)));
         calcData();
     }
@@ -221,17 +221,17 @@ void ReachDetailDialog::setItems()
         {
             up_offset = 6.0;
             segUpDamTopView->setRect(length / scaleFactor + 2.0,
-                             -(upReach->upper_width / 10.0 + 2.0) / 2.0 / scaleFactor,
+                             -(upReach->upperWidth / 10.0 + 2.0) / 2.0 / scaleFactor,
                              2.0,
-                             (upReach->upper_width / 10.0 + 4.0) / scaleFactor);
+                             (upReach->upperWidth / 10.0 + 4.0) / scaleFactor);
             segUpDamSideView->setRect(length / scaleFactor + 2.0,
-                                    -(upReach->upper_elev - 2.0) / scaleFactor,
+                                    -(upReach->upperElev - 2.0) / scaleFactor,
                                     2.0,
-                                    -(upReach->upper_depth + 4.0) / scaleFactor);
-            segDamSectionLower->setRect(-(upReach->lower_width / 10.0 / 2.0) / scaleFactor,
-                                        -(upReach->lower_elev / scaleFactor),
-                                        (upReach->lower_width / 10.0 / scaleFactor),
-                                        -(upReach->upper_depth / scaleFactor));
+                                    -(upReach->upperDepth + 4.0) / scaleFactor);
+            segDamSectionLower->setRect(-(upReach->lowerWidth / 10.0 / 2.0) / scaleFactor,
+                                        -(upReach->lowerElev / scaleFactor),
+                                        (upReach->lowerWidth / 10.0 / scaleFactor),
+                                        -(upReach->upperDepth / scaleFactor));
             upReach= (Reach *)(reach->up->up);
         }
         else
@@ -251,20 +251,20 @@ void ReachDetailDialog::setItems()
         {
             float upReachLength = upReach->length * 528.0;
             segUpTopView->setValues (upReachLength / scaleFactor,
-                                     upReach->upper_width / 10.0 / scaleFactor,
-                                     upReach->lower_width / 10.0 / scaleFactor,
-                                     upReach->bed_width / 10.0 / scaleFactor,
+                                     upReach->upperWidth / 10.0 / scaleFactor,
+                                     upReach->lowerWidth / 10.0 / scaleFactor,
+                                     upReach->bedWidth / 10.0 / scaleFactor,
                                      length / scaleFactor + up_offset);
             segUpSideView->setValues(upReachLength / scaleFactor,
-                                     upReach->upper_elev / scaleFactor,
-                                     upReach->lower_elev / scaleFactor,
-                                     upReach->upper_depth / scaleFactor,
-                                     upReach->lower_depth / scaleFactor,
+                                     upReach->upperElev / scaleFactor,
+                                     upReach->lowerElev / scaleFactor,
+                                     upReach->upperDepth / scaleFactor,
+                                     upReach->lowerDepth / scaleFactor,
                                      length / scaleFactor + up_offset);
-            segUpSectionLower->setValues(upReach->lower_width / 10.0 / scaleFactor,
-                                         upReach->lower_depth / scaleFactor,
-                                         upReach->bed_width / 10.0 / scaleFactor,
-                                         upReach->lower_elev / scaleFactor);
+            segUpSectionLower->setValues(upReach->lowerWidth / 10.0 / scaleFactor,
+                                         upReach->lowerDepth / scaleFactor,
+                                         upReach->bedWidth / 10.0 / scaleFactor,
+                                         upReach->lowerElev / scaleFactor);
         }
 
         if (downReach != NULL &&
@@ -272,17 +272,17 @@ void ReachDetailDialog::setItems()
         {
             down_offset = 6.0;
             segDownDamTopView->setRect(-4.0,
-                             -(downReach->lower_width / 10.0 / 2.0 + 2.0) / scaleFactor,
+                             -(downReach->lowerWidth / 10.0 / 2.0 + 2.0) / scaleFactor,
                              2.0,
-                             (downReach->lower_width / 10.0 + 4.0) / scaleFactor);
+                             (downReach->lowerWidth / 10.0 + 4.0) / scaleFactor);
             segDownDamSideView->setRect(-4.0,
-                                    -(downReach->lower_elev - 2.0) / scaleFactor,
+                                    -(downReach->lowerElev - 2.0) / scaleFactor,
                                     2.0,
-                                    -(downReach->upper_depth + 4.0) / scaleFactor);
-            segDamSectionUpper->setRect(-(downReach->lower_width / 10.0 / 2.0) / scaleFactor,
-                                        -(downReach->lower_elev / scaleFactor),
-                                        (downReach->lower_width / 10.0 / scaleFactor),
-                                        -(downReach->upper_depth / scaleFactor));
+                                    -(downReach->upperDepth + 4.0) / scaleFactor);
+            segDamSectionUpper->setRect(-(downReach->lowerWidth / 10.0 / 2.0) / scaleFactor,
+                                        -(downReach->lowerElev / scaleFactor),
+                                        (downReach->lowerWidth / 10.0 / scaleFactor),
+                                        -(downReach->upperDepth / scaleFactor));
             downReach= (Reach *)(reach->down->down);
         }
         else
@@ -302,20 +302,20 @@ void ReachDetailDialog::setItems()
         {
             float downReachLength = downReach->length * 528.0;
             segDownTopView->setValues(downReachLength / scaleFactor,
-                                      downReach->upper_width / 10.0 / scaleFactor,
-                                      downReach->lower_width / 10.0 / scaleFactor,
-                                      downReach->bed_width / 10.0 / scaleFactor,
+                                      downReach->upperWidth / 10.0 / scaleFactor,
+                                      downReach->lowerWidth / 10.0 / scaleFactor,
+                                      downReach->bedWidth / 10.0 / scaleFactor,
                                       -downReachLength / scaleFactor - down_offset);
             segDownSideView->setValues(downReachLength / scaleFactor,
-                                       downReach->upper_elev / scaleFactor,
-                                       downReach->lower_elev / scaleFactor,
-                                       downReach->upper_depth / scaleFactor,
-                                       downReach->lower_depth / scaleFactor,
+                                       downReach->upperElev / scaleFactor,
+                                       downReach->lowerElev / scaleFactor,
+                                       downReach->upperDepth / scaleFactor,
+                                       downReach->lowerDepth / scaleFactor,
                                        -downReachLength / scaleFactor - down_offset);
-            segDownSectionUpper->setValues(downReach->upper_width / 10.0 / scaleFactor,
-                                           downReach->upper_depth / scaleFactor,
-                                           downReach->bed_width / 10.0 / scaleFactor,
-                                           downReach->upper_elev / scaleFactor);
+            segDownSectionUpper->setValues(downReach->upperWidth / 10.0 / scaleFactor,
+                                           downReach->upperDepth / scaleFactor,
+                                           downReach->bedWidth / 10.0 / scaleFactor,
+                                           downReach->upperElev / scaleFactor);
         }
     }
 }
@@ -428,14 +428,14 @@ void ReachDetailDialog::saveData()
 {
     reach->width = width;
     reach->ave_depth = ave_depth;
-    reach->lower_elev = lower_elevation;
-    reach->lower_depth = lower_depth;
-    reach->lower_width = lower_width;
+    reach->lowerElev = lower_elevation;
+    reach->lowerDepth = lower_depth;
+    reach->lowerWidth = lower_width;
     reach->slope = slope;
-    reach->upper_elev = upper_elevation;
-    reach->upper_depth = upper_depth;
-    reach->upper_width = upper_width;
-    reach->bed_width = bed_width;
+    reach->upperElev = upper_elevation;
+    reach->upperDepth = upper_depth;
+    reach->upperWidth = upper_width;
+    reach->bedWidth = bed_width;
     reach->construct();
     if (reach->up != NULL)
         construct(reach->up);

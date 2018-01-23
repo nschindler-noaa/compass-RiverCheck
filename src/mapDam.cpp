@@ -2,12 +2,12 @@
 #include "Dam.h"
 
 //#include "qMercatorTransform.h"
-#include <QtGui/QGraphicsScene>
-#include <QtGui/QGraphicsItem>
-#include <QtGui/QMenu>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QMenu>
 #include <QPainter>
-#include <QtGui/QGraphicsSceneMouseEvent>
-#include <QtGui/QGraphicsSceneHoverEvent>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneHoverEvent>
 
 mapDam::mapDam(QGraphicsItem *par)
     : mapObject(par)
@@ -192,7 +192,7 @@ QPainterPath mapDam::path() const
 
 //        qp = (*xform)(dam_seg->bottom()->longitude->value(), dam_seg->bottom()->latitude->value());
         spill.moveTo(origin);
-        if (dam_seg->spill_side == Left)
+        if (dam_seg->getSpillSide() == Left)
         {
 //            spill.lineTo(point1);
  /*           spill.moveTo(origin.x() +  6.0, origin.y());

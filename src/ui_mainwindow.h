@@ -10,23 +10,23 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
-#include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QGraphicsView>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QStackedWidget>
-#include <QtGui/QStatusBar>
-#include <QtGui/QToolBar>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QVariant>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QGraphicsView>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QSpacerItem>
+#include <QStackedWidget>
+#include <QStatusBar>
+#include <QToolBar>
+#include <QVBoxLayout>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -251,57 +251,57 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        action_File_Open->setText(QApplication::translate("MainWindow", "&Open", 0, QApplication::UnicodeUTF8));
+        action_File_Open->setText(QApplication::translate("MainWindow", "&Open", 0));
 #ifndef QT_NO_TOOLTIP
-        action_File_Open->setToolTip(QApplication::translate("MainWindow", "Open a river description file", 0, QApplication::UnicodeUTF8));
+        action_File_Open->setToolTip(QApplication::translate("MainWindow", "Open a river description file", 0));
 #endif // QT_NO_TOOLTIP
-        action_File_Open->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
-        action_File_Save->setText(QApplication::translate("MainWindow", "&Save", 0, QApplication::UnicodeUTF8));
+        action_File_Open->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0));
+        action_File_Save->setText(QApplication::translate("MainWindow", "&Save", 0));
 #ifndef QT_NO_TOOLTIP
-        action_File_Save->setToolTip(QApplication::translate("MainWindow", "Save the current file", 0, QApplication::UnicodeUTF8));
+        action_File_Save->setToolTip(QApplication::translate("MainWindow", "Save the current file", 0));
 #endif // QT_NO_TOOLTIP
-        action_File_Save->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
-        action_File_Save_As->setText(QApplication::translate("MainWindow", "Save &As ...", 0, QApplication::UnicodeUTF8));
+        action_File_Save->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0));
+        action_File_Save_As->setText(QApplication::translate("MainWindow", "Save &As ...", 0));
 #ifndef QT_NO_TOOLTIP
-        action_File_Save_As->setToolTip(QApplication::translate("MainWindow", "Save current file as a new file", 0, QApplication::UnicodeUTF8));
+        action_File_Save_As->setToolTip(QApplication::translate("MainWindow", "Save current file as a new file", 0));
 #endif // QT_NO_TOOLTIP
-        action_File_Print->setText(QApplication::translate("MainWindow", "&Print ...", 0, QApplication::UnicodeUTF8));
+        action_File_Print->setText(QApplication::translate("MainWindow", "&Print ...", 0));
 #ifndef QT_NO_TOOLTIP
-        action_File_Print->setToolTip(QApplication::translate("MainWindow", "Print the current file", 0, QApplication::UnicodeUTF8));
+        action_File_Print->setToolTip(QApplication::translate("MainWindow", "Print the current file", 0));
 #endif // QT_NO_TOOLTIP
-        action_File_Print->setShortcut(QApplication::translate("MainWindow", "Ctrl+P", 0, QApplication::UnicodeUTF8));
-        action_File_Exit->setText(QApplication::translate("MainWindow", "E&xit", 0, QApplication::UnicodeUTF8));
+        action_File_Print->setShortcut(QApplication::translate("MainWindow", "Ctrl+P", 0));
+        action_File_Exit->setText(QApplication::translate("MainWindow", "E&xit", 0));
 #ifndef QT_NO_TOOLTIP
-        action_File_Exit->setToolTip(QApplication::translate("MainWindow", "Leave the application", 0, QApplication::UnicodeUTF8));
+        action_File_Exit->setToolTip(QApplication::translate("MainWindow", "Leave the application", 0));
 #endif // QT_NO_TOOLTIP
-        action_File_Exit->setShortcut(QApplication::translate("MainWindow", "Alt+Q", 0, QApplication::UnicodeUTF8));
-        action_Help_About->setText(QApplication::translate("MainWindow", "&About", 0, QApplication::UnicodeUTF8));
+        action_File_Exit->setShortcut(QApplication::translate("MainWindow", "Alt+Q", 0));
+        action_Help_About->setText(QApplication::translate("MainWindow", "&About", 0));
 #ifndef QT_NO_TOOLTIP
-        action_Help_About->setToolTip(QApplication::translate("MainWindow", "Information about this application", 0, QApplication::UnicodeUTF8));
+        action_Help_About->setToolTip(QApplication::translate("MainWindow", "Information about this application", 0));
 #endif // QT_NO_TOOLTIP
-        action_Help_About_Qt->setText(QApplication::translate("MainWindow", "About &Qt", 0, QApplication::UnicodeUTF8));
+        action_Help_About_Qt->setText(QApplication::translate("MainWindow", "About &Qt", 0));
 #ifndef QT_NO_TOOLTIP
-        action_Help_About_Qt->setToolTip(QApplication::translate("MainWindow", "Information about the version of Qt used to produce this application.", 0, QApplication::UnicodeUTF8));
+        action_Help_About_Qt->setToolTip(QApplication::translate("MainWindow", "Information about the version of Qt used to produce this application.", 0));
 #endif // QT_NO_TOOLTIP
-        action_File_Revert_to_Saved->setText(QApplication::translate("MainWindow", "&Revert to Saved", 0, QApplication::UnicodeUTF8));
+        action_File_Revert_to_Saved->setText(QApplication::translate("MainWindow", "&Revert to Saved", 0));
 #ifndef QT_NO_TOOLTIP
-        action_File_Revert_to_Saved->setToolTip(QApplication::translate("MainWindow", "Discard any edits and revert to saved data.", 0, QApplication::UnicodeUTF8));
+        action_File_Revert_to_Saved->setToolTip(QApplication::translate("MainWindow", "Discard any edits and revert to saved data.", 0));
 #endif // QT_NO_TOOLTIP
-        actionShow_File_Header->setText(QApplication::translate("MainWindow", "Edit File &Header", 0, QApplication::UnicodeUTF8));
-        actionShow_File_Header->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", 0, QApplication::UnicodeUTF8));
-        actionShow_Map->setText(QApplication::translate("MainWindow", "Show &Map", 0, QApplication::UnicodeUTF8));
-        actionShow_Current_Dam->setText(QApplication::translate("MainWindow", "Show Current &Dam", 0, QApplication::UnicodeUTF8));
-        actionShow_Current_Reach->setText(QApplication::translate("MainWindow", "Show Current &Reach", 0, QApplication::UnicodeUTF8));
+        actionShow_File_Header->setText(QApplication::translate("MainWindow", "Edit File &Header", 0));
+        actionShow_File_Header->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", 0));
+        actionShow_Map->setText(QApplication::translate("MainWindow", "Show &Map", 0));
+        actionShow_Current_Dam->setText(QApplication::translate("MainWindow", "Show Current &Dam", 0));
+        actionShow_Current_Reach->setText(QApplication::translate("MainWindow", "Show Current &Reach", 0));
         label_spacer->setText(QString());
-        RiverSystemName->setText(QApplication::translate("MainWindow", "River System Name", 0, QApplication::UnicodeUTF8));
-        DamName->setText(QApplication::translate("MainWindow", "Dam Name", 0, QApplication::UnicodeUTF8));
-        ReachName->setText(QApplication::translate("MainWindow", "Reach Name", 0, QApplication::UnicodeUTF8));
-        toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0, QApplication::UnicodeUTF8));
-        menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
-        menu_Help->setTitle(QApplication::translate("MainWindow", "&Help", 0, QApplication::UnicodeUTF8));
+        RiverSystemName->setText(QApplication::translate("MainWindow", "River System Name", 0));
+        DamName->setText(QApplication::translate("MainWindow", "Dam Name", 0));
+        ReachName->setText(QApplication::translate("MainWindow", "Reach Name", 0));
+        toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
+        menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0));
+        menu_Help->setTitle(QApplication::translate("MainWindow", "&Help", 0));
         menu->setTitle(QString());
-        menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
-        menu_View->setTitle(QApplication::translate("MainWindow", "&View", 0, QApplication::UnicodeUTF8));
+        menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0));
+        menu_View->setTitle(QApplication::translate("MainWindow", "&View", 0));
         Q_UNUSED(MainWindow);
     } // retranslateUi
 

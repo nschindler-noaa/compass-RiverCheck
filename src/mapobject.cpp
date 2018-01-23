@@ -1,7 +1,7 @@
-#include <QtGui/QPushButton>
-#include <QtGui/QGraphicsSceneContextMenuEvent>
-#include <QtGui/QLabel>
-#include <QtGui/QListWidget>
+#include <QPushButton>
+#include <QGraphicsSceneContextMenuEvent>
+#include <QLabel>
+#include <QListWidget>
 
 #include "mapobject.h"
 

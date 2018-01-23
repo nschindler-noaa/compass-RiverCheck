@@ -1,7 +1,7 @@
 #ifndef QSTRINGLISTEDITDIALOG_H
 #define QSTRINGLISTEDITDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
 #include <QStringList>
 
 namespace Ui {

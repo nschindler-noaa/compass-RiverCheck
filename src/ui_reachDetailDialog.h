@@ -11,19 +11,19 @@
 #define UI_REACHDETAILDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QDoubleSpinBox>
-#include <QtGui/QGraphicsView>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QVBoxLayout>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QDoubleSpinBox>
+#include <QGraphicsView>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -593,48 +593,48 @@ public:
 
     void retranslateUi(QDialog *ReachDetailDialog)
     {
-        ReachDetailDialog->setWindowTitle(QApplication::translate("ReachDetailDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        label_lower_3->setText(QApplication::translate("ReachDetailDialog", "Lower", 0, QApplication::UnicodeUTF8));
-        label_lowerDepth->setText(QApplication::translate("ReachDetailDialog", "Depth", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_lowerDepth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_lower_4->setText(QApplication::translate("ReachDetailDialog", "Lower", 0, QApplication::UnicodeUTF8));
-        label_lowerArea->setText(QApplication::translate("ReachDetailDialog", "Area", 0, QApplication::UnicodeUTF8));
-        label_lowerAreaValue->setText(QApplication::translate("ReachDetailDialog", "TextLabel", 0, QApplication::UnicodeUTF8));
-        label_upper_3->setText(QApplication::translate("ReachDetailDialog", "Upper", 0, QApplication::UnicodeUTF8));
-        label_upperDepth->setText(QApplication::translate("ReachDetailDialog", "Depth", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_upperDepth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_upper_4->setText(QApplication::translate("ReachDetailDialog", "Upper", 0, QApplication::UnicodeUTF8));
-        label_upperArea->setText(QApplication::translate("ReachDetailDialog", "Area", 0, QApplication::UnicodeUTF8));
-        label_upperAreaValue->setText(QApplication::translate("ReachDetailDialog", "TextLabel", 0, QApplication::UnicodeUTF8));
-        label_slope->setText(QApplication::translate("ReachDetailDialog", "Slope of sides", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_slope->setSuffix(QApplication::translate("ReachDetailDialog", " deg.", 0, QApplication::UnicodeUTF8));
-        label_up_secB->setText(QApplication::translate("ReachDetailDialog", "Upstream Section", 0, QApplication::UnicodeUTF8));
-        label_bed_width->setText(QApplication::translate("ReachDetailDialog", "Bed Width", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_bed_width->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_down_secA->setText(QApplication::translate("ReachDetailDialog", "Downstream Section", 0, QApplication::UnicodeUTF8));
-        label_down_side->setText(QApplication::translate("ReachDetailDialog", "Downstream Side View", 0, QApplication::UnicodeUTF8));
-        label_down_top->setText(QApplication::translate("ReachDetailDialog", "Downstream Top View", 0, QApplication::UnicodeUTF8));
-        label_lower_2->setText(QApplication::translate("ReachDetailDialog", "Lower", 0, QApplication::UnicodeUTF8));
-        label_lowerElev->setText(QApplication::translate("ReachDetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_lowerElev->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_upper_2->setText(QApplication::translate("ReachDetailDialog", "Upper", 0, QApplication::UnicodeUTF8));
-        label_upperElev->setText(QApplication::translate("ReachDetailDialog", "Elev", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_upperElev->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_length->setText(QApplication::translate("ReachDetailDialog", "Length", 0, QApplication::UnicodeUTF8));
-        label_lengthValue->setText(QApplication::translate("ReachDetailDialog", "ft.", 0, QApplication::UnicodeUTF8));
-        label_up_top->setText(QApplication::translate("ReachDetailDialog", "Upstream Top View", 0, QApplication::UnicodeUTF8));
-        label_up_side->setText(QApplication::translate("ReachDetailDialog", "Upstream Side View", 0, QApplication::UnicodeUTF8));
-        label_lower_1->setText(QApplication::translate("ReachDetailDialog", "Lower", 0, QApplication::UnicodeUTF8));
-        label_lowerWidth->setText(QApplication::translate("ReachDetailDialog", "Width", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_lowerWidth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label_upper_1->setText(QApplication::translate("ReachDetailDialog", "Upper", 0, QApplication::UnicodeUTF8));
-        label_upperWidth->setText(QApplication::translate("ReachDetailDialog", "Width", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_upperWidth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("ReachDetailDialog", "Note: Length and width are scaled by 1/10.", 0, QApplication::UnicodeUTF8));
-        pushButton_revert->setText(QApplication::translate("ReachDetailDialog", "Revert", 0, QApplication::UnicodeUTF8));
-        pushButton_save->setText(QApplication::translate("ReachDetailDialog", "Save", 0, QApplication::UnicodeUTF8));
-        label_width->setText(QApplication::translate("ReachDetailDialog", "Ave Width", 0, QApplication::UnicodeUTF8));
-        doubleSpinBox_width->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0, QApplication::UnicodeUTF8));
+        ReachDetailDialog->setWindowTitle(QApplication::translate("ReachDetailDialog", "Dialog", 0));
+        label_lower_3->setText(QApplication::translate("ReachDetailDialog", "Lower", 0));
+        label_lowerDepth->setText(QApplication::translate("ReachDetailDialog", "Depth", 0));
+        doubleSpinBox_lowerDepth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
+        label_lower_4->setText(QApplication::translate("ReachDetailDialog", "Lower", 0));
+        label_lowerArea->setText(QApplication::translate("ReachDetailDialog", "Area", 0));
+        label_lowerAreaValue->setText(QApplication::translate("ReachDetailDialog", "TextLabel", 0));
+        label_upper_3->setText(QApplication::translate("ReachDetailDialog", "Upper", 0));
+        label_upperDepth->setText(QApplication::translate("ReachDetailDialog", "Depth", 0));
+        doubleSpinBox_upperDepth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
+        label_upper_4->setText(QApplication::translate("ReachDetailDialog", "Upper", 0));
+        label_upperArea->setText(QApplication::translate("ReachDetailDialog", "Area", 0));
+        label_upperAreaValue->setText(QApplication::translate("ReachDetailDialog", "TextLabel", 0));
+        label_slope->setText(QApplication::translate("ReachDetailDialog", "Slope of sides", 0));
+        doubleSpinBox_slope->setSuffix(QApplication::translate("ReachDetailDialog", " deg.", 0));
+        label_up_secB->setText(QApplication::translate("ReachDetailDialog", "Upstream Section", 0));
+        label_bed_width->setText(QApplication::translate("ReachDetailDialog", "Bed Width", 0));
+        doubleSpinBox_bed_width->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
+        label_down_secA->setText(QApplication::translate("ReachDetailDialog", "Downstream Section", 0));
+        label_down_side->setText(QApplication::translate("ReachDetailDialog", "Downstream Side View", 0));
+        label_down_top->setText(QApplication::translate("ReachDetailDialog", "Downstream Top View", 0));
+        label_lower_2->setText(QApplication::translate("ReachDetailDialog", "Lower", 0));
+        label_lowerElev->setText(QApplication::translate("ReachDetailDialog", "Elev", 0));
+        doubleSpinBox_lowerElev->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
+        label_upper_2->setText(QApplication::translate("ReachDetailDialog", "Upper", 0));
+        label_upperElev->setText(QApplication::translate("ReachDetailDialog", "Elev", 0));
+        doubleSpinBox_upperElev->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
+        label_length->setText(QApplication::translate("ReachDetailDialog", "Length", 0));
+        label_lengthValue->setText(QApplication::translate("ReachDetailDialog", "ft.", 0));
+        label_up_top->setText(QApplication::translate("ReachDetailDialog", "Upstream Top View", 0));
+        label_up_side->setText(QApplication::translate("ReachDetailDialog", "Upstream Side View", 0));
+        label_lower_1->setText(QApplication::translate("ReachDetailDialog", "Lower", 0));
+        label_lowerWidth->setText(QApplication::translate("ReachDetailDialog", "Width", 0));
+        doubleSpinBox_lowerWidth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
+        label_upper_1->setText(QApplication::translate("ReachDetailDialog", "Upper", 0));
+        label_upperWidth->setText(QApplication::translate("ReachDetailDialog", "Width", 0));
+        doubleSpinBox_upperWidth->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
+        label->setText(QApplication::translate("ReachDetailDialog", "Note: Length and width are scaled by 1/10.", 0));
+        pushButton_revert->setText(QApplication::translate("ReachDetailDialog", "Revert", 0));
+        pushButton_save->setText(QApplication::translate("ReachDetailDialog", "Save", 0));
+        label_width->setText(QApplication::translate("ReachDetailDialog", "Ave Width", 0));
+        doubleSpinBox_width->setSuffix(QApplication::translate("ReachDetailDialog", " ft.", 0));
     } // retranslateUi
 
 };

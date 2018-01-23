@@ -1,9 +1,9 @@
 #ifndef SEGMENTVIEWS_H
 #define SEGMENTVIEWS_H
 
-#include <QtGui/QGraphicsItem>
+#include <QGraphicsItem>
 #include <QPainter>
-#include<QtGui/QStyleOptionGraphicsItem>
+#include <QStyleOptionGraphicsItem>
 
 #include "RiverSegment.h"
 

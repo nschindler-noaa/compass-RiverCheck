@@ -1,14 +1,14 @@
 #include "mapItem.h"
-#include <QtGui/QGraphicsScene>
-#include <QtGui/QGraphicsItem>
-#include <QtGui/QMenu>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QMenu>
 #include <QPainter>
-#include <QtGui/QGraphicsSceneMouseEvent>
-#include <QtGui/QGraphicsSceneHoverEvent>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QListWidgetItem>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneHoverEvent>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QListWidgetItem>
 
 
 mapItem::mapItem(QGraphicsItem *parent)

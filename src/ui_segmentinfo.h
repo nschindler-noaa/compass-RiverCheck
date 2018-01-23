@@ -11,18 +11,18 @@
 #define UI_SEGMENTINFO_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QFrame>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QTextEdit>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QFrame>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QTextEdit>
+#include <QVBoxLayout>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -234,18 +234,18 @@ public:
 
     void retranslateUi(QWidget *SegmentInfo)
     {
-        SegmentInfo->setWindowTitle(QApplication::translate("SegmentInfo", "Form", 0, QApplication::UnicodeUTF8));
-        pushButton_goto->setText(QApplication::translate("SegmentInfo", "Go to", 0, QApplication::UnicodeUTF8));
-        label_dir_width->setText(QApplication::translate("SegmentInfo", "Upper", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("SegmentInfo", "Width", 0, QApplication::UnicodeUTF8));
-        lineEdit_width->setText(QApplication::translate("SegmentInfo", "ft.", 0, QApplication::UnicodeUTF8));
-        label_dir_elev->setText(QApplication::translate("SegmentInfo", "Upper", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("SegmentInfo", "Elevation", 0, QApplication::UnicodeUTF8));
-        label_dir_depth->setText(QApplication::translate("SegmentInfo", "Upper", 0, QApplication::UnicodeUTF8));
-        label_6->setText(QApplication::translate("SegmentInfo", "Depth", 0, QApplication::UnicodeUTF8));
-        label_dir_area->setText(QApplication::translate("SegmentInfo", "Upper", 0, QApplication::UnicodeUTF8));
-        label_area->setText(QApplication::translate("SegmentInfo", "Area", 0, QApplication::UnicodeUTF8));
-        label_areaValue->setText(QApplication::translate("SegmentInfo", "ft.", 0, QApplication::UnicodeUTF8));
+        SegmentInfo->setWindowTitle(QApplication::translate("SegmentInfo", "Form", 0));
+        pushButton_goto->setText(QApplication::translate("SegmentInfo", "Go to", 0));
+        label_dir_width->setText(QApplication::translate("SegmentInfo", "Upper", 0));
+        label_2->setText(QApplication::translate("SegmentInfo", "Width", 0));
+        lineEdit_width->setText(QApplication::translate("SegmentInfo", "ft.", 0));
+        label_dir_elev->setText(QApplication::translate("SegmentInfo", "Upper", 0));
+        label_4->setText(QApplication::translate("SegmentInfo", "Elevation", 0));
+        label_dir_depth->setText(QApplication::translate("SegmentInfo", "Upper", 0));
+        label_6->setText(QApplication::translate("SegmentInfo", "Depth", 0));
+        label_dir_area->setText(QApplication::translate("SegmentInfo", "Upper", 0));
+        label_area->setText(QApplication::translate("SegmentInfo", "Area", 0));
+        label_areaValue->setText(QApplication::translate("SegmentInfo", "ft.", 0));
     } // retranslateUi
 
 };
