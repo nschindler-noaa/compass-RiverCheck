@@ -16,6 +16,14 @@ Tested on Windows 7 and Linux
 
 History:
 
+2017-01-23
+Version 1.2.4
+1. Added getter/setter functions to encapsulate data.
+
+2016-12-09
+Version 1.2.3 changes
+1. Made changes to .pro file to build under Qt 5.7
+
 2016-02-25
 Version 1.2.3 Changes
 1. Rebuilt with 5.7 libraries.

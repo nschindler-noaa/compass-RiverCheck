@@ -13,15 +13,15 @@ QString metadata::version()
     QString minor = (QString::number(VER_MINOR_RELEASE));
     QString bugfix = (QString::number(VER_BUGFIX));
     QString rels ("");
-    if      (VER_RELEASE_LEVEL == "a")
+    if      (QString(VER_RELEASE_LEVEL).contains('a'))
         rels.append ("-alpha");
-    else if (VER_RELEASE_LEVEL == "b")
+    else if (QString(VER_RELEASE_LEVEL).contains('b'))
         rels.append ("-beta");
-    else if (VER_RELEASE_LEVEL == "rc1")
+    else if (QString(VER_RELEASE_LEVEL).contains('1'))
         rels.append("-RC1");
-    else if (VER_RELEASE_LEVEL == "rc2")
+    else if (QString(VER_RELEASE_LEVEL).contains('2'))
         rels.append("-RC2");
-    else if (VER_RELEASE_LEVEL == "rc3")
+    else if (QString(VER_RELEASE_LEVEL).contains('3'))
         rels.append("-RC3");
 
     ver = QString("%1.%2.%3%4").arg (major, minor, bugfix, rels);

@@ -584,8 +584,9 @@ void RiverSystem::deleteSegment(RiverSegment *seg)
 
 void RiverSystem::addDam(Dam *dam)
 {
+    int i, num = dam->getNumPowerhouses();
     dams->append(*dam->name);
-    for (int i = 0; i < dam->powerhouse_cap.count(); i++)
+    for (i = 0; i < num; i++)
         powerhouses->append(QString ("%1_PH%2").arg(
                                 *dam->name, QString::number(i+1)));
 }
@@ -601,7 +602,7 @@ void RiverSystem::deleteDam(Dam *dam)
     ind = dams->indexOf(*dam->name);
     if (ind >= 0)
         dams->takeAt(ind);
-    for (int i = 0; i < dam->powerhouse_cap.count(); i++)
+    for (int i = 0; i < dam->getNumPowerhouses(); i++)
     {
         QString ph_name (*dam->name);
         ph_name.append(QString("_%1").arg(QString::number(i + 1)));
@@ -620,12 +621,12 @@ void RiverSystem::deleteDam(Dam *dam)
         impounded_reaches.append(seg_up);
         while (seg_up->up != NULL &&
                seg_up->up->type == RiverSegment::ReachSegment &&
-               seg_up->up->impound() != RiverSegment::NotImpounded)
+               seg_up->up->getImpound() != RiverSegment::NotImpounded)
         {
             seg_up = (Reach *)seg_up->up;
             impounded_reaches.append(seg_up);
         }
-        if (seg_up->impound() == RiverSegment::NotImpounded)
+        if (seg_up->getImpound() == RiverSegment::NotImpounded)
             adjustReaches (seg_down, seg_up, impounded_reaches);
         else
             adjustReaches (seg_down, seg_down, impounded_reaches);
@@ -674,7 +675,7 @@ void RiverSystem::deleteDam(Dam *dam)
     }
     else if (seg_down != NULL)
     {
-        seg_down->upper_elev = seg_down->lower_elev;
+        seg_down->upperElev = seg_down->lowerElev;
         river->deleteSegment(dam);
     }
 }
@@ -682,22 +683,22 @@ void RiverSystem::deleteDam(Dam *dam)
 void RiverSystem::adjustReaches(Reach *downReach, Reach *upReach, QList<Reach *> reaches)
 {
     Reach *reach = (Reach *)reaches.takeLast();
-    float bd_width = upReach->bed_width;
+    float bd_width = upReach->bedWidth;
     reach->slope = DEFAULT_SLOPE;
     reach->tan_slope = tan(reach->slope * DEG_2_RAD);
     if (upReach == downReach)
     {
         if (reach->up != NULL &&
-                reach->up->lower_depth < upReach->upper_depth)
-            reach->lower_depth = reach->upper_depth = reach->up->lower_depth;
+                reach->up->lowerDepth < upReach->upperDepth)
+            reach->lowerDepth = reach->upperDepth = reach->up->lowerDepth;
         else
-            reach->lower_depth = reach->upper_depth = upReach->upper_depth;
+            reach->lowerDepth = reach->upperDepth = upReach->upperDepth;
     }
     else
     {
-        reach->lower_depth = reach->upper_depth = upReach->lower_depth;
+        reach->lowerDepth = reach->upperDepth = upReach->lowerDepth;
     }
-    reach->width = bd_width + 2.0 * reach->upper_depth;
+    reach->width = bd_width + 2.0 * reach->upperDepth;
     reach->calculateGeometries();
 
     while (reaches.count() > 0)
@@ -706,16 +707,16 @@ void RiverSystem::adjustReaches(Reach *downReach, Reach *upReach, QList<Reach *>
         upReach = (Reach *)reach->up;
         reach->width = upReach->width;
         reach->slope = upReach->slope;
-        reach->lower_depth = reach->upper_depth = upReach->lower_depth;
+        reach->lowerDepth = reach->upperDepth = upReach->lowerDepth;
         reach->calculateGeometries();
     }
 
 //    reach->width = downReach->upper_width;
-    reach->lower_depth = downReach->upper_depth;
+    reach->lowerDepth = downReach->upperDepth;
     reach->calculateGeometries();
 
-    if (downReach->upper_elev != reach->lower_elev)
-        downReach->upper_elev  = reach->lower_elev;
+    if (downReach->upperElev != reach->lowerElev)
+        downReach->upperElev  = reach->lowerElev;
 }
 
 void RiverSystem::addReach(Reach *rch)
