@@ -8,35 +8,39 @@ Version 1.2.3
 Programmer: Neal Schindler
 Date: 2017-09-01
 
-This is programmed with Qt 5.7 using static libraries
-and should therefore be compilable
-on many platforms. Mac OSX, MS Windows, and Linux
+This is programmed with Qt 5.11 using dynamic libraries
+and should therefore compile on many platforms,
+including Mac OSX, MS Windows, and Linux
 
-Tested on Windows 7 and Linux
+Tested on Windows 10 and Linux
 
 History:
 
+2018-10-30
+Version 1.2.5b
+1. Moved to Qt 5.11 on Windows 10.
+
 2017-01-23
-Version 1.2.4
+Version 1.2.4b
 1. Added getter/setter functions to encapsulate data.
 
 2016-12-09
-Version 1.2.3 changes
+Version 1.2.3b changes
 1. Made changes to .pro file to build under Qt 5.7
 
 2016-02-25
-Version 1.2.3 Changes
+Version 1.2.3b Changes
 1. Rebuilt with 5.7 libraries.
 
 2016-02-25
-Version 1.2.2 Changes
+Version 1.2.2b Changes
 1. Calculate RiverSegment before Reach.
 2. Fixed the reach width calculations.
 3. Calculate Reaches before Dams (to get better width numbers).
 4. Added a check for duplicate lat/lon points.
 
 2014-09-10
-Version 1.2 Changes
+Version 1.2b Changes
 1. Changed how width is read from data file. Now reads in as lower_width
    rather than width (average width).
 
