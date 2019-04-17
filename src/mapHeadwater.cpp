@@ -11,8 +11,8 @@ mapHeadwater::mapHeadwater(QGraphicsItem *par)
     : mapItem(par)
 {
 //	setData( SEGTYPE, HEADWATER );
-	mouseOver = false;
-    itemErrors = NULL;
+    mouseOver = false;
+    itemErrors = nullptr;
 }
 
 mapHeadwater::mapHeadwater(RiverSegment *rseg, mapTransform *xform_, QGraphicsItem *par)
@@ -22,36 +22,36 @@ mapHeadwater::mapHeadwater(RiverSegment *rseg, mapTransform *xform_, QGraphicsIt
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::RightButton | Qt::LeftButton);
 
-	width = 1;
+    width = 1;
     normalPen = QPen(QBrush(Qt::blue), width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     highlightPen = QPen(QBrush(Qt::cyan), width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-	mouseOver = false;
+    mouseOver = false;
 
-	path = shape();
+    path = shape();
 
-    itemErrors = NULL;
+    itemErrors = nullptr;
     itemErrors = createInfo();
-	setBoundingRect();
+    setBoundingRect();
 }
 
 
 QPainterPath mapHeadwater::shape() const
 {
-	QPainterPath path;
-	QPointF qp;
+    QPainterPath path;
+    QPointF qp;
 
-	if( rv_seg != NULL && xform != NULL )
-	{
+    if( rv_seg != nullptr && xform != nullptr )
+    {
 //		point *p = rv_seg->top;
 //		qp = (*xform)( p->lon, p->lat );
-        qp = (*xform) (rv_seg->top()->longitude->value(),
-                       rv_seg->top()->latitude->value());
-		//path.addEllipse( qp.x() - 1, qp.y() - 1, 2.0, 2.0 );
-		path.addEllipse( qp.x() - .5, qp.y() - .5, 1.0, 1.0 );
-		//path.addRect( qp.x() - .5, qp.y() - .5, 1.0, 1.0 );
-	}
-	return path;
+        qp = (*xform) (rv_seg->top()->longitude,
+                       rv_seg->top()->latitude);
+        //path.addEllipse( qp.x() - 1, qp.y() - 1, 2.0, 2.0 );
+        path.addEllipse( qp.x() - .5, qp.y() - .5, 1.0, 1.0 );
+        //path.addRect( qp.x() - .5, qp.y() - .5, 1.0, 1.0 );
+    }
+    return path;
 }
 
 void mapHeadwater::paint (QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWidget *w)
@@ -63,23 +63,23 @@ void mapHeadwater::paint (QPainter *paintr, const QStyleOptionGraphicsItem *opt,
 
 /*QDialog * mapHeadwater::createInfo()
 {
-    if(itemErrors == NULL)
-	{
+    if(itemErrors == nullptr)
+    {
         itemErrors = new QDialog();
         itemErrors->addAction( name() );
         itemErrors->addSeparator();
-		QAction *actionFlowRate =  itemOptions->addAction( "Headwater Flow" );
-		QAction *actionWaterTemp = itemOptions->addAction( "Headwater Temperature" );
+        QAction *actionFlowRate =  itemOptions->addAction( "Headwater Flow" );
+        QAction *actionWaterTemp = itemOptions->addAction( "Headwater Temperature" );
         QAction *actionTurbidity = itemOptions->addAction( "Headwater Turbidity" );
-	}
-	return itemOptions;
+    }
+    return itemOptions;
 }*/
 
 void mapHeadwater::infoPanel()
 {
     QDialog menu;
 //	QAction *selectAction = menu.addAction("Select");
-	menu.show();
+    menu.show();
 }
 
 

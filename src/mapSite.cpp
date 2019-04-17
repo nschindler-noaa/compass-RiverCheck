@@ -11,8 +11,8 @@ mapSite::mapSite(QGraphicsItem *par)
     : QGraphicsItem(par)
 {
 //	setData( SEGTYPE, REACH );
-	mouseOver = false;
-	itemOptions = NULL;
+    mouseOver = false;
+    itemOptions = nullptr;
 }
 
 mapSite::mapSite(RiverSite *rsite, mapTransform *xform_, QGraphicsItem *par)
@@ -30,34 +30,34 @@ mapSite::mapSite(RiverSite *rsite, mapTransform *xform_, QGraphicsItem *par)
     highlightPen = QPen( Qt::gray, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     errorPen = QPen( Qt::red, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
-	mouseOver = false;
+    mouseOver = false;
 
-	path = shape();
+    path = shape();
 
-	itemOptions = NULL;
-	itemOptions = createMenu();
+    itemOptions = nullptr;
+    itemOptions = createMenu();
 //	setBoundingRect();
 }
 
 QPainterPath mapSite::shape() const
 {
-	QPainterPath path;
-	QPointF qp;
+    QPainterPath path;
+    QPointF qp;
 
-    if (rv_site != NULL && xform != NULL)
-	{
-        qp = (*xform) (rv_site->location->longitude->value(),
-                       rv_site->location->latitude->value());
-		path.moveTo (qp);
-/*		for (p = p->next; p != NULL; p = p->next)
-		{
-			qp = (*xform) (p->lon, p->lat);
-			path.lineTo (qp);
-			if (p->lat == rv_seg->top->lat && p->lon == rv_seg->top->lon)
-				break;
+    if (rv_site != nullptr && xform != nullptr)
+    {
+        qp = (*xform) (rv_site->location->longitude,
+                       rv_site->location->latitude);
+        path.moveTo (qp);
+/*		for (p = p->next; p != nullptr; p = p->next)
+        {
+            qp = (*xform) (p->lon, p->lat);
+            path.lineTo (qp);
+            if (p->lat == rv_seg->top->lat && p->lon == rv_seg->top->lon)
+                break;
         }*/
-	}
-	return path;
+    }
+    return path;
 }
 
 void mapSite::paint(QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWidget *w)
@@ -69,31 +69,31 @@ void mapSite::paint(QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWidg
 
 QMenu * mapSite::createMenu()
 {
-    if(itemOptions == NULL)
-	{
-		itemOptions = new QMenu();
+    if(itemOptions == nullptr)
+    {
+        itemOptions = new QMenu();
 /*		itemOptions->addAction( name() );//QString(rv_seg->seg_name) );
-		itemOptions->addSeparator();
-		QAction *actionFlowRate =  itemOptions->addAction( "Flow Rate" );
-		QAction *actionWaterTemp = itemOptions->addAction( "Water Temperature" );
-		QAction *actionTurbidity = itemOptions->addAction( "Turbidity" );
-		//QAction *actionTDGSat =    itemOptions->addAction( "TDG Saturation > 100%" );
-		QAction *actionVelocity =  itemOptions->addAction( "Velocity" );
-		QAction *actionElevChng =  itemOptions->addAction( "Elevation Change" );
-		QAction *actionLoss =      itemOptions->addAction( "Loss" );
-		QAction *actionPassHist =  itemOptions->addAction( "Passage Histogram" );
-		QAction *actionLengHist =  itemOptions->addAction( "Length Histogram" );
+        itemOptions->addSeparator();
+        QAction *actionFlowRate =  itemOptions->addAction( "Flow Rate" );
+        QAction *actionWaterTemp = itemOptions->addAction( "Water Temperature" );
+        QAction *actionTurbidity = itemOptions->addAction( "Turbidity" );
+        //QAction *actionTDGSat =    itemOptions->addAction( "TDG Saturation > 100%" );
+        QAction *actionVelocity =  itemOptions->addAction( "Velocity" );
+        QAction *actionElevChng =  itemOptions->addAction( "Elevation Change" );
+        QAction *actionLoss =      itemOptions->addAction( "Loss" );
+        QAction *actionPassHist =  itemOptions->addAction( "Passage Histogram" );
+        QAction *actionLengHist =  itemOptions->addAction( "Length Histogram" );
         QAction *actionGasDist =   itemOptions->addAction( "Gas Distribution" );*/
-	}
-	return itemOptions;
+    }
+    return itemOptions;
 }
 
 
 void mapSite::contextMenu()
 {
-	QMenu menu;
+    QMenu menu;
 //	QAction *selectAction = menu.addAction("Select");
-	menu.show();
+    menu.show();
 }
 
 

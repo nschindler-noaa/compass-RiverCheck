@@ -12,8 +12,8 @@
 mapDam::mapDam(QGraphicsItem *par)
     : mapObject(par)
 {
-	mouseOver = false;
-    itemErrors = NULL;
+    mouseOver = false;
+    itemErrors = nullptr;
     angle = 0;
 }
 
@@ -30,13 +30,13 @@ mapDam::mapDam(RiverSegment *rseg, mapTransform *xform_, QGraphicsItem *par)
     errorPen = QPen(Qt::magenta, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     errorHighlightPen = QPen(Qt::darkRed, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-	mouseOver = false;
+    mouseOver = false;
 
     origin = getOriginPoint();
     highlightPath = path();
     backgroundShape = shape();
 
-    itemErrors = NULL;
+    itemErrors = nullptr;
 //    itemErrors = createInfo();
     //screen coordinates
     setAngle();
@@ -50,7 +50,7 @@ QPointF mapDam::getOriginPoint()
     RiverPoint *p0;
     QPointF qp0;
     p0 = rv_seg->bottom();
-    qp0 = (*xform)(p0->longitude->value(), p0->latitude->value());
+    qp0 = (*xform)(p0->longitude, p0->latitude);
 
     return qp0;
 }
@@ -60,24 +60,24 @@ QPointF mapDam::getBackingPoint()
     RiverPoint *p1;
     QPointF qp1;
     // first, look at upstream segment
-    if (rv_seg->up != NULL &&
+    if (rv_seg->up != nullptr &&
         rv_seg->up->type != RiverSegment::HeadwaterSegment &&
         rv_seg->up->course.count() > 1)
     {
         rv_seg->up->bottom();
         p1 = rv_seg->up->nextPointUp();
-        qp1 = (*xform)(p1->longitude->value(), p1->latitude->value());
+        qp1 = (*xform)(p1->longitude, p1->latitude);
     }
     else
     {
         // have to look downstream
-        if (rv_seg->down != NULL &&
+        if (rv_seg->down != nullptr &&
             rv_seg->down->course.count() > 1)
         {
             rv_seg->down->top();
             p1 = rv_seg->down->nextPointDn();
         }
-        else if (rv_seg->down->down != NULL &&
+        else if (rv_seg->down->down != nullptr &&
                 rv_seg->down->down->course.count() > 1)
         {
             rv_seg->down->down->top();
@@ -86,11 +86,11 @@ QPointF mapDam::getBackingPoint()
         else
         {
             // cannot determine point
-            p1 = NULL;
+            p1 = nullptr;
         }
-        if (p1 != NULL)
+        if (p1 != nullptr)
         {
-            qp1 = (*xform)(p1->longitude->value(), p1->latitude->value());
+            qp1 = (*xform)(p1->longitude, p1->latitude);
             qp1.setX(origin.x() + origin.x() - qp1.x());
             qp1.setY(origin.y() - origin.y() - qp1.y());
         }
@@ -110,21 +110,21 @@ void mapDam::setAngle()
     double dx, dy, slope;
 
     p0 = rv_seg->top();
-    origin = (*xform) (p0->longitude->value(), p0->latitude->value());
+    origin = (*xform) (p0->longitude, p0->latitude);
 
-    if (rv_seg->up != NULL)
+    if (rv_seg->up != nullptr)
     {
         p1 = rv_seg->up->bottom();
         p1 = rv_seg->up->nextPointUp();
-        dx = p1->longitude->value() - p0->longitude->value();
-        dy = p1->latitude->value() - p0->latitude->value();
+        dx = p1->longitude - p0->longitude;
+        dy = p1->latitude - p0->latitude;
     }
     else
     {
         p1 = rv_seg->down->top();
         p1 = rv_seg->nextPointDn();
-        dx = p0->longitude->value() - p1->longitude->value();
-        dy = p0->latitude->value() - p1->latitude->value();
+        dx = p0->longitude - p1->longitude;
+        dy = p0->latitude - p1->latitude;
     }
 
     slope = -dx / dy; // perpendicular to river
@@ -166,7 +166,7 @@ void mapDam::setAngle()
 /*
 QPixmap mapDam::icon()
 {
-	return QPixmap( ":/images/map_dam_lg.png"  );
+    return QPixmap( ":/images/map_dam_lg.png"  );
 }
 */
 /* This is the (scaled) shape of the spillway.
@@ -186,7 +186,7 @@ QPainterPath mapDam::path() const
 
 //    spill_rect = QRect(0, 0, DAM_LENGTH, 5);
 
-    if(rv_seg != NULL && xform != NULL)
+    if(rv_seg != nullptr && xform != nullptr)
     {
         Dam *dam_seg = (Dam *)rv_seg;
 
@@ -287,7 +287,7 @@ QPainterPath mapDam::shape() const
     QPainterPath path;
     QPointF qp;
 //    RiverPoint *p0;
-    if (rv_seg != NULL)
+    if (rv_seg != nullptr)
     {
 /*        path.moveTo(point1);
         path.lineTo(point2);*/
@@ -307,7 +307,7 @@ QPainterPath mapDam::shape() const
     qreal nextx, nexty;
     qreal depx, depy, widx, widy;
 
-    if(rv_seg != NULL && xform != NULL)
+    if(rv_seg != nullptr && xform != nullptr)
     {
 /*        // map coordinates
         p0 = rv_seg->bottom();
@@ -358,7 +358,7 @@ QPainterPath mapDam::shape() const
 */
     path.setFillRule(Qt::WindingFill);
 
-	return path;
+    return path;
 }
 
 void mapDam::setBoundingRect()
@@ -374,7 +374,7 @@ void mapDam::setBoundingRect()
 //QRectF mapDam::boundingRect() const
 //{
 //	return QRectF( maxLon, maxLat,
-//			(maxLon - minLon), 
+//			(maxLon - minLon),
 //			(maxLat - minLat) );
 //}
 
@@ -417,10 +417,10 @@ void mapDam::paint(QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWidge
 /*
 QDialog * mapDam::createInfo()
 {
-    if(itemErrors != NULL)
+    if(itemErrors != nullptr)
     {
         delete itemErrors;
-        itemErrors = NULL;
+        itemErrors = nullptr;
     }
 
     itemErrors = new QDialog();
@@ -430,10 +430,10 @@ QDialog * mapDam::createInfo()
 
 QMenu *mapDam::createMenu()
 {
-    if(itemOptions != NULL)
+    if(itemOptions != nullptr)
     {
         delete itemOptions;
-        itemOptions = NULL;
+        itemOptions = nullptr;
     }
 
     itemOptions = new QMenu();

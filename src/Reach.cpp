@@ -11,7 +11,7 @@ Reach::Reach (QString rname, QString rivName, QObject *parent) :
 {
     name = new QString (rname);
     type = RiverSegment::ReachSegment;
-    abbrev = NULL;
+    abbrev = nullptr;
 
     clear ();
 }
@@ -214,7 +214,7 @@ bool Reach::calculateGeometries()
     {
 //        if (upper_depth == lower_depth)
         {
-            if (up != NULL)
+            if (up != nullptr)
             {
 //                upper_elev = up->lower_elev;
                 if (up->type == RiverSegment::ReachSegment)
@@ -305,7 +305,7 @@ bool Reach::output(int indent, RiverFile *rfile)
     if (slope != 40.0)
         rfile->writeString(indent + 1, "slope", QString::number(slope, 'f', 2));
     rfile->writeString(indent + 1, "lower_elev", QString::number(lowerElev, 'f', 2));
-    if (abbrev != NULL && !abbrev->isEmpty())
+    if (abbrev != nullptr && !abbrev->isEmpty())
         rfile->writeString(indent + 1,"abbrev", *abbrev);
     outputCourse (indent + 1, rfile);
     rfile->writeEnd(indent, "reach", *name);

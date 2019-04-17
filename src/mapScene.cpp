@@ -28,21 +28,21 @@
 #include "mapRelease.h"
 
 mapScene::mapScene(QObject *p)
-	: QGraphicsScene(p) 
+    : QGraphicsScene(p)
 {
-	xform = NULL;
-	selectRect = NULL;
-    selection = NULL;
-    currentSeg = NULL;
+    xform = nullptr;
+    selectRect = nullptr;
+    selection = nullptr;
+    currentSeg = nullptr;
 }
 
 mapScene::mapScene (RiverSystem *rsys, QObject *p)
     : QGraphicsScene(p)
 {
-    xform = NULL;
-    selectRect = NULL;
-    selection = NULL;
-    currentSeg = NULL;
+    xform = nullptr;
+    selectRect = nullptr;
+    selection = nullptr;
+    currentSeg = nullptr;
 
     createTransform(rsys);
     xform = getTransform();
@@ -57,9 +57,9 @@ mapScene::mapScene (RiverSystem *rsys, QObject *p)
     showGrid();
 }
 
-mapScene::~mapScene() 
+mapScene::~mapScene()
 {
-	clearTransforms();
+    clearTransforms();
 }
 
 void mapScene::addRiverSystem(RiverSystem *rsys)
@@ -72,7 +72,7 @@ void mapScene::addRiverSystem(RiverSystem *rsys)
         // add all segments on the river
         for (int j = 0; j < river->segments->count(); j++)
         {
-            segment = NULL;
+            segment = nullptr;
             RiverSegment * seg = river->segments->at(j);
             switch (seg->type)
             {
@@ -86,7 +86,7 @@ void mapScene::addRiverSystem(RiverSystem *rsys)
             default:
                 break;
             }
-            if (segment != NULL)
+            if (segment != nullptr)
             {
                 addItem(segment);
                 connect (segment, SIGNAL(showDetail(RiverSegment *)),SLOT(showSegmentDetail(RiverSegment*)));
@@ -101,56 +101,56 @@ void mapScene::addRiverSystem(RiverSystem *rsys)
 
 QRectF mapScene::boundingRect()
 {
-	return riverRect;
+    return riverRect;
 }
 
 void mapScene::drawGrid()
 {
-	int xstart, xend;
-	int ystart, yend;
-	QPainterPath * gridPath = new QPainterPath();
-	QPen pen (Qt::gray, 1, Qt::DashDotLine);
+    int xstart, xend;
+    int ystart, yend;
+    QPainterPath * gridPath = new QPainterPath();
+    QPen pen (Qt::gray, 1, Qt::DashDotLine);
     QPointF bl (xform->reverse (riverRect.bottomLeft()));
     QPointF tl (xform->reverse (riverRect.topLeft()));
     QPointF br (xform->reverse (riverRect.bottomRight()));
     QPointF tr (xform->reverse (riverRect.topRight()));
-	if( bl.x() < tl.x() ) 
+    if( bl.x() < tl.x() )
         xstart = (int)bl.x();
-	else
+    else
         xstart = (int)tl.x();
-	if( br.x() < tr.x() )
+    if( br.x() < tr.x() )
         xend = (int)tr.x();
-	else
+    else
         xend = (int)br.x();
 
     ystart = (int)br.y();
     yend = (int)tl.y() + 1;
 
-	for (int i = xstart; i <= xend; i++)
-	{
-		gridPath->moveTo((*xform)(i, ystart));
-		for (int j = ystart + 1; j <= yend; j++)
-			gridPath->lineTo ((*xform)(i, j));
-	}
-	for (int j = ystart; j <= yend; j++)
-	{
-		gridPath->moveTo((*xform)(xstart, j));
-		for (int i = xstart + 1; i <= xend; i++)
-			gridPath->lineTo((*xform)(i, j));
-	}
-	grid.setPath (*gridPath);
-	grid.setPen (pen);
-	grid.setZValue (0);
+    for (int i = xstart; i <= xend; i++)
+    {
+        gridPath->moveTo((*xform)(i, ystart));
+        for (int j = ystart + 1; j <= yend; j++)
+            gridPath->lineTo ((*xform)(i, j));
+    }
+    for (int j = ystart; j <= yend; j++)
+    {
+        gridPath->moveTo((*xform)(xstart, j));
+        for (int i = xstart + 1; i <= xend; i++)
+            gridPath->lineTo((*xform)(i, j));
+    }
+    grid.setPath (*gridPath);
+    grid.setPen (pen);
+    grid.setZValue (0);
 }
 
 void mapScene::showGrid()
 {
-	grid.setVisible (true);
+    grid.setVisible (true);
 }
 
 void mapScene::hideGrid()
 {
-	grid.setVisible (false);
+    grid.setVisible (false);
 }
 
 void mapScene::showSegmentDetail(RiverSegment *seg)
@@ -165,7 +165,7 @@ void mapScene::showSegmentDetail(RiverSegment *seg)
 
 void mapScene::removeObject(mapObject *obj)
 {
-    if (obj->riverSegment() != NULL)
+    if (obj->riverSegment() != nullptr)
         emit deleteSegment(obj->riverSegment());
     removeItem(obj);
     delete obj;
@@ -174,131 +174,131 @@ void mapScene::removeObject(mapObject *obj)
 /*
 void mapScene::setReleases (QList<struct release *> new_rls)
 {
-	addTransports();
-	addReleases (release_sites);
+    addTransports();
+    addReleases (release_sites);
 }
 
 void mapScene::clearData()
 {
-	removeTransports();
-	removeReleases();
+    removeTransports();
+    removeReleases();
 }
 
 void mapScene::addTransports()
 {
-	int i, k;
+    int i, k;
     mapTransport * maptrns;*/
-	/* Loop through dams */
+    /* Loop through dams */
 /*	for (i = 0, k = 0; k < MAX_TRNS && i < dams.count(); i++)
-	{
-		if (dams[i] == NULL)
-			break;
-		else
-		{
-			if (dams[i]->current->dam.collector)
-			{
-				maptrns = new mapTransport(this, dams[i], xform);
-				maptransports[k] = maptrns;
-				maptrns->setZValue (4);
-				addItem (maptrns);
-				k++;
-			}
-		}
-	}
-	for (; k < MAX_TRNS; k++)
-		maptransports[k] = NULL;
+    {
+        if (dams[i] == nullptr)
+            break;
+        else
+        {
+            if (dams[i]->current->dam.collector)
+            {
+                maptrns = new mapTransport(this, dams[i], xform);
+                maptransports[k] = maptrns;
+                maptrns->setZValue (4);
+                addItem (maptrns);
+                k++;
+            }
+        }
+    }
+    for (; k < MAX_TRNS; k++)
+        maptransports[k] = nullptr;
 }
 
 void mapScene::addReleases( struct release * new_rls )
 {
-	struct release *itr;
-	struct release_site *site = release_sites;
-	int index;
-	for( itr = new_rls; itr != NULL; itr = itr->next )
-	{
-		QString itemName = QString( itr->site->seg->seg_name ) + QString( " (" ) + 
-			QString( itr->species->name ) + QString( ", " ) +
-			(&itr->stock? QString( itr->stock->name ) : QString( "Generic" )) + QString( ")" );
-		for( ; site != NULL; site = site->next )
-		{
-			if( QString( site->name ) == itemName )
+    struct release *itr;
+    struct release_site *site = release_sites;
+    int index;
+    for( itr = new_rls; itr != nullptr; itr = itr->next )
+    {
+        QString itemName = QString( itr->site->seg->seg_name ) + QString( " (" ) +
+            QString( itr->species->name ) + QString( ", " ) +
+            (&itr->stock? QString( itr->stock->name ) : QString( "Generic" )) + QString( ")" );
+        for( ; site != nullptr; site = site->next )
+        {
+            if( QString( site->name ) == itemName )
 
-				break;
-		}
-	}
-	addReleases( release_sites );
+                break;
+        }
+    }
+    addReleases( release_sites );
 }
 
 void mapScene::addReleases (QList<struct release_site *> sites)
 {
-	int k = 0;
+    int k = 0;
 //	struct release *rls, *itr;
 //	struct release_site * site = sites ;
-	mapRelease *maprls;
+    mapRelease *maprls;
 
     *//* Loop through releases *//*
-	for (k = 0; k < sites.count(); k++)
-//	for( k = 0; site != NULL && k < MAX_RELS; k++, site = site->next ) 
-	{
-		maprls = new mapRelease (this, sites[k], xform);
-		mapreleases[k] = maprls;
-		maprls->setZValue(4);
-		addItem (maprls);
-	}
-	for (; k < MAX_RELS; k++)
-		mapreleases[k] = NULL;
+    for (k = 0; k < sites.count(); k++)
+//	for( k = 0; site != nullptr && k < MAX_RELS; k++, site = site->next )
+    {
+        maprls = new mapRelease (this, sites[k], xform);
+        mapreleases[k] = maprls;
+        maprls->setZValue(4);
+        addItem (maprls);
+    }
+    for (; k < MAX_RELS; k++)
+        mapreleases[k] = nullptr;
 }
 
 void mapScene::removeTransports()
 {
-	for( int i = 0; i < MAX_TRNS; i++ )
-	{
-		if( maptransports[i] != NULL ) 
-		{
-			this->removeItem( maptransports[i] );
-			delete maptransports[i];
-			maptransports[i] = NULL;
-		}
-		else
-			break;
-	}
+    for( int i = 0; i < MAX_TRNS; i++ )
+    {
+        if( maptransports[i] != nullptr )
+        {
+            this->removeItem( maptransports[i] );
+            delete maptransports[i];
+            maptransports[i] = nullptr;
+        }
+        else
+            break;
+    }
 }
 
 void mapScene::removeReleases()
 {
-	for( int k = 0; k < MAX_RELS; k++ )
-	{
-		if( mapreleases[k] != NULL ) 
-		{
-			this->removeItem( mapreleases[k] );
-			delete mapreleases[k];
-			mapreleases[k] = NULL;
-		}
-		else
-			break;
-	}
+    for( int k = 0; k < MAX_RELS; k++ )
+    {
+        if( mapreleases[k] != nullptr )
+        {
+            this->removeItem( mapreleases[k] );
+            delete mapreleases[k];
+            mapreleases[k] = nullptr;
+        }
+        else
+            break;
+    }
 }
 */
 
 void mapScene::pushTransform(mapLocalTransform *zpt)
-{ 
-	if (xform != NULL)
-		delete xform;
-	xform = zpt; 
+{
+    if (xform != nullptr)
+        delete xform;
+    xform = zpt;
 }
 
 mapLocalTransform *mapScene::popTransform()
 {
-	mapLocalTransform *temp = xform;
-	xform = NULL;
-	return temp;
+    mapLocalTransform *temp = xform;
+    xform = nullptr;
+    return temp;
 }
 
 void mapScene::clearTransforms()
 {
-	if (xform != NULL)
-		delete xform;
-	xform = NULL;
+    if (xform != nullptr)
+        delete xform;
+    xform = nullptr;
 }
 
 //	mapScene::getTransform
@@ -307,7 +307,7 @@ void mapScene::clearTransforms()
 
 mapLocalTransform *mapScene::getTransform()
 {
-	return xform;
+    return xform;
 }
 
 //	mapScene::printMap()
@@ -315,56 +315,56 @@ mapLocalTransform *mapScene::getTransform()
 /*
 void mapScene::printMap( QPrinter *pnter )
 {
-	isPrintMode_ = true;
-	QPainter *old_painter = currPainter;
+    isPrintMode_ = true;
+    QPainter *old_painter = currPainter;
 
     QPrinter printer(QPrinter::PrinterResolution);
-	printer.setOrientation(QPrinter::Landscape) ;
-	printer.setPageSize(QPrinter::Letter) ;
+    printer.setOrientation(QPrinter::Landscape) ;
+    printer.setPageSize(QPrinter::Letter) ;
 //	printer.setMinMax ( 1,1 );
-	printer.setFromTo( 1, 1 );
-	printer.setPrintRange(QPrinter::AllPages);
+    printer.setFromTo( 1, 1 );
+    printer.setPrintRange(QPrinter::AllPages);
 
-	QPrintDialog dialog( &printer, this );
-	dialog.setMinMax( 1, 1 );
-	if( dialog.exec() ) //printer.setup (0))
-*/	
+    QPrintDialog dialog( &printer, this );
+    dialog.setMinMax( 1, 1 );
+    if( dialog.exec() ) //printer.setup (0))
+*/
 /*	{
-		QPainter p;
-        if( !p.begin( pnter ) )//&printer ) ) 
-		{               // paint on printer
+        QPainter p;
+        if( !p.begin( pnter ) )//&printer ) )
+        {               // paint on printer
             return;
         }
-	
+
 //        Q3PaintDeviceMetrics metrics( p.device() );
 //        int dpiy = metrics.logicalDpiY();
-		int dpiy = p.device()->logicalDpiY();
+        int dpiy = p.device()->logicalDpiY();
         int margin = (int) ( (2/2.54)*dpiy ); // 2 cm margins
-        
+
 //		QRect body( 0,0, metrics.width(), metrics.height() );
-		QRect body( 0, 0, p.device()->width(), p.device()->height() );
-		currPainter = &p; //set the painter
-		drawArea = body;
-		
+        QRect body( 0, 0, p.device()->width(), p.device()->height() );
+        currPainter = &p; //set the painter
+        drawArea = body;
+
 //		qMapMediator* mapMed = (qMapMediator*) ((qMapWidget*)parentWidget() )->getMapMediator();
-		QStack <mapCordset*> mapStack_;
+        QStack <mapCordset*> mapStack_;
 //		mapStack_ =  mapMed->getCordStack() ;//= ;
 
-		qMercatorTransform *trans;
-		mapCordset *defaultCord_ = new mapCordset(124.3,49.0,113.2,43.50);
-		if(mapStack_.top())
-			trans = new qMercatorTransform(body,mapStack_.top());
-		else	  
-			trans = new qMercatorTransform(body,defaultCord_);
+        qMercatorTransform *trans;
+        mapCordset *defaultCord_ = new mapCordset(124.3,49.0,113.2,43.50);
+        if(mapStack_.top())
+            trans = new qMercatorTransform(body,mapStack_.top());
+        else
+            trans = new qMercatorTransform(body,defaultCord_);
 
-		pushTransform(trans);
-		emit evRefresh();
-		//done printing
-		//popTransform();
-		delete defaultCord_;
-	}
-	currPainter = old_painter;
-	isPrintMode_ = false;
+        pushTransform(trans);
+        emit evRefresh();
+        //done printing
+        //popTransform();
+        delete defaultCord_;
+    }
+    currPainter = old_painter;
+    isPrintMode_ = false;
 }
 
 
@@ -377,11 +377,11 @@ QPointF mapScene::transPoint(QPointF qp)
 
 void mapScene::createTransform(RiverSystem *rsys)
 {
-	mapCordset *mapLimits;
-	QRect *sceneLimits;
-	double minLat, maxLat, minLon, maxLon;
-	minLat = minLon = 1000;
-	maxLat = maxLon = -1000;
+    mapCordset *mapLimits;
+    QRect *sceneLimits;
+    double minLat, maxLat, minLon, maxLon;
+    minLat = minLon = 1000;
+    maxLat = maxLon = -1000;
     mapLimits = new mapCordset(124.3, 49.0, 113.2, 43.50);
     sceneLimits = new QRect(0, 0, 700, 500);
 
@@ -394,11 +394,11 @@ void mapScene::createTransform(RiverSystem *rsys)
                 RiverSegment *rseg = rsys->rivers->at(i)->segments->at(j);
                 for (int k = 0; k < rseg->course.count(); k++)
                 {
-                    RiverPoint *p = (RiverPoint *)rseg->course.at(k);
-                    if (minLat > p->latitude->value()) minLat = p->latitude->value();
-                    if (maxLat < p->latitude->value()) maxLat = p->latitude->value();
-                    if (minLon > p->longitude->value()) minLon = p->longitude->value();
-                    if (maxLon < p->longitude->value()) maxLon = p->longitude->value();
+                    RiverPoint *p = rseg->course.at(k);
+                    if (minLat > p->latitude) minLat = p->latitude;
+                    if (maxLat < p->latitude) maxLat = p->latitude;
+                    if (minLon > p->longitude) minLon = p->longitude;
+                    if (maxLon < p->longitude) maxLon = p->longitude;
                 }
             }
         }
@@ -412,10 +412,10 @@ void mapScene::createTransform(RiverSystem *rsys)
 /*
 void mapScene::removeSelectRect()
 {
-	if( selectRect != NULL )
+    if( selectRect != nullptr )
         removeItem(selection);
-		delete selectRect;
-	selectRect = NULL;
+        delete selectRect;
+    selectRect = nullptr;
 }
 
 void mapScene::addSelectRect(QPointF p1, QPointF p2)

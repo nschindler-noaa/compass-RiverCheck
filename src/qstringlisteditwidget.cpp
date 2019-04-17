@@ -10,7 +10,7 @@ QStringListEditWidget::QStringListEditWidget(QWidget *parent) :
     ui->setupUi(this);
     setMinimumWidth(10);
     setMaximumWidth(200);
-    strList = NULL;
+    strList = nullptr;
 }
 
 QStringListEditWidget::QStringListEditWidget (QString title, QStringList *sList, QWidget *parent) :
@@ -41,7 +41,7 @@ void QStringListEditWidget::setQStringList(QStringList *sList)
         ui->listWidget->takeItem(0);
 
     strList = sList;
-    if (sList == NULL)
+    if (sList == nullptr)
     {
         strList = new QStringList();
     }

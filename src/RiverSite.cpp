@@ -13,23 +13,23 @@ RiverSite::RiverSite(QString sitetype, QString sitename)
 
 RiverSite::~RiverSite()
 {
-    if (name != NULL)
+    if (name != nullptr)
         delete name;
-    if (type != NULL)
+    if (type != nullptr)
         delete type;
-    if (location != NULL)
+    if (location != nullptr)
         delete location;
-    if (segment != NULL)
+    if (segment != nullptr)
         delete segment;
     reset();
 }
 
 void RiverSite::reset()
 {
-    name = NULL;
-    type = NULL;
-    location = NULL;
-    segment = NULL;
+    name = nullptr;
+    type = nullptr;
+    location = nullptr;
+    segment = nullptr;
     distance = 0.0;
 }
 
@@ -43,7 +43,7 @@ bool RiverSite::parse(RiverFile *rfile)
         token = rfile->popToken ();
         if (token.compare ("latlon") == 0)
         {
-            if (location != NULL)
+            if (location != nullptr)
                 delete location;
             location = new RiverPoint ();
             okay = rfile->readString(token);
@@ -73,14 +73,14 @@ bool RiverSite::parse(RiverFile *rfile)
 
 void RiverSite::setName(QString sitename)
 {
-    if (name != NULL)
+    if (name != nullptr)
         delete name;
     name = new QString (sitename);
 }
 
 void RiverSite::setLocation(RiverPoint *loc)
 {
-    if (location != NULL)
+    if (location != nullptr)
         delete location;
     location = loc;
 }

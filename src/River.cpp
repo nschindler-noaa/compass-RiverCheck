@@ -132,9 +132,9 @@ bool River::parse(RiverFile *rfile)
 bool River::construct()
 {
     bool okay = true;
-//    River *riv = NULL;
-    RiverSegment *cur_seg = NULL;
-    RiverSegment *down_seg = NULL;
+//    River *riv = nullptr;
+    RiverSegment *cur_seg = nullptr;
+    RiverSegment *down_seg = nullptr;
     QString curRiver ("");
 
     down_seg = (RiverSegment *) segments->at (0);
@@ -149,8 +149,8 @@ bool River::construct()
             cur_seg->down = down_seg;
             down_seg->up = cur_seg;
 
-            if (down_seg->top()->latitude->degrees != cur_seg->bottom()->latitude->degrees ||
-                down_seg->top()->longitude->degrees != cur_seg->bottom()->longitude->degrees)
+            if (down_seg->top()->latitude != cur_seg->bottom()->latitude ||
+                down_seg->top()->longitude != cur_seg->bottom()->longitude)
             {
                 Log::instance()->add(Log::Error, QString ("Top of %1 doesn't match bottom of %2").arg(
                                          *down_seg->name, *cur_seg->name));
@@ -219,7 +219,7 @@ bool River::initialize()
 
 RiverSegment * River::findSegment(QString name)
 {
-    RiverSegment *seg = NULL;
+    RiverSegment *seg = nullptr;
     for (int i = 0; i < segments->count(); i++)
     {
         seg = (RiverSegment *)segments->at (i);
@@ -231,7 +231,7 @@ RiverSegment * River::findSegment(QString name)
 
 RiverSegment * River::findSegment(RiverPoint *pt)
 {
-    RiverSegment *seg = NULL;
+    RiverSegment *seg = nullptr;
     bool found = false;
     for (int i = 0; !found && i < segments->count(); i++)
     {
@@ -241,7 +241,7 @@ RiverSegment * River::findSegment(RiverPoint *pt)
                 found = true;
     }
     if (!found)
-        seg = NULL;
+        seg = nullptr;
 
     return seg;
 }
@@ -302,9 +302,9 @@ bool River::deleteSegment(RiverSegment *seg)
     if (ind >= 0) //found_seg == seg)
     {
         found_seg = segments->takeAt(ind);
-        if (seg->down != NULL)
+        if (seg->down != nullptr)
             seg->down->up = seg->up;
-        if (seg->up != NULL)
+        if (seg->up != nullptr)
             seg->up->down = seg->down;
 
         switch (seg->type)

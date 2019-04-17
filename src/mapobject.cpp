@@ -8,8 +8,8 @@
 mapObject::mapObject(QGraphicsItem *parent) :
     QGraphicsObject(parent)
 {
-        rv_seg = NULL;
-        xform = NULL;
+        rv_seg = nullptr;
+        xform = nullptr;
         setAcceptHoverEvents (true);
         setAcceptedMouseButtons (Qt::LeftButton);
         itemName = QString("");
@@ -21,7 +21,7 @@ mapObject::mapObject(QGraphicsItem *parent) :
         errorHighlightPen = QPen(Qt::darkRed, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
         mouseOver = false;
-        itemOptions = NULL;
+        itemOptions = nullptr;
 }
 
 mapObject::mapObject(RiverSegment *rseg, mapTransform *xform_, QGraphicsItem *parent)
@@ -45,9 +45,9 @@ mapObject::mapObject(RiverSegment *rseg, mapTransform *xform_, QGraphicsItem *pa
     backgroundShape = shape();
     highlightPath = path();
 
-    itemOptions = NULL;
+    itemOptions = nullptr;
 //    itemOptions = createMenu();
-    itemErrors = NULL;
+    itemErrors = nullptr;
     setBoundingRect();
     setToolTip(itemName);
 }
@@ -80,10 +80,10 @@ QPainterPath mapObject::shape() const
     QPainterPath shapePath;
     QPointF qp;
 
-    if (rv_seg != NULL && xform != NULL)
+    if (rv_seg != nullptr && xform != nullptr)
     {
         RiverPoint *p = rv_seg->course.at(0);
-        qp = (*xform)(p->longitude->value(), p->latitude->value());
+        qp = (*xform)(p->longitude, p->latitude);
         shapePath.moveTo(qp);
     }
     return shapePath;
@@ -94,12 +94,12 @@ QPainterPath mapObject::path() const
     QPainterPath pathPath;
     QPointF qp;
 
-    if (rv_seg != NULL && xform != NULL)
+    if (rv_seg != nullptr && xform != nullptr)
     {
         for (int i = 0; i < rv_seg->course.count(); i++)
         {
-            qp = (*xform)(rv_seg->course.at(i)->longitude->value(),
-                          rv_seg->course.at(i)->latitude->value());
+            qp = (*xform)(rv_seg->course.at(i)->longitude,
+                          rv_seg->course.at(i)->latitude);
             if (i == 0)
                 pathPath.moveTo(qp);
             else
@@ -140,10 +140,10 @@ void mapObject::paint (QPainter *paintr, const QStyleOptionGraphicsItem *opt, QW
 /*
 QMenu * mapObject::createMenu()
 {
-    if (itemOptions != NULL)
+    if (itemOptions != nullptr)
     {
         delete itemOptions;
-        itemOptions = NULL;
+        itemOptions = nullptr;
     }
     itemOptions = new QMenu();
     itemOptions->addAction(name());
@@ -219,10 +219,10 @@ void mapObject::contextMenuEvent(QGraphicsSceneContextMenuEvent *evnt)
 
 QDialog *mapObject::createInfo()
 {
-    if(itemErrors != NULL)
+    if(itemErrors != nullptr)
     {
         delete itemErrors;
-        itemErrors == NULL;
+        itemErrors == nullptr;
     }
 
 //    QString *message;

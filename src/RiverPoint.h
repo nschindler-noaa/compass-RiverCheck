@@ -7,6 +7,9 @@
 
 #define GREAT_CIRCLE
 
+float dms2float (QString d, QString m, QString s, QString dir);
+QStringList &float2dms (float val);
+
 class dms
 {
 public:
@@ -33,6 +36,7 @@ public:
     void setText ();
     QString text ();
     float setValue (float val);
+    float setValue (QString val, QString dir);
     float setValue (int degs, int mins, int secs, QString dir);
     float setValue (QString degs, QString mins, QString secs, QString dir);
 
@@ -73,8 +77,10 @@ public:
     void clear ();
     void initialize ();
 
-    dms *latitude;
-    dms *longitude;
+    float latitude;
+    float longitude;
+//    dms *latitude;
+//    dms *longitude;
     float width;
     bool readLatLon (QString *line);
     float setLongitude (float ln);

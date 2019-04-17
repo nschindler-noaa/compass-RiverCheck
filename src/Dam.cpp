@@ -6,7 +6,7 @@ Dam::Dam(QString dname, QString rivName, QObject *parent) :
 {
     name = new QString (dname);
     type = RiverSegment::DamSegment;
-    abbrev = NULL;
+    abbrev = nullptr;
     initialize();
 
     backgroundPen = QPen(Qt::darkGray, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -15,9 +15,9 @@ Dam::Dam(QString dname, QString rivName, QObject *parent) :
 
 Dam::~Dam ()
 {
-    PowerHouse *phs = NULL;
+    PowerHouse *phs = nullptr;
     delete name;
-    if (storage != NULL)
+    if (storage != nullptr)
         delete_basin (storage);
     while (getNumPowerhouses() > 0)
     {
@@ -36,9 +36,9 @@ void Dam::reset()
 
 void Dam::clear()
 {
-    if (storage)
+    if (storage != nullptr)
         delete storage;
-    storage = NULL;
+    storage = nullptr;
     width = 0.0;
     length = 20.0;
     tailraceLength = DAM_TAILRACE_DEFAULT;
@@ -208,6 +208,7 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
 bool Dam::initialize()
 {
     bool okay = true;
+    storage = nullptr;
 
     clear();
     spillSide = Left;
@@ -227,7 +228,7 @@ bool Dam::construct ()
     // get widths from surrounding reaches
     tailraceWidth = down->upperWidth;
 //    width = tailrace_width;
-    if (up != NULL)
+    if (up != nullptr)
     {
         width = up->width > tailraceWidth? up->width: tailraceWidth;
     }
@@ -342,9 +343,9 @@ bool Dam::output(int indent, RiverFile *rfile)
     }
     rfile->writeString(indent + 1, "basin_length", QString::number(stillingLength, 'f', 2));
     rfile->writeString(indent + 1, "sgr", QString::number(sgr, 'f', 2));
-    if (abbrev != NULL && !abbrev->isEmpty())
+    if (abbrev != nullptr && !abbrev->isEmpty())
         rfile->writeString(indent + 1,"abbrev", *abbrev);
-    if (storage != NULL)
+    if (storage != nullptr)
     {
         rfile->writeString(indent + 1, "storage_basin",
                            QString::number(storage->min_volume, 'f', 2),
@@ -625,7 +626,7 @@ QGraphicsScene *Dam::sideView()
     dam = QRectF (0, 0, 40, upper_depth);
     scene->addRect(dam, backgroundPen);
 
-    if (basin != NULL)
+    if (basin != nullptr)
     {
         QRectF bsn (-(basin_length), -20, basin_length, 20);
         scene->addRect(bsn, normalPen);
@@ -664,7 +665,7 @@ QGraphicsScene *Dam::sectionA()
     }
     scene->addRect(spill, normalPen);
 
-    if (basin != NULL)
+    if (basin != nullptr)
     {
         QRectF bsn (-(basin_length), -20, basin_length, 20);
         scene->addRect(bsn, normalPen);
@@ -681,7 +682,7 @@ QGraphicsScene *Dam::sectionA()
 
 QGraphicsScene *Dam::sectionB()
 {
-    QGraphicsScene *secb = NULL;
+    QGraphicsScene *secb = nullptr;
     return secb;
 }
 */

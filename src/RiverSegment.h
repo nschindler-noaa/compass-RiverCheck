@@ -47,13 +47,13 @@ public:
 
     /** Type of River Segment. It can be DamSegment, ReachSegment (meaning a
      *  pool or free-flowing segment), or HeadwaterSegment.
-     *  There is a NullSegment for unknown types.
+     *  There is a nullptrSegment for unknown types.
      */
     enum SegmentType {
         DamSegment,
         ReachSegment,
         HeadwaterSegment,
-        NullSegment
+        nullptrSegment
     };
 
     /** Type of impound due to downstream dam. It can be NotImpounded (not

@@ -15,40 +15,40 @@ mapItem::mapItem(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
 //	map = m;
-	rv_seg = NULL;
-	xform = NULL;
+    rv_seg = nullptr;
+    xform = nullptr;
     itemName = QString("");
 
-//	pix = NULL;
-	mouseOver = false;
-	itemOptions = NULL;
+//	pix = nullptr;
+    mouseOver = false;
+    itemOptions = nullptr;
 }
 
 mapItem::mapItem(RiverSegment *rseg, mapTransform *xform_, QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
-	rv_seg = rseg;
-	xform = xform_;
-	setAcceptHoverEvents (true);
+    rv_seg = rseg;
+    xform = xform_;
+    setAcceptHoverEvents (true);
     setAcceptedMouseButtons (Qt::LeftButton);
     itemName = *(rseg->name);
 
     width = (int) (rseg->width / 1500) + 1;
-	normalPen = QPen(Qt::blue, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-	highlightPen = QPen(Qt::cyan, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    normalPen = QPen(Qt::blue, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    highlightPen = QPen(Qt::cyan, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     errorPen = QPen(Qt::magenta, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     errorHighlightPen = QPen(Qt::darkRed, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-	mouseOver = false;
+    mouseOver = false;
 
 //	pix = icon();
     shape = getShape();
     path = getPath();
 
-	itemOptions = NULL;
-	itemOptions = createMenu();
-    itemErrors = NULL;
-	setBoundingRect();
+    itemOptions = nullptr;
+    itemOptions = createMenu();
+    itemErrors = nullptr;
+    setBoundingRect();
     setToolTip(itemName);
 }
 
@@ -62,7 +62,7 @@ mapItem::~mapItem()
 
 RiverSegment *mapItem::riverSegment()
 {
-	return rv_seg;
+    return rv_seg;
 }
 
 QString mapItem::name()
@@ -70,7 +70,7 @@ QString mapItem::name()
     return QString(itemName);
 }
 /*
-QPixmap mapItem::icon() 
+QPixmap mapItem::icon()
 {
     return QPixmap(":/images/river.png");
 }*/
@@ -80,10 +80,10 @@ QPainterPath mapItem::getShape() const
     QPainterPath shapePath;
     QPointF qp;
 
-    if (rv_seg != NULL && xform != NULL)
+    if (rv_seg != nullptr && xform != nullptr)
     {
         RiverPoint *p = rv_seg->course.at(0);
-        qp = (*xform)(p->longitude->value(), p->latitude->value());
+        qp = (*xform)(p->longitude, p->latitude);
         shapePath.moveTo(qp);
     }
     return shapePath;
@@ -94,12 +94,12 @@ QPainterPath mapItem::getPath() const
     QPainterPath pathPath;
     QPointF qp;
 
-    if (rv_seg != NULL && xform != NULL)
+    if (rv_seg != nullptr && xform != nullptr)
     {
         for (int i = 0; i < rv_seg->course.count(); i++)
         {
-            qp = (*xform)(rv_seg->course.at(i)->longitude->value(),
-                          rv_seg->course.at(i)->latitude->value());
+            qp = (*xform)(rv_seg->course.at(i)->longitude,
+                          rv_seg->course.at(i)->latitude);
             if (i == 0)
                 pathPath.moveTo(qp);
             else
@@ -110,19 +110,19 @@ QPainterPath mapItem::getPath() const
 }
 
 
-void mapItem::setBoundingRect() 
+void mapItem::setBoundingRect()
 {
     QPainterPath p = getPath();
-	bounds = p.boundingRect();
-	maxX = bounds.x();
-	minX = bounds.x() - bounds.width();
-	maxY = bounds.y();
-	minY = bounds.y() - bounds.height();
+    bounds = p.boundingRect();
+    maxX = bounds.x();
+    minX = bounds.x() - bounds.width();
+    maxY = bounds.y();
+    minY = bounds.y() - bounds.height();
 }
 
 QRectF mapItem::boundingRect() const
 {
-	return bounds;
+    return bounds;
 }
 
 void mapItem::paint (QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWidget *w)
@@ -140,10 +140,10 @@ void mapItem::paint (QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWid
 
 QMenu * mapItem::createMenu()
 {
-    if (itemOptions != NULL)
+    if (itemOptions != nullptr)
     {
         delete itemOptions;
-        itemOptions = NULL;
+        itemOptions = nullptr;
     }
     itemOptions = new QMenu();
     itemOptions->addAction(name());
@@ -162,34 +162,34 @@ void mapItem::displayMenu (QPoint pos)
 
 void mapItem::hoverEnterEvent (QGraphicsSceneHoverEvent *evnt)
 {
-	mouseOver = true;
+    mouseOver = true;
     update (boundingRect());
 }
 
 void mapItem::hoverLeaveEvent (QGraphicsSceneHoverEvent *evnt)
 {
-	mouseOver = false;
+    mouseOver = false;
     update (boundingRect());
 }
 
 void mapItem::highlight()
 {
-	mouseOver = true;
+    mouseOver = true;
     update (boundingRect());
 }
 
 void mapItem::normal()
 {
-	mouseOver = false;
+    mouseOver = false;
     update (boundingRect());
 }
 
 /*
 void mapItem::contextMenu()
 {
-	QMenu menu;
-	QAction *selectAction = menu.addAction("Select");
-	menu.show();
+    QMenu menu;
+    QAction *selectAction = menu.addAction("Select");
+    menu.show();
 }*/
 
 void mapItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *evnt)
@@ -211,10 +211,10 @@ void mapItem::infoPanel()
 
 QDialog *mapItem::createInfo()
 {
-    if(itemErrors != NULL)
+    if(itemErrors != nullptr)
     {
         delete itemErrors;
-        itemErrors == NULL;
+        itemErrors == nullptr;
     }
 
     QString *message;

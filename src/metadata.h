@@ -6,9 +6,9 @@
 #define APPLICATION_NAME   "River Description File Checker"
 #define VER_MAJOR_RELEASE   1
 #define VER_MINOR_RELEASE   2
-#define VER_BUGFIX          5
+#define VER_BUGFIX          6
 #define VER_RELEASE_LEVEL  "b"
-#define BUILD_DATE         "2017-01-19"
+#define BUILD_DATE         "2019-04-17"
 #define MODIFIER           "Neal Schindler"
 #define CREATOR            "Neal Schindler"
 #define CREATED_DATE       "2013 Jan 02"

@@ -109,7 +109,7 @@ public:
 
 private:
     /** Pointer to the storage basin info */
-    Basin *storage;  /**< Storage basin pointer. If no basin, this is NULL. */
+    Basin *storage;  /**< Storage basin pointer. If no basin, this is nullptr. */
 
     /* physical characteristics; some may be computed from others,
      * depending on which were found in the river description file.

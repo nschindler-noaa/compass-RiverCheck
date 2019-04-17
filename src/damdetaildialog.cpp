@@ -35,11 +35,11 @@ DamDetailDialog::DamDetailDialog(QWidget *parent) :
     connect (ui->pushButton_save, SIGNAL(clicked()), SLOT(saveData()));
     connect (ui->pushButton_revert, SIGNAL(clicked()), SLOT(resetData()));
 
-    dam = NULL;
+    dam = nullptr;
 
     topView = new SeeView (this);
     connect (topView, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
-    segTopView = new DamTopViewItem (NULL);
+    segTopView = new DamTopViewItem (nullptr);
     segUpTopView = new ReachTopViewItem (segTopView);
     segDownTopView = new ReachTopViewItem (segTopView);
     topView->addItem(segTopView);
@@ -49,7 +49,7 @@ DamDetailDialog::DamDetailDialog(QWidget *parent) :
 
     sideView = new SeeView (this);
     connect (sideView, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
-    segSideView = new DamSideViewItem (NULL);
+    segSideView = new DamSideViewItem (nullptr);
     segUpSideView = new ReachSideViewItem(segSideView);
     segDownSideView = new ReachSideViewItem (segSideView);
     sideView->addItem(segSideView);
@@ -59,7 +59,7 @@ DamDetailDialog::DamDetailDialog(QWidget *parent) :
 
     sectionView = new SeeView (this);
     connect (sectionView, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
-    segSectionView = new DamSectionItem (NULL);
+    segSectionView = new DamSectionItem (nullptr);
     segUpSectionView = new ReachSectionItem (segSectionView);
     segDownSectionView = new ReachSectionItem (segSectionView);
     sectionView->addItem(segSectionView);
@@ -97,7 +97,7 @@ void DamDetailDialog::setSegment(RiverSegment *seg)
 
 void DamDetailDialog::setData()
 {
-    if (dam != NULL)
+    if (dam != nullptr)
     {
         floor_elev = dam->getFloorElev();//dam->floorElev;
         tailrace_elev = dam->getTailraceElev();//dam->tailraceElev;
@@ -150,7 +150,7 @@ void DamDetailDialog::setItems()
     float up_offset = dam_length / scaleFactor + 2.0;
     float down_offset = (tailrace_length / 10.0) / scaleFactor + 2.0;
 
-    if (dam != NULL)
+    if (dam != nullptr)
     {
         upReach = (Reach *)dam->up;
         downReach = (Reach *)dam->down;
@@ -193,7 +193,7 @@ void DamDetailDialog::setItems()
                                          -forebay_elev / scaleFactor, //(floor_elev / scaleFactor - 10.0),
                                          800.0 / scaleFactor,
                                          upper_depth / scaleFactor);//-(upper_depth / scaleFactor + 20.0));
-        if (upReach != NULL)
+        if (upReach != nullptr)
         {
             float upReachLength = upReach->length * 528.0;
             segUpTopView->setValues(upReachLength / scaleFactor,
@@ -219,7 +219,7 @@ void DamDetailDialog::setItems()
             segUpSectionView->setValues(0,0,0,0);
         }
 
-        if (downReach != NULL)
+        if (downReach != nullptr)
         {
             float downReachLength = downReach->length * 5280.0 / 10.0;
             segDownTopView->setValues(downReachLength / scaleFactor,
@@ -283,7 +283,7 @@ void DamDetailDialog::updateViews()
     ui->graphicsView_top->setSceneRect(-100, -400, 200, 800);
 
 
-/*    if (dam != NULL)
+/*    if (dam != nullptr)
     {
         ui->graphicsView_top->setScene(topView());
         ui->graphicsView_side->setScene(sideView());
@@ -294,12 +294,12 @@ void DamDetailDialog::updateViews()
 SeeView * DamDetailDialog::topView()
 {
     float width = dam->width;
-    if (dam->up != NULL && width < dam->up->width)
+    if (dam->up != nullptr && width < dam->up->width)
         width = dam->up->width;
     if (width < dam->down->upper_width)
         width = dam->down->upper_width;
 
-    if (top != NULL)
+    if (top != nullptr)
         delete top;
     top = new SeeView(this);
     connect (top, SIGNAL(scaleChanged(int)), SLOT(scale(int)));
@@ -317,7 +317,7 @@ SeeView * DamDetailDialog::topView()
 
 SeeView * DamDetailDialog::sideView()
 {
-    if (side != NULL)
+    if (side != nullptr)
         delete side;
     side = new SeeView(this);
     connect (side, SIGNAL(scaleChanged(int)), SLOT(scale(int)));
@@ -335,12 +335,12 @@ SeeView * DamDetailDialog::sideView()
 SeeView * DamDetailDialog::sectionA()
 {
 //    float width = dam->width;
-    if (dam->up != NULL && width < dam->up->width)
+    if (dam->up != nullptr && width < dam->up->width)
         width = dam->up->width;
     if (width < dam->down->upper_width)
         width = dam->down->upper_width;
 
-    if (secA != NULL)
+    if (secA != nullptr)
         delete secA;
     secA = new SeeView(this);
     connect (secA, SIGNAL(scaleChanged(int)), SLOT(scale(int)));
@@ -440,9 +440,9 @@ void DamDetailDialog::saveData()
     dam->setSpillwayWidth(spill_width);// spillwayWidth = spill_width;
     dam->setSpillSide(spill_side);// spillSide = spill_side;
     dam->construct();
-    if (dam->up != NULL)
+    if (dam->up != nullptr)
         construct (dam->up);
-    if (dam->down != NULL)
+    if (dam->down != nullptr)
         construct (dam->down);
 
     emit dataChanged();
@@ -487,7 +487,7 @@ QPainterPath DamDetailDialog::drawDamTop_back()
     damtop.setFillRule(Qt::WindingFill);
 
     // draw down seg
-    if (dam->down != NULL)
+    if (dam->down != nullptr)
     {
         segwidth2 = dam->down->width / 2.0;
         segupwidth2 = dam->down->upper_width / 2.0;
@@ -503,7 +503,7 @@ QPainterPath DamDetailDialog::drawDamTop_back()
     }
 
     // draw up seg
-    if (dam->up != NULL)
+    if (dam->up != nullptr)
     {
         segwidth2 = dam->up->width / 2.0;
         segupwidth2 = dam->up->upper_width / 2.0;
@@ -558,7 +558,7 @@ QPainterPath DamDetailDialog::drawDamSide_back()
     damside.addRect(-20, -floor, 20, floor - tailrace);
 
     // draw down seg
-    if (dam->down != NULL)
+    if (dam->down != nullptr)
     {
         segdowndepth = dam->down->lower_depth;
         segupdepth = dam->down->upper_depth;
@@ -573,7 +573,7 @@ QPainterPath DamDetailDialog::drawDamSide_back()
         }
     }
     // draw up seg
-    if (dam->up != NULL)
+    if (dam->up != nullptr)
     {
         segdowndepth = dam->up->lower_depth;
         segupdepth = dam->up->upper_depth;
@@ -614,7 +614,7 @@ QPainterPath DamDetailDialog::drawDamSecA_back()
     damsecA.addRect(startPtX, -startPtY, dam->down->width, -dam->down->upper_depth);
 
     // draw down seg
-    if (dam->down != NULL)
+    if (dam->down != nullptr)
     {
         segdepth = dam->down->upper_depth;
         segbedwidth2 = dam->down->bed_width / 2.0;
@@ -629,7 +629,7 @@ QPainterPath DamDetailDialog::drawDamSecA_back()
         }
     }
     // draw up seg
-    if (dam->up != NULL)
+    if (dam->up != nullptr)
     {
         segdepth = dam->up->lower_depth;
         segbedwidth2 = dam->up->bed_width / 2.0;

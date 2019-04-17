@@ -28,10 +28,6 @@ enum Location {
 };
 
 
-#ifndef NULL
-#define NULL ((void *)0.0)
-#endif
-
 // some math definitions
 // PI
 #ifndef M_PI
@@ -49,5 +45,7 @@ enum Location {
 #define LENGTH_SCALE (.20)
 #define HEIGHT_SCALE (1.0) // not used
 
+
+#define PREC (.0000001)
 
 #endif // DEFINITIONS_H

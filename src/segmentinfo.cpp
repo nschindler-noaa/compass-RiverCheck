@@ -8,7 +8,7 @@ SegmentInfo::SegmentInfo(Side loc, QWidget *parent) :
 {
     ui->setupUi(this);
     setup(loc);
-    segment = NULL;
+    segment = nullptr;
     connect (ui->pushButton_goto, SIGNAL(clicked()), SLOT(gotoClicked()));
 }
 
@@ -56,7 +56,7 @@ void SegmentInfo::addSegment(RiverSegment *seg)
 {
     double area;
     segment = seg;
-    if (segment != NULL)
+    if (segment != nullptr)
     {
         ui->textEdit_name->setText(*seg->name);
         switch (side)
@@ -147,7 +147,7 @@ UpperSegmentInfo::~UpperSegmentInfo()
 void UpperSegmentInfo::addSegment(RiverSegment *seg)
 {
     segment = seg;
-    if (segment != NULL)
+    if (segment != nullptr)
     {
         ui->textEdit_name->setText(*seg->name);
     }
@@ -177,7 +177,7 @@ LowerSegmentInfo::~LowerSegmentInfo()
 void LowerSegmentInfo::addSegment(RiverSegment *seg)
 {
     segment = seg;
-    if (segment != NULL)
+    if (segment != nullptr)
     {
         ui->textEdit_name->setText(*seg->name);
     }

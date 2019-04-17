@@ -6,10 +6,53 @@
 #include <QString>
 #include <QStringList>
 
-dms::dms ()
+
+float dms2float (QString d, QString m, QString s, QString dir)
+{
+    float val = 0.0;
+    float deg = d.toFloat();
+    float min = m.toFloat();
+    float sec = s.toFloat();
+    int sign = 1;
+    if (dir.contains("S") || dir.contains("W"))
+        sign = -1;
+
+    val = deg + min/60 + sec/3600;
+    val *= sign;
+
+    return val;
+}
+
+QStringList &float2dms (float val)
+{
+    QStringList *ql = new QStringList ();
+    int d = 0, m = 0, s = 0, sign = 1;
+    float min = 0, sec = 0;
+    QString dir ("EN");
+
+    if (val < 0)
+    {
+        dir = QString ("WS");
+        sign = -1;
+        val *= sign;
+    }
+    d = static_cast<int>(val);
+    min = (val - d) * 60;
+    m = static_cast<int>(min);
+    sec = (min - m) * 60;
+    s = static_cast<int>(sec);
+
+    ql->append(QString::number(d));
+    ql->append(QString::number(m));
+    ql->append(QString::number(s));
+    ql->append(dir);
+
+    return *ql;
+}
+
+/*dms::dms ()
 {
     setup ();
-
     setText();
 }
 
@@ -17,16 +60,25 @@ dms::dms (QString str)
 {
     setup();
     QStringList list (str.split (' ', QString::SkipEmptyParts));
-    int d, m, s;
+    switch (list.count())
+    {
+    case 4:
+        setValue(list.at(0), list.at(1), list.at(2), list.at(3));
+        break;
+    case 2:
+    case 1:
+        setValue (list.at(0).toFloat());
+
+    }
     if (list.count() == 4)
     {
-        setValue (list.at(0), list.at(1), list.at(2), list.at(3));
+        setValue (
     }
-    else
+    else if (list.count() == 1)
     {
-        d = 0; m = 0; s = 0; sign = 1; degrees = 0.0;
-        setText();
+        setValue (list.at(0).toFloat());
     }
+    setText();
 }
 
 dms::dms (QString d, QString m, QString s, QString dir)
@@ -94,6 +146,12 @@ float dms::setValue(float val)
     return degrees;
 }
 
+float dms::setValue(QString val, QString dir)
+{
+    float degval = val.toFloat();
+    setValue(degval);
+}
+
 float dms::setValue(int degs, int mins, int secs, QString dir)
 {
     deg = degs;
@@ -159,7 +217,7 @@ bool dms::equals(const dms rhs)
              direction->compare(*rhs.direction) == 0);
 
     return equal;
-}
+}*/
 
 RiverPoint::RiverPoint()
 {
@@ -167,8 +225,8 @@ RiverPoint::RiverPoint()
 }
 RiverPoint::RiverPoint(const RiverPoint &other)
 {
-    longitude = new dms (*other.longitude);
-    latitude = new dms (*other.latitude);
+    longitude = other.longitude;
+    latitude = other.latitude;
     width = other.width;
 }
 RiverPoint::~RiverPoint ()
@@ -177,16 +235,13 @@ RiverPoint::~RiverPoint ()
 }
 void RiverPoint::initialize ()
 {
-    longitude = new dms ();
-    latitude = new dms ();
+    longitude = 0.0;
+    latitude = 0.0;
     width = 0.0;
 }
 void RiverPoint::clear ()
 {
-    if (longitude != NULL)
-        delete longitude;
-    if (latitude != NULL)
-        delete latitude;
+    initialize();
 }
 
 bool RiverPoint::readLatLon (QString *line)
@@ -196,12 +251,8 @@ bool RiverPoint::readLatLon (QString *line)
 
     if (list.count() == 8)
     {
-        latitude->setValue(list.at(0), list.at(1), list.at(2), list.at(3));
-        longitude->setValue(list.at(4), list.at(5), list.at(6), list.at(7));
-/*        setLat(list.at(0), list.at(1), list.at(2));
-        setLatDir(list.at(3));
-        setLon(list.at(4), list.at(5), list.at(6));
-        setLonDir(list.at(7));*/
+        latitude = dms2float(list.at(0), list.at(1), list.at(2), list.at(3));
+        longitude = dms2float(list.at(4), list.at(5), list.at(6), list.at(7));
     }
     else
     {
@@ -213,65 +264,51 @@ bool RiverPoint::readLatLon (QString *line)
 
 float RiverPoint::setLongitude (const float x)
 {
-    return longitude->setValue(x);
+    return longitude = x;
 /*    lon = x;
     return lon;*/
 }
 
 float RiverPoint::setLongitude (int d, int m, int s, QString dir)
 {
-    return longitude->setValue(d, m, s, dir);
-/*    lon = (double)d + (((double)m + ((double)s / 60.0)) / 60.0);
-    return lon;*/
+    longitude = d + m/60.0 + s/3600.0;
+    setLonDir(dir);
+    return longitude;
 }
 
 float RiverPoint::setLongitude (QString deg, QString min, QString sec, QString dir)
 {
-    return longitude->setValue(deg, min, sec, dir);
-/*    int d = deg.toInt ();
-    int m = min.toInt ();
-    int s = sec.toInt ();
-    return setLon (d, m, s);*/
+    return longitude = dms2float(deg, min, sec, dir);
 }
 
 void RiverPoint::setLonDir (QString ew)
 {
     if (ew.contains ("W", Qt::CaseInsensitive))
-        longitude->sign = -1;
-    else
-        longitude->sign =  1;
+        longitude *= -1;
 }
 
 
 float RiverPoint::setLatitude (const float x)
 {
-    return longitude->setValue(x);
-/*    lat = x;
-    return lat;*/
+    return latitude = x;
 }
 
 float RiverPoint::setLatitude (int d, int m, int s, QString dir)
 {
-    return longitude->setValue(d, m, s, dir);
-/*    lat = (double)d + (((double)m + ((double)s / 60.0)) / 60.0);
-    return lat;*/
+    latitude = d + m/60.0 + s/3600.0;
+    setLatDir(dir);
+    return latitude;
 }
 
 float RiverPoint::setLatitude (QString deg, QString min, QString sec, QString dir)
 {
-    return longitude->setValue(deg, min, sec, dir);
-/*    int d = deg.toInt ();
-    int m = min.toInt ();
-    int s = sec.toInt ();
-    return setLat (d, m, s);*/
+    return longitude = dms2float(deg, min, sec, dir);
 }
 
 void RiverPoint::setLatDir (QString ns)
 {
-    if (ns.compare ("S", Qt::CaseInsensitive) == 0)
-        latitude->sign = -1;
-    else
-        latitude->sign =  1;
+    if (ns.contains ("S", Qt::CaseInsensitive))
+        latitude *= -1;
 }
 
 float RiverPoint::setWidth (const float wd)
@@ -282,19 +319,15 @@ float RiverPoint::setWidth (const float wd)
 
 bool RiverPoint::equals (const RiverPoint rhs)
 {
-    return (latitude->equals (*(rhs.latitude)) &&
-            longitude->equals (*(rhs.longitude)) &&
-            width == rhs.width);
-/*    float prec = .0000001;
     bool equal = true;
-    if (lon < rhs.lon - prec || lon > rhs.lon + prec)
+    if (longitude < rhs.longitude - PREC || longitude > rhs.longitude + PREC)
         equal = false;
-    if (lat < rhs.lat - prec || lat > rhs.lat + prec)
+    if (latitude < rhs.latitude - PREC || latitude > rhs.latitude + PREC)
         equal = false;
-    if (width < rhs.width - prec || width > rhs.width + prec)
+    if (width < rhs.width - PREC || width > rhs.width + PREC)
         equal = false;
 
-    return equal;*/
+    return equal;
 }
 
 bool RiverPoint::operator == (const RiverPoint rhs)
@@ -308,11 +341,11 @@ bool RiverPoint::operator != (const RiverPoint rhs)
 /** \brief Compute distance between two geographic points.
  * If GREAT_CIRCLE is defined, it will calculate the distance
  * with great circles. If not, it will calculate the distance
- * using a lattitude adjusted cartesian distance (the cos(y0(pi/180)) factor).
+ * using a latitude adjusted cartesian distance (the cos(y0(pi/180)) factor).
  * The result is multiplied by 69.0468 to get statute miles.
- * \param y0 lattitude of first point
+ * \param y0 latitude of first point
  * \param x0 longitude of first point
- * \param y1 lattitude of second point
+ * \param y1 latitude of second point
  * \param x1 longitude of second point
  * \return distance
  */
@@ -338,12 +371,8 @@ double gc_dist (double y0, double x0, double y1, double x1)
 double RiverPoint::calcDistance(RiverPoint *pt)
 {
     double result = 0.0;
-    if (latitude->value() != pt->latitude->value()
-            || longitude->value() != pt->longitude->value())
-    {
-        result = gc_dist (latitude->value(), longitude->value(),
-                      pt->latitude->value(), pt->longitude->value());
-    }
+    result = gc_dist (latitude, longitude,
+                  pt->latitude, pt->longitude);
 
 /*    double londiff, dy, dx, result = 0.0;
 
@@ -353,7 +382,7 @@ double RiverPoint::calcDistance(RiverPoint *pt)
     dx = londiff * cos (latitude->value() * (M_PI_180));
 
     result = sqrt ((dx * dx) + (dy * dy));
-    result *= 69.0468;    /* statute miles */
+    result *= 69.0468;    // statute miles */
 
     return result;
 }
@@ -361,34 +390,13 @@ double RiverPoint::calcDistance(RiverPoint *pt)
 QString RiverPoint::text ()
 {
     QString *txt = new QString ("");
-    txt->append(QString("%1 %2").arg (latitude->text(), longitude->text()));
-
-/*    int d, m, s;
-    double min, sec;
-    d = (int) (lon);
-    min = (lon - d) * 60.0;
-    m = (int) (min);
-    sec = (min - m) * 60.0;
-    s = (int) (sec);
-    txt->append (QString ("%1 %2 %3 ").arg
-                 (QString::number (d), QString::number (m), QString::number (s)));
-    if (lon > 0.0)
-        txt->append ("E ");
-    else
-        txt->append ("W ");
-
-    d = (int) (lat);
-    min = (lon - d) * 60.0;
-    m = (int) (min);
-    sec = (min - m) * 60.0;
-    s = (int) (sec);
-    txt->append (QString ("%1 %2 %3 ").arg
-                 (QString::number (d), QString::number (m), QString::number (s)));
-    if (lat > 0.0)
-        txt->append ("N");
-    else
-        txt->append ("S");
-*/
+    QStringList lat = float2dms(latitude);
+    QStringList lon = float2dms(longitude);
+    QString latdir = latitude < 0? QString("S") : QString("N");
+    QString londir = longitude < 0? QString ("W") : QString ("E");
+    txt->append(QString("%1 %2 %3 %4 %5 %6 %7 %8").arg (
+                    lat.at(0), lat.at(1), lat.at(2), latdir,
+                    lon.at(0), lon.at(1), lon.at(2), londir));
     return *txt;
 }
 
@@ -401,22 +409,4 @@ bool RiverPoint::output(int indent, RiverFile *rfile)
     return okay;
 }
 
-/*
-RiverPoint *newPoint ()
-{
-    RiverPoint *p = new RiverPoint;// *) malloc (sizeof (RiverPoint));
-    p->lat = 0.0;
-    p->lon = 0.0;
-    p->width = 0.0;
-    return p;
-}
-
-void deletePoint (RiverPoint *&rpt)
-{
-    rpt->lat = 0.0;
-    rpt->lon = 0.0;
-    rpt->width = 0.0;
-    delete (rpt);
-    rpt = NULL;
-}*/
 

@@ -20,7 +20,7 @@ MainWindow::MainWindow (QWidget *parent) :
     setMinimumSize(1000, 800);
 
     system = new RiverSystem (this);
-    riv_desc = NULL;
+    riv_desc = nullptr;
 
     connect (ui->action_File_Open, SIGNAL(triggered()), SLOT(file_open()));
     connect (ui->action_File_Save, SIGNAL(triggered()), SLOT(file_save()));
@@ -84,12 +84,12 @@ MainWindow::~MainWindow ()
     {
         saveChanges();
     }
-    if (system != NULL)
+    if (system != nullptr)
         delete system;
-    system = NULL;
-    if (riv_desc != NULL)
+    system = nullptr;
+    if (riv_desc != nullptr)
         delete riv_desc;
-    riv_desc = NULL;
+    riv_desc = nullptr;
     delete ui;
 }
 
@@ -129,8 +129,8 @@ void MainWindow::file_open ()
     connect (riv_desc, SIGNAL(dataChanged()), SLOT(riverDataChanged()));
 
     openFile();
-    currentDam = NULL;
-    currentReach = NULL;
+    currentDam = nullptr;
+    currentReach = nullptr;
 }
 
 void MainWindow::file_save ()
@@ -149,7 +149,7 @@ void MainWindow::file_save_as ()
 
 void MainWindow::file_revert()
 {
-    if (riv_desc != NULL)
+    if (riv_desc != nullptr)
     {
         riv_desc->close();
         openFile();
@@ -197,11 +197,11 @@ void MainWindow::openFile ()
     bool okay = true;
     showMap();
 
-    if (riv_desc != NULL)
+    if (riv_desc != nullptr)
     {
-        if (system != NULL)
+        if (system != nullptr)
             delete system;
-        system = NULL;
+        system = nullptr;
 
         system = new RiverSystem (this);
         system->initialize();
@@ -312,13 +312,13 @@ void MainWindow::displaySegment(RiverSegment *seg)
 
 void MainWindow::showDamPage()
 {
-    if (currentDam == NULL)
+    if (currentDam == nullptr)
     {
         if (system->dams->count() > 0)
             currentDam = (Dam *)(system->findSegment(system->dams->at(0)));
     }
 
-    if (currentDam == NULL)
+    if (currentDam == nullptr)
     {
         showMap();
     }
@@ -327,7 +327,7 @@ void MainWindow::showDamPage()
         ui->DamName->setText(*currentDam->name);
         damDialog->setSegment(currentDam);
         damDialogDown->addSegment(currentDam->down);
-        if (currentDam->up == NULL)
+        if (currentDam->up == nullptr)
             damDialogUp->hide();
         else
         {
@@ -346,13 +346,13 @@ void MainWindow::showDam(Dam *dam)
 
 void MainWindow::showReachPage()
 {
-    if (currentReach == NULL)
+    if (currentReach == nullptr)
     {
         if (system->reaches->count() > 0)
             currentReach = (Reach *)(system->findSegment(system->reaches->at(0)));
     }
 
-    if (currentReach == NULL)
+    if (currentReach == nullptr)
     {
         showMap();
     }
@@ -360,21 +360,21 @@ void MainWindow::showReachPage()
     {
         ui->ReachName->setText(*currentReach->name);
         reachDialog->setSegment(currentReach);
-        if (currentReach->down == NULL)
+        if (currentReach->down == nullptr)
             reachDialogDown->hide();
         else
         {
             reachDialogDown->addSegment(currentReach->down);
             reachDialogDown->show();
         }
-        if (currentReach->up == NULL)
+        if (currentReach->up == nullptr)
             reachDialogUp->hide();
         else
         {
             reachDialogUp->addSegment(currentReach->up);
             reachDialogUp->show();
         }
-        if (currentReach->fork == NULL)
+        if (currentReach->fork == nullptr)
             reachDialogFork->hide();
         else
         {

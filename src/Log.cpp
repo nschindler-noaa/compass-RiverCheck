@@ -3,11 +3,11 @@
 #include "Log.h"
 #define DEFAULT_LOGNAME  "COMPASSXXXX.log"
 
-static Log *outputlog = NULL;
+static Log *outputlog = nullptr;
 
 Log *Log::instance (QObject *parent)
 {
-    if (outputlog == NULL)
+    if (outputlog == nullptr)
         outputlog = new Log (parent);
 
     return outputlog;
@@ -15,7 +15,7 @@ Log *Log::instance (QObject *parent)
 
 Log *Log::instance (QString filename, QObject *parent)
 {
-    if (outputlog == NULL)
+    if (outputlog == nullptr)
         outputlog = new Log (filename);
 
     return outputlog;
@@ -68,15 +68,15 @@ void Log::setLogFile (QString filename)
 Log::~Log()
 {
     deleteLogFile ();
-    outputlog = NULL;
+    outputlog = nullptr;
 }
 
 
 void Log::deleteLogFile ()
 {
-    if (outputlog != NULL)
+    if (outputlog != nullptr)
     {
-        if (logFile != NULL)
+        if (logFile != nullptr)
         {
             logFile->close ();
             delete logFile;

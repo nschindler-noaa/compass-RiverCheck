@@ -35,9 +35,9 @@ void RiverSegment::setup ()
     reset ();
     width = 0.0;
     type = (SegmentType) -1;
-    up = (RiverSegment *)NULL;
-    down = (RiverSegment *)NULL;
-    fork = (RiverSegment *)NULL;
+    up = (RiverSegment *)nullptr;
+    down = (RiverSegment *)nullptr;
+    fork = (RiverSegment *)nullptr;
     backgroundPen = QPen(Qt::darkGray, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     normalPen = QPen(Qt::blue, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
@@ -179,7 +179,7 @@ short RiverSegment::findErrors ()
 {
     error = 0;
 
-    if (down != NULL)
+    if (down != nullptr)
     {
         if (*bottom() != *(down->top()))
             error |= LatLonLower;
@@ -188,7 +188,7 @@ short RiverSegment::findErrors ()
         if (lowerDepth != down->upperDepth)
             error |= DepthLower;
     }
-    if (up != NULL)
+    if (up != nullptr)
     {
         if (*top() != *(up->bottom()))
             error |= LatLonUpper;
@@ -197,7 +197,7 @@ short RiverSegment::findErrors ()
         if (upperDepth != up->lowerDepth)
             error |= DepthUpper;
     }
-    if (fork != NULL)
+    if (fork != nullptr)
     {
         if (*top() != *(up->bottom()))
             error |= LatLonUpper;
@@ -299,12 +299,12 @@ RiverSegment::Impounded RiverSegment::getImpound()
 {
     impound = NotImpounded;
     RiverSegment *down_seg = down;
-    while (down_seg != NULL &&
+    while (down_seg != nullptr &&
            down_seg->type != DamSegment)
     {
         down_seg = down_seg->down;
     }
-    if (down_seg != NULL)
+    if (down_seg != nullptr)
     {
         if (down_seg->type == DamSegment)
         {
@@ -325,12 +325,12 @@ void RiverSegment::setImpound()
 {
     impound = NotImpounded;
     RiverSegment *down_seg = down;
-    while (down_seg != NULL &&
+    while (down_seg != nullptr &&
            down_seg->type != DamSegment)
     {
         down_seg = down_seg->down;
     }
-    if (down_seg != NULL)
+    if (down_seg != nullptr)
     {
         if (down_seg->type == DamSegment)
         {

@@ -17,13 +17,13 @@ ReachDetailDialog::ReachDetailDialog(QWidget *parent) :
     connect (ui->pushButton_save, SIGNAL(clicked()), SLOT(saveData()));
     connect (ui->pushButton_revert, SIGNAL(clicked()), SLOT(resetData()));
 
-    reach = NULL;
+    reach = nullptr;
 
     topView = new SeeView (this);
     connect (topView, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
 //    topViewDown = new SeeView (this);
 //    connect (topViewDown, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
-    segTopView = new ReachTopViewItem (NULL) ;
+    segTopView = new ReachTopViewItem (nullptr) ;
     segUpTopView = new ReachTopViewItem (segTopView);
     segDownTopView = new ReachTopViewItem (segTopView);
     segUpDamTopView = new QGraphicsRectItem (segTopView);
@@ -42,7 +42,7 @@ ReachDetailDialog::ReachDetailDialog(QWidget *parent) :
     connect (sideView, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
 //    sideViewDown = new SeeView (this);
 //    connect (sideViewDown, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
-    segSideView = new ReachSideViewItem (NULL);
+    segSideView = new ReachSideViewItem (nullptr);
     segUpSideView = new ReachSideViewItem (segSideView);
     segDownSideView = new ReachSideViewItem (segSideView);
     segUpDamSideView = new QGraphicsRectItem (segSideView);
@@ -58,7 +58,7 @@ ReachDetailDialog::ReachDetailDialog(QWidget *parent) :
 
     secViewUpper = new SeeView (this);
     connect (secViewUpper, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
-    segSectionUpper = new ReachSectionItem (NULL);
+    segSectionUpper = new ReachSectionItem (nullptr);
     segUpSectionLower = new ReachSectionItem (segSectionUpper);
     segDamSectionLower = new QGraphicsRectItem (segSectionUpper);
     secViewUpper->addItem(segSectionUpper);
@@ -68,7 +68,7 @@ ReachDetailDialog::ReachDetailDialog(QWidget *parent) :
 
     secViewLower = new SeeView (this);
     connect (secViewLower, SIGNAL(scaleChanged(float)), SLOT(setScale(float)));
-    segSectionLower = new ReachSectionItem (NULL);
+    segSectionLower = new ReachSectionItem (nullptr);
     segDownSectionUpper = new ReachSectionItem (segSectionLower);
     segDamSectionUpper = new QGraphicsRectItem (segSectionLower);
     secViewLower->addItem(segSectionLower);
@@ -97,7 +97,7 @@ void ReachDetailDialog::setSegment(RiverSegment *seg)
 {
     reach = (Reach *)seg;
     canAddViews = false;
-    if (reach != NULL)
+    if (reach != nullptr)
     {
         setData();
         updateViews();
@@ -109,7 +109,7 @@ void ReachDetailDialog::setData()
     float uprArea = 0.0;
     float lwrArea = 0.0;
 
-    if (reach != NULL)
+    if (reach != nullptr)
     {
         length = reach->length * 528.0;
         width = reach->width;
@@ -165,7 +165,7 @@ void ReachDetailDialog::setItems()
     up_offset = 2.0;
     down_offset = 2.0;
 
-    if (reach != NULL && canAddViews)
+    if (reach != nullptr && canAddViews)
     {
         upReach = (Reach *)(reach->up);
         downReach = (Reach *)(reach->down);
@@ -216,7 +216,7 @@ void ReachDetailDialog::setItems()
                                    (lower_width / 10.0) / scaleFactor,
                                    -(lower_depth + 40.0) / scaleFactor);
 
-        if (upReach != NULL &&
+        if (upReach != nullptr &&
                 upReach->type == RiverSegment::DamSegment)
         {
             up_offset = 6.0;
@@ -241,7 +241,7 @@ void ReachDetailDialog::setItems()
             segDamSectionLower->setRect(0,0,0,0);
         }
 
-        if (upReach == NULL)
+        if (upReach == nullptr)
         {
             segUpTopView->setValues(0, 0, 0, 0, 0);
             segUpSideView->setValues(0, 0, 0, 0, 0, 0);
@@ -267,7 +267,7 @@ void ReachDetailDialog::setItems()
                                          upReach->lowerElev / scaleFactor);
         }
 
-        if (downReach != NULL &&
+        if (downReach != nullptr &&
                 downReach->type == RiverSegment::DamSegment)
         {
             down_offset = 6.0;
@@ -292,7 +292,7 @@ void ReachDetailDialog::setItems()
             segDamSectionUpper->setRect(0,0,0,0);
         }
 
-        if (downReach == NULL)
+        if (downReach == nullptr)
         {
             segDownTopView->setValues(0, 0, 0, 0, 0);
             segDownSideView->setValues(0, 0, 0, 0, 0, 0);
@@ -437,9 +437,9 @@ void ReachDetailDialog::saveData()
     reach->upperWidth = upper_width;
     reach->bedWidth = bed_width;
     reach->construct();
-    if (reach->up != NULL)
+    if (reach->up != nullptr)
         construct(reach->up);
-    if (reach->down != NULL)
+    if (reach->down != nullptr)
         construct(reach->down);
     emit dataChanged();
 }

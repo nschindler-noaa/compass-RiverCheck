@@ -8,7 +8,7 @@
 #include "Dam.h"
 #include "Log.h"
 
-RiverSystem *riverSystem = NULL;
+RiverSystem *riverSystem = nullptr;
 
 RiverSystem::RiverSystem(QObject *parent) :
     QObject(parent)
@@ -276,10 +276,10 @@ bool RiverSystem::parse(RiverFile *rfile)
 bool RiverSystem::construct()
 {
     bool done = false;
-    River *cur_riv = NULL;
-    River *down_riv = NULL;
-    RiverSegment *cur_seg = NULL;
-    RiverSegment *down_seg = NULL;
+    River *cur_riv = nullptr;
+    River *down_riv = nullptr;
+    RiverSegment *cur_seg = nullptr;
+    RiverSegment *down_seg = nullptr;
     QString curRiver ("");
 
     for (int i = 0; !done && i < rivers->count(); i++)
@@ -289,8 +289,8 @@ bool RiverSystem::construct()
     }
     for (int i = 1; i < rivers->count(); i++)
     {
-        cur_seg = NULL;
-        down_seg = NULL;
+        cur_seg = nullptr;
+        down_seg = nullptr;
         done = false;
         cur_riv = (River *)rivers->at(i);
         cur_seg = (RiverSegment *)cur_riv->segments->at(0);
@@ -300,7 +300,7 @@ bool RiverSystem::construct()
             {
                 down_riv = (River *)rivers->at(j);
                 down_seg = down_riv->findSegment(cur_seg->bottom());
-                if (down_seg != NULL && down_seg->type == RiverSegment::ReachSegment)
+                if (down_seg != nullptr && down_seg->type == RiverSegment::ReachSegment)
                 {
                     cur_seg->down = down_seg;
                     down_seg->fork = cur_seg;
@@ -323,7 +323,7 @@ bool RiverSystem::construct()
 bool RiverSystem::initialize()
 {
     bool okay = true;
-    River * riv = NULL;
+    River * riv = nullptr;
 
     for (int i = 0; i < rivers->count(); i++)
     {
@@ -336,7 +336,7 @@ bool RiverSystem::initialize()
 
 River * RiverSystem::findRiver(QString name)
 {
-    River *riv = NULL;
+    River *riv = nullptr;
     for (int i = 0; i < rivers->count(); i++)
     {
         riv = (River *)rivers->at (i);
@@ -348,13 +348,13 @@ River * RiverSystem::findRiver(QString name)
 
 RiverSegment * RiverSystem::findSegment(QString name)
 {
-    River *riv = NULL;
-    RiverSegment *seg = NULL;
+    River *riv = nullptr;
+    RiverSegment *seg = nullptr;
     for (int i = 0; i < rivers->count(); i++)
     {
         riv = (River *)rivers->at (i);
         seg = riv->findSegment(name);
-        if (seg != NULL)
+        if (seg != nullptr)
             break;
     }
     return seg;
@@ -362,13 +362,13 @@ RiverSegment * RiverSystem::findSegment(QString name)
 
 RiverSegment * RiverSystem::findSegment(RiverPoint *pt)
 {
-    River *riv = NULL;
-    RiverSegment *seg = NULL;
+    River *riv = nullptr;
+    RiverSegment *seg = nullptr;
     for (int i = 0; i < rivers->count(); i++)
     {
         riv = (River *)rivers->at (i);
         seg = riv->findSegment(pt);
-        if (seg != NULL)
+        if (seg != nullptr)
             break;
     }
     return seg;
@@ -376,7 +376,7 @@ RiverSegment * RiverSystem::findSegment(RiverPoint *pt)
 
 Species * RiverSystem::findSpecies(QString name)
 {
-    Species *spec = NULL;
+    Species *spec = nullptr;
     for (int i = 0; i < species->count(); i++)
     {
         spec = (Species *)species->at (i);
@@ -388,7 +388,7 @@ Species * RiverSystem::findSpecies(QString name)
 
 Stock * RiverSystem::findStock(QString name)
 {
-    Stock *st = NULL;
+    Stock *st = nullptr;
     for (int i = 0; i < stocks->count(); i++)
     {
         st = (Stock *)stocks->at (i);
@@ -401,7 +401,7 @@ Stock * RiverSystem::findStock(QString name)
 
 RiverSite * RiverSystem::findReleaseSite(QString name)
 {
-    RiverSite *site = NULL;
+    RiverSite *site = nullptr;
     for (int i = 0; i < releaseSites->count(); i++)
     {
         site = (RiverSite *)releaseSites->at (i);
@@ -611,15 +611,15 @@ void RiverSystem::deleteDam(Dam *dam)
             powerhouses->takeAt(ind);
     }
 
-    if (river == NULL)
+    if (river == nullptr)
         Log::instance()->add(Log::Error, QString("Could not find river %1").arg
                              (*dam->riverName));
-    else if (seg_up != NULL)
+    else if (seg_up != nullptr)
     {
         // get list of impounded reaches to adjust depths, slopes, and widths
         QList <Reach *> impounded_reaches;
         impounded_reaches.append(seg_up);
-        while (seg_up->up != NULL &&
+        while (seg_up->up != nullptr &&
                seg_up->up->type == RiverSegment::ReachSegment &&
                seg_up->up->getImpound() != RiverSegment::NotImpounded)
         {
@@ -636,7 +636,7 @@ void RiverSystem::deleteDam(Dam *dam)
             seg_up = impounded_reaches.takeAt(i);
             if (seg_up->type == RiverSegment::ReachSegment)
             {
-                if (seg_up->up == NULL)
+                if (seg_up->up == nullptr)
                 {
                     seg_up->upper_depth = 15;
                     seg_up->upper_elev = seg_up->lower_elev;
@@ -673,7 +673,7 @@ void RiverSystem::deleteDam(Dam *dam)
 */
         river->deleteSegment(dam);
     }
-    else if (seg_down != NULL)
+    else if (seg_down != nullptr)
     {
         seg_down->upperElev = seg_down->lowerElev;
         river->deleteSegment(dam);
@@ -688,7 +688,7 @@ void RiverSystem::adjustReaches(Reach *downReach, Reach *upReach, QList<Reach *>
     reach->tan_slope = tan(reach->slope * DEG_2_RAD);
     if (upReach == downReach)
     {
-        if (reach->up != NULL &&
+        if (reach->up != nullptr &&
                 reach->up->lowerDepth < upReach->upperDepth)
             reach->lowerDepth = reach->upperDepth = reach->up->lowerDepth;
         else
@@ -735,14 +735,14 @@ void RiverSystem::deleteReach (Reach *reach)
     if (ind >= 0)
         reaches->takeAt(ind);
 
-    if (reach->up != NULL && reach->down != NULL)
+    if (reach->up != nullptr && reach->down != nullptr)
     {
         if (reach->up->bottom() == reach->down->top())
             del = true;
     }
-    else if (reach->down == NULL)
+    else if (reach->down == nullptr)
         del = true;
-    else if (reach->up == NULL && reach->down->type != RiverSegment::DamSegment)
+    else if (reach->up == nullptr && reach->down->type != RiverSegment::DamSegment)
         del = true;
     else
         del = false;

@@ -16,8 +16,8 @@
 mapReach::mapReach(QGraphicsItem *par)
     : mapObject(par)
 {
-	mouseOver = false;
-    itemErrors = NULL;
+    mouseOver = false;
+    itemErrors = nullptr;
 }
 
 mapReach::mapReach(RiverSegment *rseg, mapTransform *xform_, QGraphicsItem *par)
@@ -30,13 +30,13 @@ mapReach::mapReach(RiverSegment *rseg, mapTransform *xform_, QGraphicsItem *par)
     normalPen = QPen(Qt::blue, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     highlightPen = QPen(Qt::cyan, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-	mouseOver = false;
+    mouseOver = false;
 
     highlightPath = path();
 
-    itemErrors = NULL;
+    itemErrors = nullptr;
 //    itemOptions = createMenu();
-	setBoundingRect();
+    setBoundingRect();
 }
 
 QPainterPath mapReach::shape() const
@@ -44,15 +44,15 @@ QPainterPath mapReach::shape() const
     QPainterPath shapePath;
     QPointF qp;
 
-    if (rv_seg != NULL && xform != NULL)
+    if (rv_seg != nullptr && xform != nullptr)
     {
         RiverPoint *p = rv_seg->course.at(0);
-        qp = (*xform)(p->longitude->value(), p->latitude->value());
+        qp = (*xform)(p->longitude, p->latitude);
         shapePath.moveTo(qp);
         for (int j = 1; j < rv_seg->course.count(); j++)
         {
             p = rv_seg->course.at(j);
-            qp = (*xform) (p->longitude->value(), p->latitude->value());
+            qp = (*xform) (p->longitude, p->latitude);
             shapePath.lineTo(qp);
         }
     }
@@ -64,18 +64,18 @@ QPainterPath mapReach::path() const
     QPainterPath lpath;
     QPointF qp;
 
-	if (rv_seg != NULL && xform != NULL)
-	{
+    if (rv_seg != nullptr && xform != nullptr)
+    {
         RiverPoint *p = rv_seg->course.at(0);
-        qp = (*xform) (p->longitude->value(), p->latitude->value());
+        qp = (*xform) (p->longitude, p->latitude);
         lpath.moveTo (qp);
         for (int j = 1; j < rv_seg->course.count(); j++)
         {
             p = rv_seg->course.at(j);
-            qp = (*xform) (p->longitude->value(), p->latitude->value());
+            qp = (*xform) (p->longitude, p->latitude);
             lpath.lineTo(qp);
         }
-	}
+    }
     return lpath;
 }
 /*
@@ -88,10 +88,10 @@ void mapReach::paint(QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWid
 
 QDialog * mapReach::createInfo()
 {
-    if(itemErrors != NULL)
+    if(itemErrors != nullptr)
     {
         delete itemErrors;
-        itemErrors == NULL;
+        itemErrors == nullptr;
     }
 
 //    QString *message;
@@ -143,10 +143,10 @@ void mapReach::infoPanel()
 
 QMenu * mapReach::createMenu()
 {
-    if (itemOptions != NULL)
+    if (itemOptions != nullptr)
     {
         delete itemOptions;
-        itemOptions = NULL;
+        itemOptions = nullptr;
     }
 
     itemOptions = new QMenu();
@@ -191,7 +191,7 @@ void mapReach::contextMenuEvent(QGraphicsSceneContextMenuEvent *evnt)
 /*
 void mapReach::showErrors(QPointF pt)
 {
-    if (itemErrors == NULL)
+    if (itemErrors == nullptr)
         createInfo();
     itemErrors->setGeometry(pt.x(), pt.y(),
             itemErrors->geometry().width(), itemErrors->geometry().height());
@@ -200,7 +200,7 @@ void mapReach::showErrors(QPointF pt)
 
 void mapReach::showViews()
 {
-    if (itemErrors != NULL)
+    if (itemErrors != nullptr)
         itemErrors->close();
     QDialog *itemViews = createViews();
 

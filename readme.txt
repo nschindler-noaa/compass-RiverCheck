@@ -1,20 +1,24 @@
 #=======================================#
 
 COMPASS River Description File Checker
-Version 1.2.3
+Version 1.2.6b
 
 #=======================================#
 
 Programmer: Neal Schindler
 Date: 2017-09-01
 
-This is programmed with Qt 5.11 using dynamic libraries
+This is programmed with Qt 5.12 using dynamic libraries
 and should therefore compile on many platforms,
 including Mac OSX, MS Windows, and Linux
 
 Tested on Windows 10 and Linux
 
 History:
+
+2019-04-17
+Version 1.2.6b
+1. Moved to Qt 5.12 on Windows 10.
 
 2018-10-30
 Version 1.2.5b
