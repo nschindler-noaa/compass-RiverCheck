@@ -474,7 +474,7 @@ void ReachDetailDialog::resetData()
 
 void ReachDetailDialog::setScale(float sc)
 {
-    qreal halfFactor = scaleFactor * 0.5;
+//    qreal halfFactor = scaleFactor * 0.5;
     if (sc > 0.0)
         scaleFactor += 0.5;
     else

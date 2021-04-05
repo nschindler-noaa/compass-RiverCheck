@@ -8,33 +8,23 @@
 #include "PowerHouse.h"
 #include "Period.h"
 #include "RSW.h"
-#include "mapDam.h"
+//#include "mapDam.h"
+#include "Basin.h"
+#include "Transport.h"
+#include "Fishway.h"
 
 
 #define DAM_TAILRACE_DEFAULT  100.0
 
-/** \struct basin
- * \brief A structure to represent a storage basin associated with a dam.
- */
-struct basin
-{
-public:
-    float min_volume;         /**< Minimum allowable volume */
-    float max_volume;         /**< Maximum allowable volume */
-    QList<float> volume;      /**< Volume per day (DAYS_IN_SEASON) */
-};
-typedef struct basin Basin;
-Basin * new_basin ();
-void delete_basin (Basin *bsn);
 
 
 /** \class Dam
- * \brief Dam-specific segment data (i.e. the dam parameters) */
+ * \brief Dam-specific river segment data (i.e. the dam parameters) */
 class Dam : public RiverSegment
 {
 public:
 
-    Dam (QString dname, QString rivName = QString (""), QObject *parent = 0);
+    Dam (const QString &dname, const QString &rivName = QString (""), QObject *parent = nullptr);
     Dam (const Dam &rhs);
     ~Dam ();
     void clear ();
@@ -50,6 +40,7 @@ public:
 
     QList<PowerHouse *> getPowerhouses() const;
     void setPowerhouses(const QList<PowerHouse *> &value);
+    void addPowerhouse (PowerHouse *phouse);
     int getNumPowerhouses ();
 
     float getTailrace_width() const;
@@ -103,24 +94,29 @@ public:
     Location getSpillSide() const;
     void setSpillSide(const Location &value);
 
-    QList<RSW *> getSpillWeirs() const;
-    void setSpillWeirs(const QList<RSW *> &value);
-    int getNumSpillWeirs ();
+    RSW * getSpillWeir() const;
+    void setSpillWeir(RSW *value);
+
+    Transport *getTransport() const;
+    void setTransport(Transport *value);
+
+    Fishway *getFishway() const;
+    void setFishway(Fishway *value);
 
 private:
-    /** Pointer to the storage basin info */
+
     Basin *storage;  /**< Storage basin pointer. If no basin, this is nullptr. */
 
     /* physical characteristics; some may be computed from others,
      * depending on which were found in the river description file.
      */
+    /** A list of pointers to the powerhouses for this dam. */
     QList<PowerHouse *> powerhouses;
-//    QList <float> powerhouse_cap;
 
     float tailraceWidth; /**< Tailrace width (ft) - lower width */
     float tailraceLength;/**< Tailrace length in ft */
     float tailraceElev;  /**< Tailrace elevation (ft) */
-//    float baseElev;
+    float baseElev;
     float forebayElev;   /**< Forebay elevation (ft) */
     float fullFbDepth;   /**< Full pool forebay depth - upper depth */
     float fullHead;      /**< Full pool head */
@@ -142,7 +138,13 @@ private:
     Location spillSide;  /**< Spillway location. */
 
     /* Removable spill weirs */
-    QList<RSW *> spillWeirs;
+    RSW * spillWeir;
+
+    // Transport
+    Transport *transport;
+
+    // Fishway
+    Fishway  *fishway;
 
 public slots:
 //    mapDam * mapView();

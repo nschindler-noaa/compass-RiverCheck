@@ -174,21 +174,21 @@ QPixmap mapDam::icon()
 QPainterPath mapDam::path() const
 {
     QPainterPath spill;
-    QPointF qp;
+//    QPointF qp;
 
 
-    int seg_w = 0;
-    int spl_w = 0;
+//    int seg_w = 0;
+//    int spl_w = 0;
 //    float half_length, half_width;
-    qreal nextx, nexty;
-    qreal depx, depy, widx, widy, s_widx, s_widy;
+//    qreal nextx, nexty;
+//    qreal depx, depy, widx, widy, s_widx, s_widy;
 //    QRect spill_rect;
 
 //    spill_rect = QRect(0, 0, DAM_LENGTH, 5);
 
     if(rv_seg != nullptr && xform != nullptr)
     {
-        Dam *dam_seg = (Dam *)rv_seg;
+        Dam *dam_seg = static_cast<Dam *>(rv_seg);
 
 //        qp = (*xform)(dam_seg->bottom()->longitude->value(), dam_seg->bottom()->latitude->value());
         spill.moveTo(origin);
@@ -285,7 +285,7 @@ QPainterPath mapDam::path() const
 QPainterPath mapDam::shape() const
 {
     QPainterPath path;
-    QPointF qp;
+//    QPointF qp;
 //    RiverPoint *p0;
     if (rv_seg != nullptr)
     {
@@ -309,7 +309,7 @@ QPainterPath mapDam::shape() const
 
     if(rv_seg != nullptr && xform != nullptr)
     {
-/*        // map coordinates
+        // map coordinates
         p0 = rv_seg->bottom();
         // screen coordinates
         qp = (*xform)(p0->longitude->value(), p0->latitude->value());
@@ -381,6 +381,8 @@ void mapDam::setBoundingRect()
 void mapDam::paint(QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWidget *w)
 {
     QColor color;
+    Q_UNUSED(opt);
+    Q_UNUSED(w);
     paintr->setPen(backgroundPen);
     paintr->drawPath(backgroundShape);
     paintr->fillPath(backgroundShape, QBrush(Qt::darkGray));

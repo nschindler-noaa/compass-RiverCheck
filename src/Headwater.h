@@ -3,6 +3,11 @@
 
 #include "RiverSegment.h"
 
+/** /class Headwater  A headwater is the last upstream segment of a river.
+ *     For purposes of COMPASS, it occupies a single point and is the
+ *     simplest river segment. It does include flow and temp and may include
+ *     turbidity or gas.
+ */
 class Headwater : public RiverSegment
 {
 public:

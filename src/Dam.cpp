@@ -1,12 +1,15 @@
 #include "Dam.h"
 #include "Log.h"
 
-Dam::Dam(QString dname, QString rivName, QObject *parent) :
+Dam::Dam(const QString &dname, const QString &rivName, QObject *parent) :
     RiverSegment (rivName, parent)
 {
     name = new QString (dname);
     type = RiverSegment::DamSegment;
     abbrev = nullptr;
+    storage = nullptr;
+    spillWeir = nullptr;
+
     initialize();
 
     backgroundPen = QPen(Qt::darkGray, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -18,13 +21,14 @@ Dam::~Dam ()
     PowerHouse *phs = nullptr;
     delete name;
     if (storage != nullptr)
-        delete_basin (storage);
+        delete (storage);
     while (getNumPowerhouses() > 0)
     {
         phs = powerhouses.takeLast();
         delete phs;
     }
-
+    if (spillWeir != nullptr)
+        delete spillWeir;
 }
 
 void Dam::reset()
@@ -36,13 +40,9 @@ void Dam::reset()
 
 void Dam::clear()
 {
-    if (storage != nullptr)
-        delete storage;
-    storage = nullptr;
     width = 0.0;
     length = 20.0;
     tailraceLength = DAM_TAILRACE_DEFAULT;
-//    base_elev = 0.0;
     forebayElev = 0.0;
     tailraceElev = 0.0;
     fullHead = 0.0;
@@ -56,7 +56,7 @@ void Dam::clear()
     stillingLength = 0.0;
     sgr = 0.0;
 
-    spillSide = (Location)-1;
+    spillSide = static_cast<Location>(-1);
 
     flow_max = 0.0;
 }
@@ -193,9 +193,12 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
     }
     else if (token.compare("storage_basin", Qt::CaseInsensitive) == 0)
     {
-        storage = new_basin();
-        rfile->readFloatOrNa(na, storage->min_volume);
-        rfile->readFloatOrNa(na, storage->max_volume);
+        float ftemp = 0;
+        storage = new Basin();
+        rfile->readFloatOrNa(na, ftemp);
+        storage->setMinVolume(ftemp);
+        rfile->readFloatOrNa(na, ftemp);
+        storage->setMaxVolume(ftemp);
     }
     else
     {
@@ -208,7 +211,12 @@ bool Dam::parseToken (QString token, RiverFile *rfile)
 bool Dam::initialize()
 {
     bool okay = true;
+    if (storage != nullptr)
+        delete storage;
     storage = nullptr;
+    if (spillWeir != nullptr)
+        delete spillWeir;
+    spillWeir = nullptr;
 
     clear();
     spillSide = Left;
@@ -240,9 +248,9 @@ bool Dam::construct ()
     lowerWidth = width;
 
     // get forebay depth and head from elevation, or vice versa
-    if (forebayElev == 0.0)
+    if (forebayElev == 0)
     {
-        if (fullHead == 0.0)
+        if (fullHead == 0)
             fullHead = 112.0;
         forebayElev = floorElev + fullHead;
     }
@@ -251,9 +259,9 @@ bool Dam::construct ()
         fullHead = forebayElev - floorElev;
     }
 
-    if (tailraceElev == 0.0 && floorElev > 0.0)
+    if (tailraceElev == 0 && floorElev > 0)
     {
-        if (fullHead == 0.0)
+        if (fullHead == 0)
             fullHead = 75.0;
         tailraceElev = forebayElev - fullHead;
     }
@@ -267,11 +275,11 @@ bool Dam::construct ()
     lowerDepth = tailraceElev - floorElev;
 
     // spillway width defaults if necessary
-    if (ngates == 0 || gateWidth == 0.0)
+    if (ngates == 0 || gateWidth == 0)
     {
-        if (spillwayWidth == 0.0)
+        if (spillwayWidth == 0)
             spillwayWidth = 1320;
-        if (gateWidth == 0.0)
+        if (gateWidth == 0)
         {
             gateWidth = spillwayWidth;
             ngates = 1;
@@ -279,11 +287,11 @@ bool Dam::construct ()
         }
         else
         {
-            ngates = (int)(spillwayWidth / gateWidth);
+            ngates = static_cast<int>(spillwayWidth / gateWidth);
         }
     }
 
-    if (spillwayWidth == 0.0)
+    if (spillwayWidth == 0)
         spillwayWidth = ngates * gateWidth;
 
     if (tailraceLength < stillingLength)
@@ -295,17 +303,17 @@ bool Dam::construct ()
 
     // Check values
     if (floorElev < -50 ||
-            forebayElev <= 0.0 ||
-            tailraceElev < 0.0 ||
+            forebayElev <= 0 ||
+            tailraceElev < 0 ||
             bypassElev > forebayElev ||
-            fullHead < 0.0 ||
-            fullFbDepth <= 0.0)
+            fullHead < 0 ||
+            fullFbDepth <= 0)
     {
         Log::instance()->add
                 (Log::Error, QString("bad physical specifications at $1").arg(*name));
         error |= BadPhysics;
     }
-    if (ngates * gateWidth != spillwayWidth)
+    if ((ngates * gateWidth) != spillwayWidth)
     {
         Log::instance()->add(Log::Error, QString ("%1 spillway width not consistent with gate width and number of gates").arg(
                                  *name));
@@ -348,8 +356,8 @@ bool Dam::output(int indent, RiverFile *rfile)
     if (storage != nullptr)
     {
         rfile->writeString(indent + 1, "storage_basin",
-                           QString::number(storage->min_volume, 'f', 2),
-                           QString::number(storage->max_volume, 'f', 2));
+                           QString::number(storage->getMinVolume(), 'f', 2),
+                           QString::number(storage->getMaxVolume(), 'f', 2));
     }
     outputCourse (indent + 1, rfile);
     rfile->writeEnd(indent, "dam", *name);
@@ -552,29 +560,34 @@ void Dam::setSpillSide(const Location &value)
     spillSide = value;
 }
 
-QList<RSW *> Dam::getSpillWeirs() const
+RSW * Dam::getSpillWeir() const
 {
-    return spillWeirs;
+    return spillWeir;
 }
 
-void Dam::setSpillWeirs(const QList<RSW *> &value)
+void Dam::setSpillWeir(RSW *value)
 {
-    spillWeirs = value;
+    spillWeir = value;
 }
 
-int Dam::getNumSpillWeirs()
+Transport *Dam::getTransport() const
 {
-    return spillWeirs.count();
+    return transport;
 }
 
-Basin *new_basin ()
+void Dam::setTransport(Transport *value)
 {
-    return (Basin *) calloc (sizeof (Basin), 1);
+    transport = value;
 }
 
-void delete_basin (Basin *bsn)
+Fishway *Dam::getFishway() const
 {
-    free (bsn);
+    return fishway;
+}
+
+void Dam::setFishway(Fishway *value)
+{
+    fishway = value;
 }
 
 /*QGraphicsScene *Dam::mapView()

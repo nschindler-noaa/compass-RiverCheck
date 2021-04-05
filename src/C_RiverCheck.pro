@@ -50,7 +50,10 @@ SOURCES += main.cpp\
     seeview.cpp \
     segmentViews.cpp \
     metadata.cpp \
-    Period.cpp
+    Period.cpp \
+    Fishway.cpp \
+    Basin.cpp \
+    Transport.cpp
 
 HEADERS  += mainwindow.h \
     Stock.h \
@@ -92,7 +95,10 @@ HEADERS  += mainwindow.h \
     seeview.h \
     segmentViews.h \
     metadata.h \
-    Period.h
+    Period.h \
+    Fishway.h \
+    Basin.h \
+    Transport.h
 
 FORMS    += mainwindow.ui \
     detaildialog.ui \

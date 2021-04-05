@@ -91,7 +91,7 @@ QDialog * mapReach::createInfo()
     if(itemErrors != nullptr)
     {
         delete itemErrors;
-        itemErrors == nullptr;
+        itemErrors = nullptr;
     }
 
 //    QString *message;

@@ -251,7 +251,7 @@ void River::markRegulationPts()
 {
     for (int i = 0; i < segments->count(); i++)\
     {
-        RiverSegment *seg = (RiverSegment *)segments->at(i);
+        RiverSegment *seg = segments->at(i);
         if (seg->type == RiverSegment::DamSegment)
             seg->regPoint = true;
     }
@@ -270,17 +270,17 @@ bool River::output (int indent, RiverFile *rfile)
     for (i = 0; i < segments->count(); i++)
     {
         rfile->writeNewline();
-        RiverSegment *seg = (RiverSegment *)segments->at(i);
+        RiverSegment *seg = segments->at(i);
         switch (seg->type)
         {
         case (RiverSegment::DamSegment):
-            okay = ((Dam *)seg)->output (indent+1, rfile);
+            okay = (static_cast<Dam *>(seg))->output (indent+1, rfile);
             break;
         case (RiverSegment::ReachSegment):
-            okay = ((Reach *)seg)->output (indent+1, rfile);
+            okay = (static_cast<Reach *>(seg))->output (indent+1, rfile);
             break;
         case (RiverSegment::HeadwaterSegment):
-            okay = ((Headwater *)seg)->output (indent+1, rfile);
+            okay = (static_cast<Headwater *>(seg))->output (indent+1, rfile);
             break;
         default:
             Log::instance()->add(Log::Error, QString("During output, segment type %1 not recognized.")
@@ -311,7 +311,7 @@ bool River::deleteSegment(RiverSegment *seg)
         {
         case RiverSegment::DamSegment:
         {
-            Dam *dam = (Dam *)seg;
+            Dam *dam = static_cast<Dam *>(seg);
             ind = dams.indexOf(dam);
             if (ind >= 0)
                 dams.takeAt(ind);
@@ -320,7 +320,7 @@ bool River::deleteSegment(RiverSegment *seg)
         }
         case RiverSegment::ReachSegment:
         {
-            Reach *reach = (Reach *)seg;
+            Reach *reach = static_cast<Reach *>(seg);
             ind = reaches.indexOf(reach);
             if (ind >= 0)
                 reaches.takeAt(ind);
@@ -329,7 +329,7 @@ bool River::deleteSegment(RiverSegment *seg)
         }
         case RiverSegment::HeadwaterSegment:
         {
-            Headwater *hwater = (Headwater *)seg;
+            Headwater *hwater = static_cast<Headwater *>(seg);
             delete hwater;
             break;
         }

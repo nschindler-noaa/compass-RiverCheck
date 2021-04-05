@@ -53,7 +53,7 @@ public:
         DamSegment,
         ReachSegment,
         HeadwaterSegment,
-        nullptrSegment
+        NullSegment
     };
 
     /** Type of impound due to downstream dam. It can be NotImpounded (not

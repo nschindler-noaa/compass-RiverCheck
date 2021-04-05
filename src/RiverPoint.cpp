@@ -278,13 +278,18 @@ float RiverPoint::setLongitude (int d, int m, int s, QString dir)
 
 float RiverPoint::setLongitude (QString deg, QString min, QString sec, QString dir)
 {
-    return longitude = dms2float(deg, min, sec, dir);
+    int d = deg.toInt ();
+    int m = min.toInt ();
+    int s = sec.toInt ();
+    return setLongitude (d, m, s, dir);
 }
 
 void RiverPoint::setLonDir (QString ew)
 {
     if (ew.contains ("W", Qt::CaseInsensitive))
-        longitude *= -1;
+        longitude = longitude < 0.0? -longitude: longitude;
+    else
+        longitude = longitude > 0.0? -longitude: longitude;
 }
 
 
@@ -302,13 +307,18 @@ float RiverPoint::setLatitude (int d, int m, int s, QString dir)
 
 float RiverPoint::setLatitude (QString deg, QString min, QString sec, QString dir)
 {
-    return longitude = dms2float(deg, min, sec, dir);
+    int d = deg.toInt ();
+    int m = min.toInt ();
+    int s = sec.toInt ();
+    return setLatitude (d, m, s, dir);
 }
 
 void RiverPoint::setLatDir (QString ns)
 {
-    if (ns.contains ("S", Qt::CaseInsensitive))
-        latitude *= -1;
+    if (ew.compare ("N", Qt::CaseInsensitive) == 0)
+        latitude = latitude < 0.0? -latitude: latitude;
+    else
+        latitude = latitude > 0.0? -latitude: latitude;
 }
 
 float RiverPoint::setWidth (const float wd)
@@ -319,6 +329,7 @@ float RiverPoint::setWidth (const float wd)
 
 bool RiverPoint::equals (const RiverPoint rhs)
 {
+    float prec = .0001;
     bool equal = true;
     if (longitude < rhs.longitude - PREC || longitude > rhs.longitude + PREC)
         equal = false;
@@ -399,6 +410,35 @@ QString RiverPoint::text ()
                     lon.at(0), lon.at(1), lon.at(2), londir));
     return *txt;
 }
+void RiverPoint::setText(const QString txt)
+{
+    QStringList items;
+    items = txt.split(' ', QString::SkipEmptyParts);
+    if (items.count() == 8)
+    {
+        setLongitude (items.at(0), items.at(1), items.at(2), items.at(3));
+        setLatitude (items.at(4), items.at(5), items.at(6), items.at(7));
+    }
+}
+
+/*
+RiverPoint *newPoint ()
+{
+    RiverPoint *p = new RiverPoint;// *) malloc (sizeof (RiverPoint));
+    p->lat = 0.0;
+    p->lon = 0.0;
+    p->width = 0.0;
+    return p;
+}
+
+void deletePoint (RiverPoint *&rpt)
+{
+    rpt->lat = 0.0;
+    rpt->lon = 0.0;
+    rpt->width = 0.0;
+    delete (rpt);
+    rpt = NULL;
+}*/
 
 bool RiverPoint::output(int indent, RiverFile *rfile)
 {
@@ -409,4 +449,49 @@ bool RiverPoint::output(int indent, RiverFile *rfile)
     return okay;
 }
 
+bool parseLatLon (CompassFile *cfile, RiverPoint *pt)
+{
+    bool okay = true, end = false;
+
+    QString latd, latm, lats, latdir;
+    QString lond, lonm, lons, londir;
+
+    latd = cfile->popToken ();
+    latm = cfile->popToken ();
+    lats = cfile->popToken ();
+    latdir = cfile->popToken ();
+    if (latd.compare ("EOF", Qt::CaseInsensitive) == 0 ||
+            latm.compare ("EOF", Qt::CaseInsensitive) == 0 ||
+            lats.compare ("EOF", Qt::CaseInsensitive) == 0 ||
+            latdir.compare ("EOF", Qt::CaseInsensitive) == 0)
+    {
+        okay = false;
+        cfile->printError ("Found EOF looking for lattitude data.");
+    }
+    else
+    {
+        pt->setLat (latd, latm, lats);
+        pt->setLatDir (latdir);
+
+        lond = cfile->popToken ();
+        lonm = cfile->popToken ();
+        lons = cfile->popToken ();
+        londir = cfile->popToken ();
+        if (lond.compare ("EOF", Qt::CaseInsensitive) == 0 ||
+                lonm.compare ("EOF", Qt::CaseInsensitive) == 0 ||
+                lons.compare ("EOF", Qt::CaseInsensitive) == 0 ||
+                londir.compare ("EOF", Qt::CaseInsensitive) == 0)
+        {
+            okay = false;
+            cfile->printError ("Found EOF looking for longitude data.");
+        }
+        else
+        {
+            end = true;
+            pt->setLon (lond, lonm, lons);
+            pt->setLonDir (londir);
+        }
+    }
+    return okay;
+}
 

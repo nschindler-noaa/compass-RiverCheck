@@ -1,9 +1,9 @@
 #ifndef POWERHOUSE_H
 #define POWERHOUSE_H
 
-#include <QList>
-#include "definitions.h"
+#include "CompassFile.h"
 #include "Period.h"
+#include "definitions.h"
 
 class PowerHouse
 {
@@ -11,21 +11,38 @@ public:
     PowerHouse();
     ~PowerHouse();
 
-    short getPriority() const;
-    void setPriority(short value);
+    void allocate (int slicesInSeason);
+
+    bool parse (CompassFile *infile);
+    bool parseToken (QString token, CompassFile *infile);
+
+    QString *getName() const;
+    void setName(QString *value);
+
+    int getNumber() const;
+    void setNumber(int value);
+
+    int getPriority() const;
+    void setPriority(int value);
+
+    float getThreshold() const;
+    void setThreshold(float value);
 
     float getCapacity() const;
     void setCapacity(float value);
 
-    float getFlow_min() const;
-    void setFlow_min(float value);
+    QList<float> getFlowFraction() const;
+    void setFlowFraction(const QList<float> &value);
 
-    Location getSide() const;
-    void setSide(const Location &value);
+    float getFlowFractionValue (int index);
+    void setFlowFractionValue (int index, float value);
 
     QList<Period *> getSchedule() const;
     void setSchedule(const QList<Period *> &value);
     int getNumPeriods ();
+
+    Location getSide() const;
+    void setSide(const Location &value);
 
 private:
     short priority;    /**< Ranking of powerhouse. The highest priority is
