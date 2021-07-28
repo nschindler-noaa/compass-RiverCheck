@@ -4,6 +4,7 @@
 #include "damdetaildialog.h"
 #include "reachdetaildialog.h"
 #include "segmentinfo.h"
+#include "metadata.h"
 
 #include <QDir>
 #include <QFileDialog>
@@ -17,6 +18,8 @@ MainWindow::MainWindow (QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    qApp->setApplicationName(metadata::name());
+    qApp->setApplicationVersion(metadata::version());
     setMinimumSize(1000, 800);
 
     system = new RiverSystem (this);
@@ -54,9 +57,12 @@ MainWindow::MainWindow (QWidget *parent) :
     damDialog = new DamDetailDialog (this);
     damDialogDown = new SegmentInfo (SegmentInfo::Upper, this);
     damDialogUp = new SegmentInfo (SegmentInfo::Lower, this);
-    ui->horizontalLayout_damPage->addWidget(damDialogDown);
-    ui->horizontalLayout_damPage->addWidget(damDialog);
-    ui->horizontalLayout_damPage->addWidget(damDialogUp);
+    ui->verticalLayout_damLwrSeg->addWidget(damDialogDown);
+    ui->verticalLayout_damCurrSeg->addWidget(damDialog);
+    ui->verticalLayout_damUprSeg->addWidget(damDialogUp);
+//    ui->horizontalLayout_damPage->addWidget(damDialogDown);
+//    ui->horizontalLayout_damPage->addWidget(damDialog);
+//    ui->horizontalLayout_damPage->addWidget(damDialogUp);
     connect (damDialog, SIGNAL(dataChanged()), SLOT(riverDataChanged()));
     connect (damDialogDown, SIGNAL(gotoSegment(RiverSegment *)), SLOT(displaySegment(RiverSegment*)));
     connect (damDialogUp, SIGNAL(gotoSegment(RiverSegment*)), SLOT(displaySegment(RiverSegment*)));
@@ -65,10 +71,14 @@ MainWindow::MainWindow (QWidget *parent) :
     reachDialogDown = new SegmentInfo (SegmentInfo::Upper, this);
     reachDialogUp = new SegmentInfo (SegmentInfo::Lower, this);
     reachDialogFork = new SegmentInfo (SegmentInfo::Lower, this);
-    ui->horizontalLayout_reachPage->addWidget(reachDialogDown);
-    ui->horizontalLayout_reachPage->addWidget(reachDialog);
-    ui->horizontalLayout_reachPage->addWidget(reachDialogUp);
-    ui->horizontalLayout_reachPage->addWidget(reachDialogFork);
+    ui->verticalLayout_rchLwrSeg->addWidget(reachDialogDown);
+    ui->verticalLayout_rchCurrSeg->addWidget(reachDialog);
+    ui->horizontalLayout_rchUprSeg->addWidget(reachDialogFork);
+    ui->horizontalLayout_rchUprSeg->addWidget(reachDialogUp);
+//    ui->horizontalLayout_reachPage->addWidget(reachDialogDown);
+//    ui->horizontalLayout_reachPage->addWidget(reachDialog);
+//    ui->horizontalLayout_reachPage->addWidget(reachDialogUp);
+//    ui->horizontalLayout_reachPage->addWidget(reachDialogFork);
     connect (reachDialog, SIGNAL(dataChanged()), SLOT(riverDataChanged()));
     connect (reachDialogDown, SIGNAL(gotoSegment(RiverSegment *)), SLOT(displaySegment(RiverSegment*)));
     connect (reachDialogUp, SIGNAL(gotoSegment(RiverSegment*)), SLOT(displaySegment(RiverSegment*)));

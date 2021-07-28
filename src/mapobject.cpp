@@ -83,7 +83,7 @@ QPainterPath mapObject::shape() const
     if (rv_seg != nullptr && xform != nullptr)
     {
         RiverPoint *p = rv_seg->course.at(0);
-        qp = (*xform)(p->longitude, p->latitude);
+        qp = (*xform)(p->getLongitude(), p->getLatitude());
         shapePath.moveTo(qp);
     }
     return shapePath;
@@ -98,8 +98,8 @@ QPainterPath mapObject::path() const
     {
         for (int i = 0; i < rv_seg->course.count(); i++)
         {
-            qp = (*xform)(rv_seg->course.at(i)->longitude,
-                          rv_seg->course.at(i)->latitude);
+            qp = (*xform)(rv_seg->course.at(i)->getLongitude(),
+                          rv_seg->course.at(i)->getLatitude());
             if (i == 0)
                 pathPath.moveTo(qp);
             else

@@ -11,7 +11,7 @@ class SegmentInfo;
 class SegmentInfo : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     enum Side {
         Upper,
@@ -21,7 +21,7 @@ public:
     explicit SegmentInfo(Side loc, QWidget *parent = 0);
     SegmentInfo (Side loc, RiverSegment *seg, QWidget *parent = 0);
     ~SegmentInfo();
-    
+
     Ui::SegmentInfo *ui;
 
     RiverSegment *segment;
@@ -31,6 +31,7 @@ public slots:
     void gotoClicked();
     void hideName (bool flag = true);
     void hideButton (bool flag = true);
+    void hideFrame(bool flag = true);
 
 signals:
     void gotoSegment (RiverSegment *seg);

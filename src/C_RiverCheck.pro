@@ -51,7 +51,6 @@ SOURCES += main.cpp\
     segmentViews.cpp \
     metadata.cpp \
     Period.cpp \
-    Fishway.cpp \
     Basin.cpp \
     Transport.cpp
 
@@ -96,7 +95,6 @@ HEADERS  += mainwindow.h \
     segmentViews.h \
     metadata.h \
     Period.h \
-    Fishway.h \
     Basin.h \
     Transport.h
 
@@ -113,3 +111,6 @@ OTHER_FILES += \
 
 DISTFILES += \
     ../readme.txt
+
+RESOURCES += \
+    rivCheck.qrc

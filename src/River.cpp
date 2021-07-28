@@ -149,8 +149,8 @@ bool River::construct()
             cur_seg->down = down_seg;
             down_seg->up = cur_seg;
 
-            if (down_seg->top()->latitude != cur_seg->bottom()->latitude ||
-                down_seg->top()->longitude != cur_seg->bottom()->longitude)
+            if (down_seg->top()->getLatitude() != cur_seg->bottom()->getLatitude() ||
+                down_seg->top()->getLongitude() != cur_seg->bottom()->getLongitude())
             {
                 Log::instance()->add(Log::Error, QString ("Top of %1 doesn't match bottom of %2").arg(
                                          *down_seg->name, *cur_seg->name));

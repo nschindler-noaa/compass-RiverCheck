@@ -4,7 +4,7 @@ PowerHouse::PowerHouse()
 {
     priority = 0;
     capacity = 0.0;
-    flow_min = 0.0;
+    flowMin = 0.0;
     side = Left;
 }
 
@@ -38,14 +38,14 @@ void PowerHouse::setCapacity(float value)
     capacity = value;
 }
 
-float PowerHouse::getFlow_min() const
+float PowerHouse::getFlowMin() const
 {
-    return flow_min;
+    return flowMin;
 }
 
-void PowerHouse::setFlow_min(float value)
+void PowerHouse::setFlowMin(float value)
 {
-    flow_min = value;
+    flowMin = value;
 }
 
 Location PowerHouse::getSide() const

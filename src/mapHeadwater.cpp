@@ -45,8 +45,8 @@ QPainterPath mapHeadwater::shape() const
     {
 //		point *p = rv_seg->top;
 //		qp = (*xform)( p->lon, p->lat );
-        qp = (*xform) (rv_seg->top()->longitude,
-                       rv_seg->top()->latitude);
+        qp = (*xform) (rv_seg->top()->getLongitude(),
+                       rv_seg->top()->getLatitude());
         //path.addEllipse( qp.x() - 1, qp.y() - 1, 2.0, 2.0 );
         path.addEllipse( qp.x() - .5, qp.y() - .5, 1.0, 1.0 );
         //path.addRect( qp.x() - .5, qp.y() - .5, 1.0, 1.0 );

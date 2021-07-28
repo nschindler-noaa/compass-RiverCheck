@@ -580,7 +580,7 @@ void Dam::setTransport(Transport *value)
     transport = value;
 }
 
-Fishway *Dam::getFishway() const
+/*Fishway *Dam::getFishway() const
 {
     return fishway;
 }
@@ -588,7 +588,7 @@ Fishway *Dam::getFishway() const
 void Dam::setFishway(Fishway *value)
 {
     fishway = value;
-}
+}*/
 
 /*QGraphicsScene *Dam::mapView()
 {

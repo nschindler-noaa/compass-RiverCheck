@@ -11,7 +11,7 @@
 //#include "mapDam.h"
 #include "Basin.h"
 #include "Transport.h"
-#include "Fishway.h"
+//#include "Fishway.h"
 
 
 #define DAM_TAILRACE_DEFAULT  100.0
@@ -100,8 +100,8 @@ public:
     Transport *getTransport() const;
     void setTransport(Transport *value);
 
-    Fishway *getFishway() const;
-    void setFishway(Fishway *value);
+//    Fishway *getFishway() const;
+//    void setFishway(Fishway *value);
 
 private:
 
@@ -144,7 +144,7 @@ private:
     Transport *transport;
 
     // Fishway
-    Fishway  *fishway;
+//    Fishway  *fishway;
 
 public slots:
 //    mapDam * mapView();

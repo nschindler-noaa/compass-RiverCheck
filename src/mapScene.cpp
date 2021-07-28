@@ -395,10 +395,10 @@ void mapScene::createTransform(RiverSystem *rsys)
                 for (int k = 0; k < rseg->course.count(); k++)
                 {
                     RiverPoint *p = rseg->course.at(k);
-                    if (minLat > p->latitude) minLat = p->latitude;
-                    if (maxLat < p->latitude) maxLat = p->latitude;
-                    if (minLon > p->longitude) minLon = p->longitude;
-                    if (maxLon < p->longitude) maxLon = p->longitude;
+                    if (minLat > p->getLatitude()) minLat = p->getLatitude();
+                    if (maxLat < p->getLatitude()) maxLat = p->getLatitude();
+                    if (minLon > p->getLongitude()) minLon = p->getLongitude();
+                    if (maxLon < p->getLongitude()) maxLon = p->getLongitude();
                 }
             }
         }

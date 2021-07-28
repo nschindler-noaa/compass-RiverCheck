@@ -12,10 +12,12 @@ DamDetailDialog::DamDetailDialog(QWidget *parent) :
     segInfoUp = new SegmentInfo(SegmentInfo::Upper, this);
     segInfoUp->hideName();
     segInfoUp->hideButton();
+    segInfoUp->hideFrame();
     ui->verticalLayout_up->addWidget(segInfoUp);
     segInfoDown = new SegmentInfo (SegmentInfo::Lower, this);
     segInfoDown->hideName();
     segInfoDown->hideButton();
+    segInfoDown->hideFrame();
     ui->verticalLayout_down->addWidget(segInfoDown);
 
     ui->comboBox_spillSide->addItem ("Right");
@@ -135,8 +137,9 @@ void DamDetailDialog::setData()
 
 void DamDetailDialog::calcData()
 {
-    ui->label_spillwyWidthValue->setText (QString::number(
-                         (gate_num * gate_width), 'f', 2));
+    ui->doubleSpinBox_spillWidValue->setValue(gate_num * gate_width);
+//    ui->label_spillwyWidthValue->setText (QString::number(
+//                         (gate_num * gate_width), 'f', 2));
 
     upper_depth = forebay_elev - floor_elev;
 }

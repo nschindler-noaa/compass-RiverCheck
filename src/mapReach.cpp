@@ -47,12 +47,12 @@ QPainterPath mapReach::shape() const
     if (rv_seg != nullptr && xform != nullptr)
     {
         RiverPoint *p = rv_seg->course.at(0);
-        qp = (*xform)(p->longitude, p->latitude);
+        qp = (*xform)(p->getLongitude(), p->getLatitude());
         shapePath.moveTo(qp);
         for (int j = 1; j < rv_seg->course.count(); j++)
         {
             p = rv_seg->course.at(j);
-            qp = (*xform) (p->longitude, p->latitude);
+            qp = (*xform) (p->getLongitude(), p->getLatitude());
             shapePath.lineTo(qp);
         }
     }
@@ -67,12 +67,12 @@ QPainterPath mapReach::path() const
     if (rv_seg != nullptr && xform != nullptr)
     {
         RiverPoint *p = rv_seg->course.at(0);
-        qp = (*xform) (p->longitude, p->latitude);
+        qp = (*xform) (p->getLongitude(), p->getLatitude());
         lpath.moveTo (qp);
         for (int j = 1; j < rv_seg->course.count(); j++)
         {
             p = rv_seg->course.at(j);
-            qp = (*xform) (p->longitude, p->latitude);
+            qp = (*xform) (p->getLongitude(), p->getLatitude());
             lpath.lineTo(qp);
         }
     }

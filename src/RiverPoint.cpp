@@ -315,7 +315,7 @@ float RiverPoint::setLatitude (QString deg, QString min, QString sec, QString di
 
 void RiverPoint::setLatDir (QString ns)
 {
-    if (ew.compare ("N", Qt::CaseInsensitive) == 0)
+    if (ns.compare ("N", Qt::CaseInsensitive) == 0)
         latitude = latitude < 0.0? -latitude: latitude;
     else
         latitude = latitude > 0.0? -latitude: latitude;
@@ -449,7 +449,7 @@ bool RiverPoint::output(int indent, RiverFile *rfile)
     return okay;
 }
 
-bool parseLatLon (CompassFile *cfile, RiverPoint *pt)
+bool parseLatLon (RiverFile *cfile, RiverPoint *pt)
 {
     bool okay = true, end = false;
 
@@ -470,7 +470,7 @@ bool parseLatLon (CompassFile *cfile, RiverPoint *pt)
     }
     else
     {
-        pt->setLat (latd, latm, lats);
+        pt->setLatitude(latd, latm, lats);
         pt->setLatDir (latdir);
 
         lond = cfile->popToken ();
@@ -488,7 +488,7 @@ bool parseLatLon (CompassFile *cfile, RiverPoint *pt)
         else
         {
             end = true;
-            pt->setLon (lond, lonm, lons);
+            pt->setLongitude(lond, lonm, lons);
             pt->setLonDir (londir);
         }
     }

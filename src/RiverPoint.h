@@ -80,15 +80,15 @@ public:
     bool readLatLon (QString *line);
     float setLongitude (float ln);
     float setLongitude (int d, int m, int s, QString dir);
-    float setLongitude (QString deg, QString min, QString sec, QString dir);
+    float setLongitude (QString deg, QString min, QString sec, QString dir = "W");
     void setLonDir (QString ew);
-    float getLongitude () {return lon;}
+    float getLongitude () {return longitude;}
 
     float setLatitude (float lt);
     float setLatitude (int d, int m, int s, QString dir);
-    float setLatitude (QString deg, QString min, QString sec, QString dir);
+    float setLatitude (QString deg, QString min, QString sec, QString dir = "W");
     void setLatDir (QString ns);
-    float getLatitude () {return lat;}
+    float getLatitude () {return latitude;}
 
     float setWidth (float wd);
     float getWidth () {return width;}
@@ -103,17 +103,18 @@ public:
 
     QString text ();
     bool output (int indent, RiverFile *rfile);
-    
+    void setText(const QString txt);
+
 protected:
     float latitude;
     float longitude;
 //    dms *latitude;
 //    dms *longitude;
     float width;
-    
+
 };
 
-bool parseLatLon (CompassFile *cfile, RiverPoint *pt);
+bool parseLatLon (RiverFile *cfile, RiverPoint *pt);
 
 
 #endif // RIVERPOINT_H

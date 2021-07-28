@@ -50,7 +50,7 @@ QPointF mapDam::getOriginPoint()
     RiverPoint *p0;
     QPointF qp0;
     p0 = rv_seg->bottom();
-    qp0 = (*xform)(p0->longitude, p0->latitude);
+    qp0 = (*xform)(p0->getLongitude(), p0->getLatitude());
 
     return qp0;
 }
@@ -66,7 +66,7 @@ QPointF mapDam::getBackingPoint()
     {
         rv_seg->up->bottom();
         p1 = rv_seg->up->nextPointUp();
-        qp1 = (*xform)(p1->longitude, p1->latitude);
+        qp1 = (*xform)(p1->getLongitude(), p1->getLatitude());
     }
     else
     {
@@ -90,7 +90,7 @@ QPointF mapDam::getBackingPoint()
         }
         if (p1 != nullptr)
         {
-            qp1 = (*xform)(p1->longitude, p1->latitude);
+            qp1 = (*xform)(p1->getLongitude(), p1->getLatitude());
             qp1.setX(origin.x() + origin.x() - qp1.x());
             qp1.setY(origin.y() - origin.y() - qp1.y());
         }
@@ -110,21 +110,21 @@ void mapDam::setAngle()
     double dx, dy, slope;
 
     p0 = rv_seg->top();
-    origin = (*xform) (p0->longitude, p0->latitude);
+    origin = (*xform) (p0->getLongitude(), p0->getLatitude());
 
     if (rv_seg->up != nullptr)
     {
         p1 = rv_seg->up->bottom();
         p1 = rv_seg->up->nextPointUp();
-        dx = p1->longitude - p0->longitude;
-        dy = p1->latitude - p0->latitude;
+        dx = p1->getLongitude() - p0->getLongitude();
+        dy = p1->getLatitude() - p0->getLatitude();
     }
     else
     {
         p1 = rv_seg->down->top();
         p1 = rv_seg->nextPointDn();
-        dx = p0->longitude - p1->longitude;
-        dy = p0->latitude - p1->latitude;
+        dx = p0->getLongitude() - p1->getLongitude();
+        dy = p0->getLatitude() - p1->getLatitude();
     }
 
     slope = -dx / dy; // perpendicular to river

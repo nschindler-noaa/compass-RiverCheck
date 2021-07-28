@@ -58,7 +58,8 @@ void SegmentInfo::addSegment(RiverSegment *seg)
     segment = seg;
     if (segment != nullptr)
     {
-        ui->textEdit_name->setText(*seg->name);
+        ui->pushButton_goto->setText(*seg->name);
+//        ui->textEdit_name->setText(*seg->name);
         switch (side)
         {
         case Upper:
@@ -115,12 +116,18 @@ void SegmentInfo::gotoClicked()
 
 void SegmentInfo::hideName(bool flag)
 {
-    ui->textEdit_name->setVisible(!flag);
+    ui->pushButton_goto->setVisible(flag);
+//    ui->textEdit_name->setVisible(!flag);
 }
 
 void SegmentInfo::hideButton(bool flag)
 {
     ui->pushButton_goto->setVisible(!flag);
+}
+
+void SegmentInfo::hideFrame(bool flag)
+{
+    ui->frame->setVisible(flag);
 }
 
 /*

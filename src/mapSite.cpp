@@ -46,8 +46,8 @@ QPainterPath mapSite::shape() const
 
     if (rv_site != nullptr && xform != nullptr)
     {
-        qp = (*xform) (rv_site->location->longitude,
-                       rv_site->location->latitude);
+        qp = (*xform) (rv_site->location->getLongitude(),
+                       rv_site->location->getLatitude());
         path.moveTo (qp);
 /*		for (p = p->next; p != nullptr; p = p->next)
         {
