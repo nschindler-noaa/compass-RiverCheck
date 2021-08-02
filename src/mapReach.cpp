@@ -181,7 +181,7 @@ void mapReach::contextMenuEvent(QGraphicsSceneContextMenuEvent *evnt)
 
     if      (selectedAction == actionShowErrors)
     {
-        showErrors(evnt->pos());
+        showErrors(evnt->screenPos());
     }
     else if (selectedAction == actionShowDetail)
     {

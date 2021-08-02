@@ -130,7 +130,7 @@ void mapObject::paint (QPainter *paintr, const QStyleOptionGraphicsItem *opt, QW
     paintr->setPen(normalPen);
     paintr->drawPath(backgroundShape);
 
-    if (rv_seg->error == 0)
+    if (rv_seg->errors.count() == 0)
         paintr->setPen(mouseOver? highlightPen : normalPen);
     else
         paintr->setPen(mouseOver? errorHighlightPen : errorPen);
@@ -204,7 +204,7 @@ void mapObject::contextMenuEvent(QGraphicsSceneContextMenuEvent *evnt)
 
     if      (selectedAction == actionShowErrors)
     {
-        showErrors(evnt->pos());
+        showErrors(evnt->screenPos());
     }
     else if (selectedAction == actionShowDetail)
     {
@@ -271,7 +271,7 @@ void mapObject::displayInfo (QPoint pos)
 }
 
 
-void mapObject::showErrors(QPointF pt)
+void mapObject::showErrors(QPoint pt)
 {
     itemErrors = createInfo();
     itemErrors->setGeometry(pt.x(), pt.y(),
@@ -294,10 +294,14 @@ void mapObject::showViews()
 QVBoxLayout * mapObject::getErrorList(RiverSegment *seg)
 {
     QVBoxLayout *lay = new QVBoxLayout();
-    int count = 0;
     QListWidget *errList = new QListWidget();
+    seg->findErrors();
+    QStringList elist = seg->getErrorList();
+    int count = elist.count();
 
-    if (seg->error & LatLonUpper)
+    for (int i = 0; i < count; i++)
+        errList->addItem(elist.at(i));
+/*    if (seg->error & LatLonUpper)
     {
         errList->addItem(new QListWidgetItem("Upper longitude/latitude mismatch."));
         count ++;
@@ -336,7 +340,7 @@ QVBoxLayout * mapObject::getErrorList(RiverSegment *seg)
     {
         errList->addItem(new QListWidgetItem("Spillway width and number and size of spillways do not match."));
         count ++;
-    }
+    }*/
     if (count == 0)
     {
         lay->addWidget((QWidget *)new QLabel (QString("%1 has no errors.").arg(*seg->name)));

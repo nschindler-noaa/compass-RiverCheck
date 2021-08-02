@@ -1,7 +1,7 @@
 #=======================================#
 
 COMPASS River Description File Checker
-Version 1.2.6b
+Version 1.3.0b
 
 #=======================================#
 
@@ -15,6 +15,10 @@ including Mac OSX, MS Windows, and Linux
 Tested on Windows 10 and Linux
 
 History:
+
+2021-08-01
+Version 1.3.0b
+1. Tweaked views for better visibility..
 
 2019-04-17
 Version 1.2.6b

@@ -186,6 +186,7 @@ bool Reach::construct()
 {
     bool okay = true;
     error = 0;
+    errors.reset();
 
     RiverSegment::construct();
     okay = calculateGeometries();
@@ -193,7 +194,7 @@ bool Reach::construct()
 //    error = findErrors();
 
     if (slope < 0.0 || slope > 90.0)
-        error |= SlopeIncorrect;
+        errors.set(SegmentErrors::SlopeIncorrect);// |= SlopeIncorrect;
 
     // create map path
 

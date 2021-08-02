@@ -8,6 +8,7 @@
 
 #include "RiverFile.h"
 #include "RiverPoint.h"
+#include "segmenterrors.h"
 
 #include "definitions.h"
 
@@ -92,8 +93,10 @@ public:
     Impounded getImpound ();
     Impounded impound;
 
+    SegmentErrors errors;
     short error;  /**< flag that contains error masks. See /ref errors below for more information. */
-    short findErrors ();
+    QStringList findErrors();
+    QStringList getErrorList() {return errors.getList();}
 
     QPen normalPen;
     QPen backgroundPen;
@@ -111,7 +114,7 @@ public slots:
 */
 };
 
-/** Errors. (Tried enum, but caused trouble in compiling) */
+/* Errors. (Tried enum, but caused trouble in compiling)
 #define LatLonUpper    (0x1)
 #define LatLonLower    (0x2)
 #define ElevUpper      (0x4)
@@ -120,6 +123,6 @@ public slots:
 #define DepthLower     (0x20)
 #define SlopeIncorrect (0x40)
 #define SpillwayWidth  (0x80)
-#define BadPhysics     (0x100)
+#define BadPhysics     (0x100)*/
 
 #endif // RIVERSEGMENT_H

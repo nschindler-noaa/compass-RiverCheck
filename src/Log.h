@@ -5,6 +5,7 @@
 #include <QString>
 #include <QStringList>
 
+#define DEFAULT_LOGNAME  "COMPASSXXXX.log"
 
 #define EOF_MSG "Found EOF in River Description File."
 
@@ -34,6 +35,7 @@ public:
 
     void add (MessageType id, QString msg);
 
+    QString filename() {return logFile->fileName();}
 //    static Log *log;
 
 protected:

@@ -34,10 +34,10 @@ void RiverSegment::setup ()
     clear ();
     reset ();
     width = 0.0;
-    type = (SegmentType) -1;
-    up = (RiverSegment *)nullptr;
-    down = (RiverSegment *)nullptr;
-    fork = (RiverSegment *)nullptr;
+    type = NullSegment;
+    up = nullptr;
+    down = nullptr;
+    fork = nullptr;
     backgroundPen = QPen(Qt::darkGray, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     normalPen = QPen(Qt::blue, width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
@@ -57,7 +57,8 @@ void RiverSegment::clear()
 void RiverSegment::reset()
 {
     currentPoint = -1;
-    error = 0;
+//    error = 0;
+    errors.reset();
 }
 
 RiverSegment::~RiverSegment ()
@@ -175,39 +176,58 @@ bool RiverSegment::construct()
     return true;
 }
 
-short RiverSegment::findErrors ()
+QStringList RiverSegment::findErrors ()
 {
-    error = 0;
+//    error = 0;
+    errors.reset();
 
     if (down != nullptr)
     {
-        if (*bottom() != *(down->top()))
-            error |= LatLonLower;
-        if (lowerElev != down->upperElev)
-            error |= ElevLower;
-        if (lowerDepth != down->upperDepth)
-            error |= DepthLower;
+        if (*bottom() != *(down->top())) {
+//            error |= LatLonLower;
+            errors.set(SegmentErrors::LatLonLower);
+        }
+        if (lowerElev != down->upperElev) {
+//            error |= ElevLower;
+            errors.set(SegmentErrors::LatLonUpper);
+        }
+        if (lowerDepth != down->upperDepth) {
+//            error |= DepthLower;
+            errors.set(SegmentErrors::DepthLower);
+        }
     }
     if (up != nullptr)
     {
-        if (*top() != *(up->bottom()))
-            error |= LatLonUpper;
-        if (upperElev != up->lowerElev)
-            error |= ElevUpper;
-        if (upperDepth != up->lowerDepth)
-            error |= DepthUpper;
+        if (*top() != *(up->bottom())) {
+//            error |= LatLonUpper;
+            errors.set(SegmentErrors::LatLonUpper);
+        }
+        if (upperElev != up->lowerElev) {
+//            error |= ElevUpper;
+            errors.set(SegmentErrors::ElevUpper);
+        }
+        if (upperDepth != up->lowerDepth) {
+//            error |= DepthUpper;
+            errors.set(SegmentErrors::DepthUpper);
+        }
     }
     if (fork != nullptr)
     {
-        if (*top() != *(up->bottom()))
-            error |= LatLonUpper;
-        if (upperElev != up->lowerElev)
-            error |= ElevUpper;
-        if (upperDepth != up->lowerDepth)
-            error |= DepthUpper;
+        if (*top() != *(up->bottom())) {
+//            error |= LatLonUpper;
+            errors.set(SegmentErrors::LatLonUpper);
+        }
+        if (upperElev != up->lowerElev) {
+//            error |= ElevUpper;
+            errors.set(SegmentErrors::ElevUpper);
+        }
+        if (upperDepth != up->lowerDepth) {
+//            error |= DepthUpper;
+            errors.set(SegmentErrors::DepthUpper);
+        }
     }
 
-    return error;
+    return errors.getList();
 }
 
 /** Write all segment information to an output file.

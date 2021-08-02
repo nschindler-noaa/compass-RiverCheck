@@ -56,7 +56,7 @@ public:
 public slots:
     void showViews(QPointF pt);
     void showViews();
-    void showErrors(QPointF pt);
+    void showErrors(QPoint pt);
 
 signals:
     void showDetail (RiverSegment *seg);

@@ -130,7 +130,7 @@ void mapItem::paint (QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWid
     paintr->setPen(normalPen);
     paintr->drawPath(shape);
 
-    if (rv_seg->error == 0)
+    if (rv_seg->errors.count() == 0)
         paintr->setPen(mouseOver? highlightPen : normalPen);
     else
         paintr->setPen(mouseOver? errorHighlightPen : errorPen);
@@ -238,7 +238,7 @@ QDialog *mapItem::createInfo()
     buttons->addSpacerItem(new QSpacerItem(10, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     buttons->addWidget((QWidget *)detail);
 
-    if (rv_seg->error == 0)
+    if (rv_seg->errors.count() == 0)
     {
         message = new QString ("This segment has no errors.");
     }
@@ -287,7 +287,8 @@ QVBoxLayout * mapItem::getErrorList(RiverSegment *seg)
     int count = 0;
     QListWidget *errList = new QListWidget();
 
-    if (seg->error & LatLonUpper)
+    QStringList errors = seg->getErrorList();
+/*    if (seg->error & LatLonUpper)
     {
         errList->addItem(new QListWidgetItem("Upper longitude/latitude mismatch."));
         count ++;
@@ -326,7 +327,8 @@ QVBoxLayout * mapItem::getErrorList(RiverSegment *seg)
     {
         errList->addItem(new QListWidgetItem("Spillway width and number and size of spillways do not match."));
         count ++;
-    }
+    }*/
+    count = errors.count();
     if (count == 0)
     {
         lay->addWidget((QWidget *)new QLabel (QString("%1 has no errors.").arg(*seg->name)));

@@ -12,6 +12,7 @@
 #include "reachdetaildialog.h"
 #include "segmentinfo.h"
 #include "metadata.h"
+#include "logdialog.h"
 
 #define OPEN_FILE tr("Open river description file.")
 #define SAVE_FILE tr("Save river description file.")
@@ -24,11 +25,11 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    
+
     void openFile ();
     void saveFile ();
     void saveFileAs (QString filename = QString(""));
@@ -62,6 +63,8 @@ private:
     ReachDetailDialog *reachDialog;
     Reach *currentReach;
 
+    LogDialog *output;
+
 private slots:
     void displaySystem ();
     void displaySegment (RiverSegment *seg);
@@ -85,7 +88,7 @@ private slots:
     void help_aboutQt ();
 
 public slots:
-    void riverDataChanged (RiverSegment *seg = 0);
+    void riverDataChanged (RiverSegment *seg = nullptr);
     void riverDataSaved ();
 
 };

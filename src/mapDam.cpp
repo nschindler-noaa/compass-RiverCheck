@@ -387,7 +387,7 @@ void mapDam::paint(QPainter *paintr, const QStyleOptionGraphicsItem *opt, QWidge
     paintr->drawPath(backgroundShape);
     paintr->fillPath(backgroundShape, QBrush(Qt::darkGray));
 
-    if (rv_seg->error == 0)
+    if (rv_seg->errors.count() == 0)
     {
         if (mouseOver)
         {
@@ -465,7 +465,7 @@ void mapDam::contextMenuEvent(QGraphicsSceneContextMenuEvent *evnt)
 
     if      (selectedAction == actionShowErrors)
     {
-        showErrors(evnt->pos());
+        showErrors(evnt->screenPos());
     }
     else if (selectedAction == actionShowDetail)
     {

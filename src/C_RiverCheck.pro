@@ -13,6 +13,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    errordialog.cpp \
+    logdialog.cpp \
         mainwindow.cpp \
     RiverSystem.cpp \
     RiverSegment.cpp \
@@ -45,6 +47,7 @@ SOURCES += main.cpp\
     qstringlisteditwidget.cpp \
     damdetaildialog.cpp \
     mapobject.cpp \
+    segmenterrors.cpp \
     segmentinfo.cpp \
     reachdetaildialog.cpp \
     seeview.cpp \
@@ -52,7 +55,8 @@ SOURCES += main.cpp\
     metadata.cpp \
     Period.cpp \
     Basin.cpp \
-    Transport.cpp
+    Transport.cpp \
+    widgetlog.cpp
 
 HEADERS  += mainwindow.h \
     Stock.h \
@@ -71,6 +75,8 @@ HEADERS  += mainwindow.h \
     Log.h \
     River.h \
     detaildialog.h \
+    errordialog.h \
+    logdialog.h \
     mercatorTransform.h \
     matrix.h \
     mapTransform.h \
@@ -88,6 +94,7 @@ HEADERS  += mainwindow.h \
     qstringlisteditwidget.h \
     damdetaildialog.h \
     mapobject.h \
+    segmenterrors.h \
     segmentinfo.h \
     reachdetaildialog.h \
     mapItem.h \
@@ -96,15 +103,19 @@ HEADERS  += mainwindow.h \
     metadata.h \
     Period.h \
     Basin.h \
-    Transport.h
+    Transport.h \
+    widgetlog.h
 
 FORMS    += mainwindow.ui \
     detaildialog.ui \
+    errordialog.ui \
+    logdialog.ui \
     reachDetailDialog.ui \
     damDetailDialog.ui \
     qstringlisteditdialog.ui \
     qstringlisteditwidget.ui \
-    segmentinfo.ui
+    segmentinfo.ui \
+    widgetlog.ui
 
 OTHER_FILES += \
     readme.txt

@@ -5,6 +5,7 @@
 #include "RiverSite.h"
 //#include "RiverSystem.h"
 #include "Log.h"
+#include "logdialog.h"
 
 River::River (QObject *parent) :
     QObject (parent)
@@ -140,6 +141,7 @@ bool River::construct()
     down_seg = (RiverSegment *) segments->at (0);
     curRiver = QString (*down_seg->riverName);
 
+    // construct the river(s)
     if (segments->count() > 1)
     {
         for (int i = 1; okay && i < segments->count(); i++)
@@ -152,10 +154,10 @@ bool River::construct()
             if (down_seg->top()->getLatitude() != cur_seg->bottom()->getLatitude() ||
                 down_seg->top()->getLongitude() != cur_seg->bottom()->getLongitude())
             {
-                Log::instance()->add(Log::Error, QString ("Top of %1 doesn't match bottom of %2").arg(
+                Log::instance()->add(Log::Error, QString ("Upstream of %1 doesn't match downstream of %2").arg(
                                          *down_seg->name, *cur_seg->name));
-                cur_seg->error |= LatLonLower;
-                down_seg->error |= LatLonUpper;
+//                cur_seg->errors.set(SegmentErrors::LatLonLower);
+//                down_seg->errors.set(SegmentErrors::LatLonUpper);// |= LatLonUpper;
             }
             down_seg = cur_seg;
         }
@@ -165,7 +167,7 @@ bool River::construct()
         cur_seg = down_seg;
     }
     // we have ended, but is it at a headwater? We don't care
-    // because we don't do anything with it.
+    // because we don't do anything with headwaters.
 /*    if (cur->type != RiverSegment::HeadwaterSegment)
     {
         QString hname (curRiver);
@@ -181,12 +183,13 @@ bool River::construct()
                   QString("adding headwater %1").arg(hname)));
     }*/
 
-    // dams need to be constructed first (more complicated)
+    // construct the reaches
     for (int i = 0; i < reaches.count(); i++)
     {
         Reach *rch = reaches.at (i);
         rch->construct();
     }
+    // construct the dams (more complicated)
     for (int i = 0; i < dams.count(); i++)
     {
         Dam *dm = dams.at (i);

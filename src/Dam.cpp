@@ -228,6 +228,7 @@ bool Dam::construct ()
 {
     bool okay = true;
     error = 0;
+    errors.reset();
 
     // base elevation
     lowerElev = floorElev;
@@ -311,13 +312,13 @@ bool Dam::construct ()
     {
         Log::instance()->add
                 (Log::Error, QString("bad physical specifications at $1").arg(*name));
-        error |= BadPhysics;
+        errors.set(SegmentErrors::BadPhysics);//error |= BadPhysics;
     }
     if ((ngates * gateWidth) != spillwayWidth)
     {
         Log::instance()->add(Log::Error, QString ("%1 spillway width not consistent with gate width and number of gates").arg(
                                  *name));
-        error |= SpillwayWidth;
+        errors.set(SegmentErrors::SpillwayWidth);// error |= SpillwayWidth;
     }
 
     return okay;

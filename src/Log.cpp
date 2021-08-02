@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "Log.h"
-#define DEFAULT_LOGNAME  "COMPASSXXXX.log"
 
 static Log *outputlog = nullptr;
 
